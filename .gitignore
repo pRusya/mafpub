@@ -1,0 +1,12 @@
+*.py[co]
+*.sw[po]
+*.bak
+*.orig
+*~
+.project
+.pydevproject
+wsgi/mafpub/media/
+migrations/
+!__init__.py
+__pycache__/
+secret.txt
