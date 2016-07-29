@@ -1,0 +1,55 @@
+{% extends 'mafiaapp/base.html' %}
+{% block content %}
+
+{% if messages %}
+<div class="row">
+	<div class="col-md-3 col-centered">
+		{% for message in messages %}
+			{% if message.tags == 'info' %}
+				<div class="alert alert-info">
+    				<strong>{{ message }}</strong>
+				</div>
+			{% else %}
+				<div class="alert alert-danger">
+    				<strong>{{ message }}</strong>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
+<div class="row" style="margin-top:50px">
+	<div class="col-md-3 col-centered">
+		<form action="{% url 'mafiaapp:index' %}" method="post" class="form-signin">
+			{% csrf_token %}
+			<input type="email" name="email" placeholder="Email address" class="form-control" />
+			<div class="col-md-6 col-centered" style="padding:0px">
+				<input type="submit" name="submit" value="Регистрация" class="btn btn-default btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row" style="margin-top:50px">
+	<div class="col-md-3 col-centered">
+		{% if form.nickname.errors %}
+			<p>{{form.nickname.errors}}</p>
+		{% endif %}
+
+		{% if form.password.errors %}
+			<p>{{form.password.errors}}</p>
+		{% endif %}
+
+		<form action="" method="post" class="form-signin">
+			{% csrf_token %}
+			<input type="text" name="nickname" placeholder="Nickname" class="form-control" />
+			<input type="password" name="password" placeholder="Password" class="form-control" />
+			<div class="col-md-4 col-centered" style="padding:0px">
+				<input type="submit" name="submit" value="Логин" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock content %}

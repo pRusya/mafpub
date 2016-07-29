@@ -1,0 +1,22 @@
+{% extends 'mafiaapp/base.html' %}
+{% load filters %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8 col-centered text-center">
+        <h1><a href="{% url 'mafiaapp:dashboard' %}">Главная страница</a> / Недоступная страница</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 col-centered text-center">
+        <h1>Страница в разработке</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-centered text-center">
+        <h4>Здесь скоро что-то появится</h4>
+    </div>
+</div>
+{% endblock content %}

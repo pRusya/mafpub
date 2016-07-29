@@ -1,0 +1,257 @@
+{% extends 'mafiaapp/base.html' %}
+{% block content %}
+
+{% if form.errors %}
+<div class="row">
+    <div class="col-md-8 col-centered">
+            <div class="alert alert-danger">
+            <strong>{{ form.errors }}</strong>
+            </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6 col-centered" style="text-align:center">
+            <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+
+            <label for="id_title">Заголовок:</label><br>
+            <input id="id_title" maxlength="100" name="title" type="text"  class="form-control" value="{{game.title|safe}}" /><br>
+
+            <label for="id_short">URL:</label><br>
+            <input id="id_short" maxlength="100" name="short" type="text"  class="form-control" value="{{game.short}}" /><br>
+
+            <label for="id_slug">Slug:</label><br>
+            <input id="id_slug" maxlength="100" name="slug" type="text"  class="form-control" value="{{game.slug}}" /><br>
+
+            <label for="id_text" style="margin-top:15px;">Описание:</label><br>
+            <textarea cols="40" id="id_text" name="description" rows="10" class="form-control">{{description.text|safe}}</textarea><br>
+
+            <label for="id_state">Фаза:</label>
+            <select id="id_state" name="state" class="form-control col-centered" style="max-width:30%;display:inline-block">
+            {% for value, name in game.STATE_CHOICES %}
+                <option value="{{value}}" {%if value == game.state%}selected{%endif%}>{{name}}</option>
+            {% endfor %}
+            </select>
+
+            <label for="id_day">День:</label>
+            <input id="id_day" type="number" name="day" style="max-width:70px;display:inline-block" class="form-control" value={{game.day}} /><br>
+
+            <label>&#160;</label><br>
+
+            <label for="id_status">Статус:</label><br>
+            <input id="id_status" maxlength="100" name="status" type="text" class="form-control" style="max-width:100%;" value="{{game.status}}" /><br>
+
+            <label for="id_hasHeadMafia" style="margin-right:10px;margin-top:15px;">ГлавМаф назначен:</label>
+            <input type="checkbox" id="id_hasHeadMafia" name="hasHeadMafia" {%if game.hasHeadMafia%}checked{%endif%} />
+
+            <label for="id_hasRecruit" style="margin-right:10px;margin-top:15px;margin-left:10px;">Есть завербованый:</label>
+            <input type="checkbox" id="id_hasRecruit" name="hasRecruit" {%if game.hasRecruit%}checked{%else%}false{%endif%} /><br>
+
+            <label for="id_anchor" style="margin-right:10px;margin-top:15px;margin-left:10px;">Ведущие:</label><br>
+            <select multiple class="form-control" id='id_anchor' name='anchor'>
+                {% for user in users %}
+                    <option value='{{ user.nickname }}' {% if user.nickname in game.anchor %}selected{% endif%}>{{ user.nickname }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Сохранить" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<section><p><a href="{% url 'mafiaapp:create_game_post' %}">Create Game Post</a></p></section>
+
+<section><p><a href="{% url 'mafiaapp:create_game_mask' %}">Create Game Mask</a></p></section>
+
+
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        Участники
+    </div>
+</div>
+<div class="row" style="margin-top:10px;">
+    {% for participant in participants %}
+    <div class="col-md-2 text-center">
+        {{ participant.user }}<br>
+        as {{ participant.mask }}<br>
+        {% if participant.role == 'peaceful' %}
+            <span style='background:lightgreen'>{{ participant.role }}</span>
+        {% elif participant.role == 'mafia' or participant.role == 'head mafia' or participant.role == 'mafia barman' or participant.role == 'mafia doctor' or participant.role == 'mafia killer' %}
+            <span style='background:lightblue'>{{ participant.role }}</span>
+        {% elif participant.role == 'maniac' %}
+            <span style='background:pink'>{{ participant.role }}</span>
+        {% elif participant.role == 'militia' or participant.role == 'head militia' or participant.role == 'militia barman' or participant.role == 'militia doctor' or participant.role == 'militia killer' %}
+            <span style='background:ivory'>{{ participant.role }}</span>
+        {% elif participant.role == 'neutral barman' or participant.role == 'neutral doctor' or participant.role == 'neutral killer' %}
+            <span style='background:lightgray'>{{ participant.role }}</span>
+        {% else%}
+            {{ participant.role }}
+        {% endif %}
+    </div>
+    <div class="col-md-2 text-center" style="margin-bottom:10px">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <input type="text" value="{{ game.number }}" name="game" style="display:none" />
+            <input type="text" value="{{ participant.id }}" name="id" style="display:none" />
+            <label style="margin:0 auto">Роль</label>
+            <select style="max-width:80%;" name="role">
+                <option value="mafia">mafia</option>
+                <option value="head mafia">head mafia</option>
+                <option value="mafia barman">mafia barman</option>
+                <option value="mafia doctor">mafia doctor</option>
+                <option value="mafia killer">mafia killer</option>
+                <option value="mafia recruit">mafia recruit</option>
+                <option value="militia">militia</option>
+                <option value="head militia">head militia</option>
+                <option value="militia barman">militia barman</option>
+                <option value="militia doctor">militia doctor</option>
+                <option value="militia killer">militia killer</option>
+                <option value="militia recruit">militia recruit</option>
+                <option value="maniac">maniac</option>
+                <option value="peaceful">peaceful</option>
+                <option value="dead">dead</option>
+                <option value="neutral barman">neutral barman</option>
+                <option value="neutral doctor">neutral doctor</option>
+                <option value="neutral killer">neutral killer</option>
+            </select>
+            <input type="submit" name="action" value="Изменить" />
+        </form>
+    </div>
+        {% if forloop.counter|divisibleby:"3" and not forloop.last %}
+</div>
+<div class="row" style="margin-top:10px;">
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        <p>&#160;</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        Маски
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+{% if masks %}
+    {% for mask in masks %}
+    <div class="col-md-2 text-center">
+        {{ mask.username }}
+    </div>
+        {% if forloop.counter|divisibleby:"3" %}
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        <p>&#160;</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <label>Зарегистрировать ботов</label><br>
+            <label>Количество:</label>
+            <input id="number" type="number" name="number" style="max-width:50px" />
+            <input type="button" name="set_15" value="15" onclick="getElementById('number').value=15" />
+            <input type="button" name="set_20" value="20" onclick="getElementById('number').value=20" />
+            <input type="button" name="set_25" value="25" onclick="getElementById('number').value=25" />
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-6 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Зарегистрировать" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <label>Создать случайные маски</label><br>
+            <label>&#160;</label><br>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Создать" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <label>Назначить маски и роли участникам</label><br>
+            <label>&#160;</label><br>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Назначить" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        <p>&#160;</p>
+    </div>
+</div>
+
+<div class="row">
+    
+
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <label>Заставить ботов флудить</label><br>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Флудить" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <label>Симулировать голосование</label>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Голосовать" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin">
+            {% csrf_token %}
+            <label>Конец дня, ночь, новый день</label>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Новый день" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        <p>&#160;</p>
+    </div>
+</div>
+
+{#% debug %#}
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'mafiaapp/base.html' %}
+{% load filters %}
+{% block content %}
+
+<div class="row">
+	<div class="col-md-4 col-centered">
+		<form action="" method="POST" enctype="multipart/form-data" class="form-signin text-center">
+			<h3>Завершение регистрации</h3><br>
+			<span>{# placeholder #}&#160;</span>
+			{% csrf_token %}
+
+			{{ form.as_p|add_class:'form-control'|safe }}
+			<div class="col-md-8 col-centered">
+				<input type="submit" value="Сохранить" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--
+<div class="row">
+	<div class="col-md-3 col-centered">
+		<form action="" method="POST" enctype="multipart/form-data" class="form-signin">
+			<h3>Complete Registration</h3>
+			{% csrf_token %}
+			<input type="text" name="nickname" placeholder="nickname" class="form-control" />
+			<input name="password1" type="password" placeholder="Password" class="form-control" style="margin-bottom:0px" />
+			<input name="password2" type="password" placeholder="Password again" class="form-control" />
+			<label>Choose avatar</label>
+			<input type="file" name="avatar" placeholder="picture" class="form-control" accept="image/jpeg,image/png,image/gif" />
+			<input name="email" type="email" value="{{form.email.value}}" style="display:none" />
+			<div class="col-md-4 col-centered" style="padding:0px;margin-top:20px">
+				<input type="submit" value="Save" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+-->
+
+{% endblock content %}

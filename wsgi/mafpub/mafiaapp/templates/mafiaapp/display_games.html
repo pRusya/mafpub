@@ -1,0 +1,25 @@
+{% extends 'mafiaapp/base.html' %}
+{% block content %}
+
+{% for game in game_list %}
+    <div class="row">
+        <div class="col-md-7 col-centered text-center">
+            <h3>{{ game|safe }}</h3><br>
+            <form action="{% url 'mafiaapp:delete_game' pk=game.number %}" method="post" class="inline">
+                {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-primary" >
+            </form>
+            <a href="{% url 'mafiaapp:edit_game' pk=game.number %}">Редактировать игру</a>
+        </div>
+    </div>
+{% empty %}
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <div class="alert alert-danger">
+                <strong>Нет игр</strong>
+            </div>
+        </div>
+    </div>
+{% endfor %}  
+
+{% endblock content %}

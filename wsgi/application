@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'mafpub.settings'
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'mafpub'))
+from distutils.sysconfig import get_python_lib
+os.environ['PYTHON_EGG_CACHE'] = get_python_lib()
+#os.environ['HTTPS'] = "on"
+
+secret = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'secret.txt')
+with open(secret, 'r') as file:
+	lines = file.readlines()
+	for line in lines:
+		k, v = line.strip().split('=')
+		os.environ.setdefault(k, v)
+
+import django.core.wsgi
+application = django.core.wsgi.get_wsgi_application()

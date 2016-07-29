@@ -1,0 +1,45 @@
+{% extends 'mafiaapp/base.html' %}
+{% block content %}
+
+{% for mask in masks_list %}
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <div style="width:80px;float: left;"><h4>Name</h4></div>
+            <div>{{ mask.nickname }}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <div style="width:80px;float: left;"><h4>Game</h4></div>
+            <div>{{ mask.game|safe }}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <img src="{{mask.avatar.url}}" style="max-width: 100%;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <form action="{% url 'mafiaapp:delete_user' pk=user.id %}" method="post" class="form-signin">
+                {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-default btn-primary btn-block">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <hr style="height: 2px; background: #BCBBBB;">
+        </div>
+    </div>
+{% empty %}
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <div class="alert alert-danger">
+                <strong>No masks are available</strong>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock content %}

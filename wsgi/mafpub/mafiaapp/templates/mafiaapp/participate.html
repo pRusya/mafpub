@@ -1,0 +1,84 @@
+{% block register %}
+
+{% if user.is_authenticated %}
+<div class="row" style="margin-top:20px">
+    <div class="col-md-4 col-centered text-center">
+    {% if game.state != 'upcoming' %}
+        <h4>Регистрация завершена</h4>
+    {% elif registered %}
+        <h4>Вы зарегистрированы!</h4>
+        <form action="" method="post" name="Description">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Отменить участие" class="btn btn-default btn-danger btn-block">
+        </form>
+    {% else %}
+        <form action="" method="post" name="Description">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Участвовать" class="btn btn-default btn-primary btn-block">
+        </form>
+    {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<div class="row" style="margin-top:20px">
+    <div class="col-md-6 col-centered text-center">
+        <h3>Зарегистрированные участники</h1>
+    </div>
+</div>
+{% if participants %}
+<div class="row">
+    <div class="col-md-3"></div>
+    {% for participant in participants %}
+    <div class="col-md-2 text-center">
+        <h3>{{ participant.user }}</h3>
+    </div>
+        {% if forloop.counter|divisibleby:"3" and not forloop.last %}
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% else %}
+    <div class="row">
+        <div class="col-md-4 col-centered text-center">
+            <h4>Нет зарегистрированных участников</h4>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row" style="margin-top:20px">
+    <div class="col-md-6 col-centered text-center">
+        <h3>Модераторы</h1>
+    </div>
+</div>
+{% if game.anchor %}
+<div class="row">
+    <div class="col-md-3"></div>
+    {% for anchor in game.anchor %}
+    <div class="col-md-3 text-center">
+        <h3>{{ anchor }}</h3>
+    </div>
+        {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% else %}
+    <div class="row">
+        <div class="col-md-4 col-centered text-center">
+            <h4>Нет модераторов</h4>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <p><br></p>
+    </div>
+</div>
+
+{% endblock register %}

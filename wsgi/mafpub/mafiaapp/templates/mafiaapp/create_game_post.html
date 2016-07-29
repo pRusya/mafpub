@@ -1,0 +1,33 @@
+{% extends 'mafiaapp/base.html' %}
+{% load filters %}
+{% block content %}
+
+{% if error_message %}
+<div class="row">
+	<div class="col-md-8 col-centered">
+			<div class="alert alert-danger">
+    		<strong>{{ error_message }}</strong>
+			</div>
+	</div>
+</div>
+{% endif %}
+
+<div class="row">
+	<div class="col-md-8 col-centered text-center">
+    		<h3>Создание нового игрового поста</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-centered text-center">
+			<form action="" method="post" class="form-signin">
+			{% csrf_token %}
+			{{ form.as_p|add_class:'form-control'|safe }}
+			<div class="col-md-4 col-centered">
+				<input type="submit" value="Создать" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock content %}

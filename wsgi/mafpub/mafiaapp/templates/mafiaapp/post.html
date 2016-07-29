@@ -1,0 +1,28 @@
+{% if messages %}
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        {% for message in messages %}
+            {% if message.tags == 'info' %}
+                <div class="alert alert-info">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% else %}
+                <div class="alert alert-danger">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="row section post">
+    <div class="col-md-2">
+        <h4 style="">{{ post.author }}</h4><br>
+        <img src="{{ post.author.avatar.url }}" style="max-height:120px;max-width:100%" />
+    </div>
+    <div class="col-md-8 col-centered">
+        <h4>{# placeholder #}&#160;</h4>
+        <h4><pre>{{ post.text|safe }}</pre></h4> 
+    </div>
+</div>

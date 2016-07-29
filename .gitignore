@@ -5,8 +5,10 @@
 *~
 .project
 .pydevproject
-wsgi/mafpub/media/
-migrations/
+wsgi/mafpub/media/*
+wsgi/mafpub/static/*
+wsgi/mafpub/identicon/migrations/*
+wsgi/mafpub/mafiaapp/migrations/*
 !__init__.py
 __pycache__/
 secret.txt

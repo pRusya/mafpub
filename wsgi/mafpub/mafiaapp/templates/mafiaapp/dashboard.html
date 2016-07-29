@@ -1,0 +1,90 @@
+{% extends 'mafiaapp/base.html' %}
+{% load filters %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-7 col-centered">
+        <h1>{# placeholder #}&#160;</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 col-centered section">
+        <h1>Текущая игра</h1>
+    </div>
+</div>
+
+{% for game in game_list|filter_state:'current' %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</h3></a>
+        <p>{{ game.status }}</p>
+    </div>
+</div>
+{% empty %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h4>Сейчас не проводится игра</h4>
+        <p>&#160;</p>
+    </div>
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-7 col-centered section">
+        <h1>Предстоящая игра</h1>
+    </div>
+</div>
+
+{% for game in game_list|filter_state:'upcoming' %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
+        <p>{{ game.status }}</p>
+    </div>
+</div>
+{% empty %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h4>Нет будущих игр</h4>
+        <p>&#160;</p>
+    </div>
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-7 col-centered section">
+        <h1>Прошедшие игры</h1>
+    </div>
+</div>
+
+{% for game in game_list|filter_state:'past' %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</h3></a>
+        <p>{{ game.status }}</p>
+    </div>
+</div>
+{% empty %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h4>Нет завершенных игр</h4>
+        <p>&#160;</p>
+    </div>
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-7 col-centered section">
+        <h1>Новости, объявления, обсуждения</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <h4>Нет тем</h4>
+        <p>&#160;</p>
+    </div>
+</div>
+
+{% endblock content %}

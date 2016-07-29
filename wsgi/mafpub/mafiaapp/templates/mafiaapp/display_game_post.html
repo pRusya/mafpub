@@ -1,0 +1,36 @@
+{% extends 'mafiaapp/base.html' %}
+{% load staticfiles %}
+{% load filters %}
+{% block content %}
+
+{% block link %}
+<div class="row">
+    <div class="col-md-6 col-centered text-center">
+        <h1><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a> / {{ post.title }}</h1>
+    </div>
+</div>
+{% endblock link %}
+
+{% include 'mafiaapp/post.html' %}
+
+{% if 'description' in post.tags %}
+{% block register %}
+	{% include 'mafiaapp/participate.html' %}
+{% endblock register %}
+{% endif %}
+
+{% if 'private' in post.tags %}
+{% block participant_actions %}
+	{% include 'mafiaapp/participant_actions.html' %}
+{% endblock participant_actions %}
+{% endif %}
+
+{% block comments %}
+{% include 'mafiaapp/comments.html' %}
+{% endblock comments %}
+
+{% block reply %}
+{% include 'mafiaapp/reply.html' %}
+{% endblock reply %}
+
+{% endblock content %}

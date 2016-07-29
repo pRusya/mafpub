@@ -1,0 +1,46 @@
+{% extends 'mafiaapp/base.html' %}
+{% block content %}
+
+{% if error_message %}
+<div class="row">
+	<div class="col-md-8 col-centered">
+			<div class="alert alert-danger">
+    		<strong>{{ error_message }}</strong>
+			</div>
+	</div>
+</div>
+{% endif %}
+
+{% if form.errors %}
+<div class="row">
+	<div class="col-md-4 col-centered">
+			<div class="alert alert-danger">
+    		<strong>{{ form.errors }}</strong>
+			</div>
+	</div>
+</div>
+{% endif %}
+
+<div class="row">
+	<div class="col-md-8 col-centered text-center">
+    		<h3>Создание новой игровой маски</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-centered" style="text-align:center">
+			<form action="" method="post" enctype="multipart/form-data" class="form-signin">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+				<input type="submit" value="Создать" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+
+{#{ form.fields }#}
+
+{#% debug %#}
+
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}Галамафия 2.0{% endblock %}</title>
+	<link rel="icon" href="{% static 'mafiaapp/favicon.ico' %}">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<link rel="stylesheet" href="http://webfonts.ru/import/forum.css">
+	<link rel="stylesheet" href="{% static 'mafiaapp/style.css' %}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-static-top">
+	<div class="container-fluid">
+		<div class="navbar-header col-centered">
+			<div class="navbar-brand col-centered text-center" style="position:relative;padding-top:0px;height:70px">
+				<a href="/"><span class="title-super40" style="display:inline-block;margin-top:10px">Галактическая мафия 2.0</span></a>
+				{% if user.is_authenticated %}
+				<span style="position:absolute;display:inline-block;right:0;margin:0 auto;padding:0px;">
+					<a href="{% url 'mafiaapp:profile' user=user.user.nickname %}" style="margin-right:7px"><h3>{{ user.user.nickname }}</h3></a>   
+					<a href="/logout" style="margin-right:14px;margin-left:7px">Logout</a>
+					<img src="{{ user.user.avatar.url }}" style="height:70px;width:auto;">
+				</span>
+				{% else %}
+				<span style="position:absolute;display:inline-block;right:0;margin-top:20px">
+					<a href="/"><h3>Login</h3></a>
+				</span>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</nav>
+
+<div class="content container">
+	{% block content %}{% endblock %}
+</div>
+
+<div class="footer">
+	© 2016 Ruslan Pozin. <a href="https://github.com/prusya/mafpub" target="new">View on GitHub <img src="https://help.github.com/assets/images/site/invertocat.png" style="max-height:19px;"></a>
+</div>
+
+{#% debug %#}
+
+</body>
+
+</html>

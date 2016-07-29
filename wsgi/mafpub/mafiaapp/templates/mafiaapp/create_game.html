@@ -1,0 +1,92 @@
+{% extends 'mafiaapp/base.html' %}
+{% load filters %}
+{% block content %}
+
+<div class="row">
+	<div class="col-md-8 col-centered text-center">
+    		<h3>Создание новой игры</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-centered text-center">
+    <p>
+    <!--Roman numbers-->
+    	<h4>&#8544; &#160;&#160;
+    	&#8545; &#160;&#160;
+    	&#8546; &#160;&#160;
+    	&#8547; &#160;&#160;
+    	&#8548; &#160;&#160;
+    	&#8549; &#160;&#160;
+    	&#8550; &#160;&#160;
+    	&#8551;</h4>
+    </p>
+    <p>
+    	<h4>&#8552; &#160;&#160;
+    	&#8553; &#160;&#160;
+    	&#8554; &#160;&#160;
+    	&#8555; &#160;&#160;
+    	&#8556; &#160;&#160;
+    	&#8557; &#160;&#160;
+    	&#8558; &#160;&#160;
+    	&#8559;</h4>
+    </p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-centered" style="text-align:center">
+		<form action="" method="post" class="form-signin">
+			{% csrf_token %}
+			{{ form.as_p|add_class:'form-control'|safe }}
+			<div class="col-md-4 col-centered">
+				<input type="submit" value="Создать" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--
+<div class="row">
+	<div class="col-md-6 col-centered" style="text-align:center">
+			<form action="" method="post" class="form-signin">
+			{% csrf_token %}
+
+			<label for="id_title">Заголовок:</label><br>
+			<input id="id_title" maxlength="100" name="title" type="text" class="form-control" /><br>
+
+			<label for="id_short">URL:</label><br>
+			<input id="id_short" maxlength="100" name="short" type="text" class="form-control" /><br>
+
+			<label for="id_text" style="margin-top:15px;">Описание:</label><br>
+			<textarea cols="40" id="id_text" name="description" rows="10" class="form-control"></textarea><br>
+
+			<label for="id_state">Фаза:</label>
+			<select id="id_state" name="state" class="form-control col-centered" style="max-width:30%;display:inline-block">
+        {% for value, name in form.state.field.choices %}
+          <option value="{{value}}">{{name}}</option>
+        {% endfor %}
+      </select>
+
+      <label for="id_day">День:</label>
+			<input id="id_day" type="number" name="day" style="max-width:70px;display:inline-block" class="form-control" value=0 /><br>
+
+			<label>&#160;</label><br>
+
+			<label for="id_status">Статус:</label><br>
+			<input id="id_status" maxlength="100" name="status" type="text" class="form-control" style="max-width:100%;" /><br>
+
+			<label for="id_hasHeadMafia" style="margin-right:10px;margin-top:15px;">ГлавМаф назначен:</label>
+			<input type="checkbox" id="id_hasHeadMafia" name="hasHeadMafia" />
+
+			<label for="hasRecruit" style="margin-right:10px;margin-top:15px;margin-left:10px;">Есть завербованый:</label>
+			<input type="checkbox" id="hasRecruit" name="hasRecruit" />
+
+			<div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+				<input type="submit" value="Создать" class="btn btn-default btn-primary btn-block" />
+			</div>
+		</form>
+	</div>
+</div>
+-->
+{% endblock content %}
