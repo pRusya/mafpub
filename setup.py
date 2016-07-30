@@ -10,7 +10,7 @@ setup(name='mafpub',
       url='http://www.python.org/sigs/distutils-sig/',
       install_requires=[
         'Django==1.8.12',
-        'Pillow',
+        'Pillow==3.1.1',
         'requests'
       ],
       dependency_links=[
