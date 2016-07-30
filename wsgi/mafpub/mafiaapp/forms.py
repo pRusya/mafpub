@@ -46,7 +46,7 @@ class UserCreateForm(UserCreationForm):
         #user.username = user.username.encode('utf-8')
         if self.cleaned_data['avatar'] is None:
             temp = NamedTemporaryFile()
-            temp.write(urllib.request.urlopen('http://localhost/identicon/').read())
+            temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
             temp.flush()
             user.avatar.save(os.path.basename(save_path(user, 'avatar.png')), File(temp))
         if commit:
