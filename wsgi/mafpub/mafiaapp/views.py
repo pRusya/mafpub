@@ -1022,6 +1022,9 @@ def night(d):
     has_mafia_post = False
     has_militia_post = False
     for post in posts:
+        post.allow_comment = False
+        post.tags.remove('current')
+        post.save()
         slug = game.slug + '_general_day' + day
         if 'mafia_day' in post.tags:
             has_mafia_post = True
@@ -1030,29 +1033,30 @@ def night(d):
             has_militia_post = True
             slug = game.slug + '_militia_day' + day
         if not game_ended:
-            new_post = GamePost(title='День ' + day, text='День ' + day, short='day' + day, tags=post.tags,
+            new_post = GamePost(title='День ' + day, text='День ' + day, short='day' + day, tags=post.tags+['current'],
                                 game=game, author=author, allow_role=post.allow_role, slug=slug)
             new_post.save()
         comment = GameComment(post=post, text='День ' + ('' if game.day == 0 else str(game.day)) +
                               ' завершен', author=author)
         comment.save()
-        post.allow_comment = False
-        post.tags.remove('current')
-        post.save()
     mafia_roles = ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer']
     militia_roles = ['militia', 'head militia']  # , 'militia doctor', 'militia barman', 'militia killer']
     if not has_mafia_post:
+        new_recruit_post = GamePost(title='Явочная', text='Явочная мафии', short='day' + day,
+                                    tags=['mafia_day', 'mafia_secret'], game=game, author=author,
+                                    allow_role=mafia_roles+['mafia_recruit'], slug=game.slug + '_mafia_secret')
+        new_recruit_post.save()
         new_post = GamePost(title='День ' + day, text='Мафия. День ' + day, short='day' + day,
                             tags=['mafia_day', 'current'],
                             game=game, author=author, allow_role=mafia_roles, slug=game.slug + '_mafia_day' + day)
         new_post.save()
-        new_recruit_post = GamePost(title='Явочная', text='Явочная мафии', short='day' + day, tags=['mafia_day'],
-                                    game=game, author=author, allow_role=mafia_roles+['mafia_recruit'],
-                                    slug=game.slug + '_mafia_secret')
-        new_recruit_post.save()
     if not has_militia_post:
+        new_recruit_post = GamePost(title='Явочная', text='Явочная милиции', short='day' + day,
+                                    tags=['militia_day', 'militia_secret'], game=game, author=author,
+                                    allow_role=mafia_roles+['militia_recruit'], slug=game.slug + '_militia_secret')
+        new_recruit_post.save()
         new_post = GamePost(title='День ' + day, text='Милиция. День ' + day, short='day' + day,
-                            tags=['militia_day', 'current'],
+                            tags=['militia_day', 'current', 'militia_secret'],
                             game=game, author=author, allow_role=militia_roles, slug=game.slug + '_militia_day' + day)
         new_post.save()
     if not game_ended:
@@ -1860,6 +1864,21 @@ def post_game_comment(request, kwargs):
     print('     post', post)
     user = get_user(request)
 
+    if user.user.nickname not in game.anchor:
+        participant = get_object_or_404(GameParticipant, game=game, user=user)
+        if post.allow_comment:
+            if 'everyone' not in post.allow_role:
+                if 'private' in post.allow_role:
+                    if user.user.nickname not in post.tags:
+                        messages.add_message(request, messages.ERROR, '#1 Вы не можете оставлять сообщения в данной теме.')
+                        return
+                elif participant.role not in post.allow_role:
+                    messages.add_message(request, messages.ERROR, '#2 Вы не можете оставлять сообщения в данной теме.')
+                    return
+        else:
+            messages.add_message(request, messages.ERROR, '#3 Вы не можете оставлять сообщения в данной теме.')
+            return
+
     text = request.POST['comment']
     if request.session.get('last_comment_time', ''):
         if int(time.time()) - request.session['last_comment_time'] < 1:
@@ -1911,6 +1930,7 @@ def post_game_comment(request, kwargs):
     print('     post comment success!')
 
 
+# TODO
 @login_required
 def post_comment(request, kwargs):
     pass
@@ -2154,8 +2174,9 @@ class DisplayGame(generic.ListView):
                 elif participant.role in ['militia recruit']:
                     context['militia'] = True
                     context['militia_recruit'] = True
+                context['dead'] = True if participant.role == 'dead' else False
 
-        gamepost_list = GamePost.objects.filter(game=game)
+        gamepost_list = GamePost.objects.filter(game=game).order_by('-date')
         context['gamepost_list'] = gamepost_list
 
         if not anonymous and self.request.user.user.nickname in game.anchor:

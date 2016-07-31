@@ -24,7 +24,7 @@ SECRET_KEY = "".join([random.SystemRandom().choice(chars) for n in range(50)])
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -70,8 +70,8 @@ TEMPLATES = [
     },
 ]
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_AGE = 1209600
+#SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+#SESSION_COOKIE_AGE = 1209600
 
 WSGI_APPLICATION = 'mafpub.wsgi.application'
 
