@@ -1,0 +1,181 @@
+* {
+	border: 1px solid red !important;
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+	color: #747784;
+	font-weight: 300;
+  margin-bottom: 50px;
+  background: #e6e6e6;
+}
+option:not(:checked) { 
+  /*background-color: #FFF;*/
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+.navbar{
+  background-color: #f5f5f5;
+  font-family: 'Forum';
+}
+h1 {
+  font-family: 'Forum';
+}
+h4, h3 {
+  display: inline;
+  font-family: 'Forum';
+}
+pre {
+  white-space: pre-wrap;
+  font-weight: 100;
+  font-family: 'Andika';
+  font-size:20px;
+  white-space:pre-wrap;
+  word-break:keep-all;
+  border: 0px;
+}
+.monospace {
+  font-family: 'Consolas', "Courier New", 'monospace';
+}
+a {
+  text-decoration: underline;
+}
+.row1 [class*="col-"]{
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+.row1{
+  overflow: hidden; 
+}
+.title-super40 {
+	font-size: 40px;
+  line-height: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+.section {
+  background:#d6d6d6;
+  border-radius:8px;
+}
+.post {
+  /*background:#BCBBBB;*/
+  min-height:200px;
+}
+.comment {
+  overflow:hidden;
+  min-height:180px;
+  padding-bottom: 30px;
+}
+.comment-quote {
+  background: #FFE3D1;
+}
+.botton-link {
+  background: none !important;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.comment-text {
+  border-left: 1px #008BBA solid;
+  border-right: 1px #008BBA solid;
+  margin-bottom:-99999px;
+  padding-bottom:99999px;
+}
+@media (max-width: 325px) {
+  h1 {
+    font-size: 32px;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 15px;
+  }
+  .title-super40 {
+    font-size: 30px;
+    line-height: 100%;
+    height: 100%;
+  }
+}
+.form-signin {
+  /*max-width: 330px;*/
+  padding: 0px;
+  padding-bottom: 0px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin select {
+  max-width:35%;
+  display:inline-block;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input {
+  max-width: 330px;
+  display: inline-block;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-signin input[type="number"] {
+  max-width: 70px;
+  display:inline-block;
+}
+.form-signin input[type="submit"] {
+  margin-bottom: 20px;
+}
+.inline {
+  display: inline;
+}
+.errorlist {
+  padding: 15px;
+  margin-bottom: 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  border-top-color: #e4b9c0;
+  color: #843534;
+  content: "\e209";
+}

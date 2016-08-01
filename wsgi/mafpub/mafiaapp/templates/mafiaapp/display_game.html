@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-7 col-centered section">
+    <div class="col-md-9 col-centered section">
         <h1>Каюты</h1>
     </div>
 </div>
@@ -22,43 +22,106 @@
 {% if private_list or morgue_list %}
 	{# game is past. display all private quarters and morgue #}
 	{% if game.status == 'past' %}
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-1">Сообщений</div>
+            <div class="col-md-3">Последнее от</div>
+        </div>
 
 		{% for private in private_list %}
-    	<div class="row">
-        	<div class="col-md-6 col-centered">
-            	<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
-        	</div>
-    	</div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
+                </div>
+                {% with comments=private.gamecomment_set.all %}
+                {% if comments.count > 0 %}
+                    <div class="col-md-1 text-center">
+                        <h3></h3>
+                        <span>{{ comments.count }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <h3></h3>
+                        <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                    </div>
+                {% endif %}
+                {% endwith %}
+            </div>
     	{% endfor %}
 
 		{% for morgue in morgue_list %}
-    	<div class="row">
-        	<div class="col-md-6 col-centered">
-        	    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
-        	</div>
-    	</div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
+                </div>
+                {% with comments=morgue.gamecomment_set.all %}
+                {% if comments.count > 0 %}
+                    <div class="col-md-1 text-center">
+                        <h3></h3>
+                        <span>{{ comments.count }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <h3></h3>
+                        <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                    </div>
+                {% endif %}
+                {% endwith %}
+            </div>
     	{% endfor %}
 
 	{# game is upcoming or current. display depending on scope #}
 	{% else %}
 		{% if registered %}
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-1">Сообщений</div>
+                <div class="col-md-3">Последнее от</div>
+            </div>
+
 			{# user is game.anchor. display all private quarters and morgue #}
 			{% if user.user.nickname in game.anchor %}
 
 				{% for private in private_list %}
-    			<div class="row">
-        			<div class="col-md-6 col-centered">
-            			<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
-        			</div>
-    			</div>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
+                        </div>
+                        {% with comments=private.gamecomment_set.all %}
+                        {% if comments.count > 0 %}
+                        <div class="col-md-1 text-center">
+                            <h3></h3>
+                            <span>{{ comments.count }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <h3></h3>
+                            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
     			{% endfor %}
 
-				{% for morgue in morgue_list %}
-    			<div class="row">
-        			<div class="col-md-6 col-centered">
-        	    		<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
-        			</div>
-    			</div>
+                {% for morgue in morgue_list %}
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
+                        </div>
+                        {% with comments=morgue.gamecomment_set.all %}
+                        {% if comments.count > 0 %}
+                        <div class="col-md-1 text-center">
+                            <h3></h3>
+                            <span>{{ comments.count }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <h3></h3>
+                            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
     			{% endfor %}
 
     		{# user is regular participant. display only his private quarters #}	
@@ -67,26 +130,52 @@
 				{% with private=private_list|filter_tag:user.user.nickname %}
 					{% for p in private %}
     				<div class="row">
-        				<div class="col-md-6 col-centered">
+                        <div class="col-md-2"></div>
+        				<div class="col-md-4">
             				<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=p.slug %}">{{ p.text|safe }}</a></h3>
         				</div>
+                        {% with comments=p.gamecomment_set.all %}
+                        {% if comments.count > 0 %}
+                        <div class="col-md-1 text-center">
+                            <h3></h3>
+                            <span>{{ comments.count }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <h3></h3>
+                            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
     				</div>
     				{% endfor %}
     			{% endwith %}
                 
     			{% if dead %}
     				{% for morgue in morgue_list %}
-    				<div class="row">
-        				<div class="col-md-6 col-centered">
-        	    			<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
-        				</div>
-    				</div>
+    				    <div class="row">
+                            <div class="col-md-2"></div>
+        				    <div class="col-md-4">
+        	    			    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
+        				    </div>
+    				    </div>
+                        {% with comments=morgue.gamecomment_set.all %}
+                        {% if comments.count > 0 %}
+                        <div class="col-md-1 text-center">
+                            <h3></h3>
+                            <span>{{ comments.count }}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <h3></h3>
+                            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
     				{% endfor %}
     			{% endif %}
 			{% endif %}
 		{% else %}
 		<div class="row">
-        	<div class="col-md-6 col-centered">
+        	<div class="col-md-8 col-centered">
             	<h4>Нет доступных кают</h4>
             	<p>&#160;</p>
         	</div>
@@ -96,7 +185,7 @@
 	{% endif %}
 {% else %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет доступных кают</h4>
             <p>&#160;</p>
         </div>
@@ -107,44 +196,84 @@
 {% endwith %}
 
 <div class="row">
-    <div class="col-md-7 col-centered section">
+    <div class="col-md-9 col-centered section">
         <h1>Игровые дни общие</h1>
     </div>
 </div>
 {% with days_list=gamepost_list|filter_tag:'general_day' %}
-{% for day in days_list %}
+    {% if days_list %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-6"></div>
+        <div class="col-md-1">Сообщений</div>
+        <div class="col-md-3">Последнее от</div>
+    </div>
+    {% endif %}
+    {% for day in days_list %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
+        {% with comments=day.gamecomment_set.all %}
+        {% if comments.count > 0 %}
+        <div class="col-md-1 text-center">
+            <h3></h3>
+            <span>{{ comments.count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h3></h3>
+            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
-{% empty %}
+    {% empty %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет игровых дней</h4>
             <p>&#160;</p>
         </div>
     </div>
-{% endfor %}
+    {% endfor %}
 {% endwith %}
 
 {% if mafia %}
 <div class="row">
-    <div class="col-md-7 col-centered section">
+    <div class="col-md-9 col-centered section">
         <h1>Игровые дни мафии</h1>
     </div>
 </div>
 {% if mafia_core %}
 	{% with days_list=gamepost_list|filter_tag:'mafia_day' %}
+    {% if days_list %}
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-1">Сообщений</div>
+        <div class="col-md-3">Последнее от</div>
+    </div>
+    {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
+        {% with comments=day.gamecomment_set.all %}
+        {% if comments.count > 0 %}
+        <div class="col-md-1 text-center">
+            <h3></h3>
+            <span>{{ comments.count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h3></h3>
+            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 	{% empty %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет игровых дней</h4>
             <p>&#160;</p>
         </div>
@@ -154,15 +283,35 @@
 {% endif %}
 {% if mafia_recruit %}
 	{% with days_list=gamepost_list|filter_tag:'mafia_secret' %}
+    {% if days_list %}
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-1">Сообщений</div>
+        <div class="col-md-3">Последнее от</div>
+    </div>
+    {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
+        {% with comments=day.gamecomment_set.all %}
+        {% if comments.count > 0 %}
+        <div class="col-md-1 text-center">
+            <h3></h3>
+            <span>{{ comments.count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h3></h3>
+            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 	{% empty %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет игровых дней</h4>
             <p>&#160;</p>
         </div>
@@ -174,21 +323,41 @@
 
 {% if militia %}
 <div class="row">
-    <div class="col-md-7 col-centered section">
+    <div class="col-md-9 col-centered section">
         <h1>Игровые дни милиции</h1>
     </div>
 </div>
 {% if militia_core %}
 	{% with days_list=gamepost_list|filter_tag:'militia_day' %}
+    {% if days_list %}
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-1">Сообщений</div>
+        <div class="col-md-3">Последнее от</div>
+    </div>
+    {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
+        {% with comments=day.gamecomment_set.all %}
+        {% if comments.count > 0 %}
+        <div class="col-md-1 text-center">
+            <h3></h3>
+            <span>{{ comments.count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h3></h3>
+            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 	{% empty %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет игровых дней</h4>
             <p>&#160;</p>
         </div>
@@ -198,15 +367,35 @@
 {% endif %}
 {% if militia_recruit %}
 	{% with days_list=gamepost_list|filter_tag:'militia_secret' %}
+    {% if days_list %}
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-1">Сообщений</div>
+        <div class="col-md-3">Последнее от</div>
+    </div>
+    {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
+        {% with comments=day.gamecomment_set.all %}
+        {% if comments.count > 0 %}
+        <div class="col-md-1 text-center">
+            <h3></h3>
+            <span>{{ comments.count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h3></h3>
+            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 	{% empty %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет игровых дней</h4>
             <p>&#160;</p>
         </div>
@@ -217,20 +406,41 @@
 {% endif %}
 
 <div class="row">
-    <div class="col-md-7 col-centered section">
+    <div class="col-md-9 col-centered section">
         <h1>Общая информация</h1>
     </div>
 </div>
 {% with infos=gamepost_list|filter_tag:'general' %}
+{% if infos %}
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-1">Сообщений</div>
+        <div class="col-md-3">Последнее от</div>
+    </div>
+{% endif %}
 {% for info in infos %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=info.slug %}">{{ info|safe }}</a></h3>
         </div>
+        {% with comments=info.gamecomment_set.all %}
+        {% if comments.count > 0 %}
+        <div class="col-md-1 text-center">
+            <h3></h3>
+            <span>{{ comments.count }}</span>
+        </div>
+        <div class="col-md-3">
+            <h3></h3>
+            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 {% empty %}
     <div class="row">
-        <div class="col-md-6 col-centered">
+        <div class="col-md-8 col-centered">
             <h4>Нет общей информации</h4>
             <p>&#160;</p>
         </div>

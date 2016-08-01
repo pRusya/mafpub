@@ -76,7 +76,7 @@
         <img src="{% static 'mafiaapp/Thumb-up.svg' %}" style="max-height:30px;cursor:pointer;"> {% if comment.like > 0 %}{{ comment.like }}{% endif %}
         {% if user.user.nickname in game.anchor %}
         <span>
-        <form action="{% url 'mafiaapp:delete_game_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">
+        <form action="{% url 'mafiaapp:delete_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">
             {% csrf_token %}
             <input type="submit" value="Удалить" class="btn btn-primary" >
         </form>
