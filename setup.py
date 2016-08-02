@@ -11,7 +11,8 @@ setup(name='mafpub',
       install_requires=[
         'Django==1.8.12',
         'Pillow==3.1.1',
-        'requests'
+        'requests',
+        'django-widget-tweaks==1.4.1'
       ],
       dependency_links=[
         'https://pypi.python.org/simple/django/'
