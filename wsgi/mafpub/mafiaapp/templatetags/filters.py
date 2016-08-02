@@ -26,7 +26,7 @@ register.filter('to_list', to_list)
 
 
 @register.filter
-def add_class(html, css_class):
+def add_class2(html, css_class):
     fields = re.split('(?s)</p>', re.sub('<p>', '', html))
     for x in range(0, len(fields)):
         if 'checkbox' in fields[x]:
@@ -37,4 +37,4 @@ def add_class(html, css_class):
             fields[x] = re.sub('(<input|<textarea)', '<br>\n\\1 class=\''+css_class+'\'', fields[x])
     return ''.join(f+'<br>\n' for f in fields)
 
-register.filter('add_class', add_class)
+register.filter('add_class2', add_class2)

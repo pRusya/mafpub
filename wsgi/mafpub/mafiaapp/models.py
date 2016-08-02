@@ -93,10 +93,30 @@ class GameParticipant(models.Model):
     #            'maniac',
     #            'peaceful',
     #            'dead']
-    role = models.CharField(max_length=20)
+    ROLE_CHOICES = (
+        ('mafia',           'mafia'),
+        ('head mafia',      'head mafia'),
+        ('mafia doctor',    'mafia doctor'),
+        ('mafia barman',    'mafia barman'),
+        ('mafia killer',    'mafia killer'),
+        ('mafia recruit',   'mafia recruit'),
+        ('militia',         'militia'),
+        ('head militia',    'head militia'),
+        ('militia doctor',  'militia doctor'),
+        ('militia barman',  'militia barman'),
+        ('militia killer',  'militia killer'),
+        ('militia recruit', 'militia recruit'),
+        ('neutral doctor',  'neutral doctor'),
+        ('neutral barman',  'neutral barman'),
+        ('neutral killer',  'neutral killer'),
+        ('maniac',          'maniac'),
+        ('peaceful',        'peaceful'),
+        ('dead',            'dead'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='', verbose_name='Роль')
 
     # used to store the last doctor's or barman's target to filter it out from next day's available targets
-    prevTarget = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    prevTarget = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     # if True, killer's 'contract form' displayed in private quarters
     # contract target cannot be changed. use this bool rather then query db for existing vote
     can_ask_killer = models.BooleanField(default=True)

@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^dashboard/games/$', views.DisplayGamesView.as_view(), name='display_games'),
     url(r'^dashboard/games/delete/(?P<pk>[0-9]+)/$', views.DeleteGameView.as_view(), name='delete_game'),
     url(r'^dashboard/games/edit/(?P<pk>[0-9]+)/$', views.EditGameView.as_view(), name='edit_game'),
+    url(r'^dashboard/gameparticipant/(?P<pk>[0-9]+)/$', views.GameParticipantUpdate.as_view(), name='participant_update'),
 
     #url(r'^dashboard/game/$', views.DisplayCurrentGameView.as_view(), name='current_game'),
     #url(r'^dashboard/game/(?P<short>[a-z0-9]+)/$', views.DisplayCurrentGamePostView.as_view(), name='display_current_game_post'),

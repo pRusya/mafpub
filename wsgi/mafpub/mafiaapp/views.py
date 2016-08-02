@@ -1,4 +1,5 @@
 import time
+import sys
 import random
 import string
 from threading import Timer
@@ -185,7 +186,6 @@ class CreateGamePost(generic.CreateView):
     
     def post(self, request, *args, **kwargs):
         self.object = None
-        print('     POST', request.POST)
         return super(CreateGamePost, self).post(request, *args, **kwargs)
 
 
@@ -209,10 +209,23 @@ class DeleteGameComment(generic.DeleteView):
                                                                   'post_slug': self.kwargs.get('post_slug', '')})
 
 
+class GameParticipantUpdate(generic.UpdateView):
+    model = GameParticipant
+    fields = ['role', 'prevTarget', 'can_ask_killer', 'can_choose_side', 'sees_maf_q', 'sees_mil_q',
+              'can_recruit', 'checked_by_mil']
+    success_url = '/dashboard/games'
+
+    """def get_object(self, queryset=None):
+        print('===\nKWARGS\n===\n', self.kwargs, file=sys.stderr)
+        participant = get_object_or_404(GameParticipant, id=int(self.request.POST['id']))
+        return participant  # Game.objects.get(number=self.kwargs['pk'])"""
+
+
 class EditGameView(generic.ListView, generic.edit.UpdateView):
     model = Game
     template_name = 'mafiaapp/edit_game.html'
     form_class = CreateGameForm
+    context_object_name = 'game'
 
     def get_object(self, queryset=None):
         game = get_object_or_404(Game, number=self.kwargs['pk'])
@@ -223,24 +236,27 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
         return game  # Game.objects.get(number=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
-        game = kwargs.pop('object_list', self.object_list)
-        participants = GameParticipant.objects.filter(game=game).exclude(user__nickname='Игровой Бот')
-        masks = Mask.objects.filter(game=game).exclude(username='Игровой Бот')
-        description = GamePost.objects.get(game=game, tags__contains=['description'])
+        context = super(EditGameView, self).get_context_data(**kwargs)
+        #game = kwargs.pop('object_list', self.object_list)
+        participants = GameParticipant.objects.filter(game=context['game']).exclude(user__nickname='Игровой Бот')
+        masks = Mask.objects.filter(game=context['game']).exclude(username='Игровой Бот')
+        description = GamePost.objects.get(game=context['game'], tags__contains=['description'])
         users = mafpub_user.objects.all()
-        context = {
-            'paginator': None,
-            'page_obj': None,
-            'is_paginated': False,
-            'game': game,
-            'participants': participants,
-            'masks': masks,
-            'description': description,
-            'users': users,
-        }
+        role_choices = GameParticipant.ROLE_CHOICES
+        context['participants'] = participants
+        context['masks'] = masks
+        context['description'] = description
+        context['users'] = users
+        context['roles'] = role_choices
+        participants_form = []
+        for participant in participants:
+            participants_form.append(UpdateGameParticipantForm(instance=participant))
+        context['participants_form'] = participants_form
+
         return context
 
     def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
         self.object_list = self.get_queryset()
         context = self.get_context_data()
         return render(request, self.template_name, context)
@@ -2162,7 +2178,7 @@ class DisplayGame(generic.ListView):
 
     def get_context_data(self, **kwargs):
         game = kwargs.pop('object_list', self.object_list)
-        context = super(DisplayGame, self).get_context_data()
+        context = super(DisplayGame, self).get_context_data(**kwargs)
         context['game'] = game
 
         anonymous = isinstance(self.request.user, AnonymousUser)
@@ -2365,7 +2381,7 @@ class DisplayGamePost(generic.ListView):
         return allowed_actions
 
     def get_context_data(self, **kwargs):
-        context = super(DisplayGamePost, self).get_context_data()
+        context = super(DisplayGamePost, self).get_context_data(**kwargs)
         context['game'] = self.game
         context['post'] = self.game_post
         if 'description' in self.game_post.tags:
@@ -2443,7 +2459,7 @@ class DisplayPost(generic.ListView):
         return Comment.objects.filter(post=self.post)
 
     def get_context_data(self, **kwargs):
-        context = super(DisplayGamePost, self).get_context_data()
+        context = super(DisplayGamePost, self).get_context_data(**kwargs)
         context['post'] = self.post
         return context
 

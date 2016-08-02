@@ -98,3 +98,10 @@ class CreateGameMaskForm(ModelForm):
     class Meta:
         model = Mask
         fields = '__all__'
+
+
+class UpdateGameParticipantForm(ModelForm):
+    class Meta:
+        model = GameParticipant
+        fields = ['user', 'mask', 'role', 'prevTarget', 'can_ask_killer', 'can_choose_side', 'sees_maf_q',
+                  'sees_mil_q', 'can_recruit', 'checked_by_mil']

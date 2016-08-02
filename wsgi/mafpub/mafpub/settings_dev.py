@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mafiaapp.apps.MafiaAppConfig',
     'identicon.apps.IdenticonConfig',
+    'widget_tweaks',
     #'djangosecure',
     #'sslserver',
 )
