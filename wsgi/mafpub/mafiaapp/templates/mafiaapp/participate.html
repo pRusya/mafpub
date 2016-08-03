@@ -1,6 +1,6 @@
 {% block register %}
 
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.user.nickname not in game.black_list %}
 <div class="row" style="margin-top:20px">
     <div class="col-md-4 col-centered text-center">
     {% if game.state != 'upcoming' %}
@@ -73,6 +73,27 @@
             <h4>Нет модераторов</h4>
         </div>
     </div>
+{% endif %}
+
+{% if game.black_list %}
+<div class="row" style="margin-top:20px">
+    <div class="col-md-6 col-centered text-center">
+        <h3>Черный список</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+    {% for black in game.black_list %}
+    <div class="col-md-3 text-center">
+        <a href="{% url 'mafiaapp:profile' user=black %}"><h3>{{ black }}</h3></a>
+    </div>
+        {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endif %}
 
 <div class="row">

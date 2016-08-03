@@ -55,6 +55,13 @@
                 {% for user in users %}
                     <option value='{{ user.nickname }}' {% if user.nickname in game.anchor %}selected{% endif%}>{{ user.nickname }}</option>
                 {% endfor %}
+            </select><br>
+
+            <label for="id_black_list" style="margin-right:10px;margin-top:15px;margin-left:10px;">Бан лист:</label><br>
+            <select multiple class="form-control" id='id_black_list' name='black_list'>
+                {% for user in users %}
+                    <option value='{{ user.nickname }}' {% if user.nickname in game.black_list %}selected{% endif%}>{{ user.nickname }}</option>
+                {% endfor %}
             </select>
 
             <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
@@ -81,8 +88,22 @@
         <div class="panel-heading section">
           <div class="row">
             <div class="col-md-2">{{participant.instance.user.nickname}}</div>
-            <div class="col-md-2">as {{ participant.mask|add_class:"disabled-select" }}</div>
-            <div class="col-md-2">{{ participant.role|add_class:"disabled-select" }}</div>
+            <div class="col-md-2">as {{ participant.instance.mask.username }}</div>
+            <div class="col-md-2">
+            {% if participant.instance.role == 'peaceful' %}
+                <span style='background:lightgreen'>{{ participant.instance.role }}</span>
+            {% elif participant.instance.role == 'mafia' or participant.instance.role == 'head mafia' or participant.instance.role == 'mafia barman' or participant.instance.role == 'mafia doctor' or participant.instance.role == 'mafia killer' %}
+                <span style='background:lightblue'>{{ participant.instance.role }}</span>
+            {% elif participant.instance.role == 'maniac' %}
+                <span style='background:pink'>{{ participant.instance.role }}</span>
+            {% elif participant.instance.role == 'militia' or participant.instance.role == 'head militia' or participant.instance.role == 'militia barman' or participant.instance.role == 'militia doctor' or participant.instance.role == 'militia killer' %}
+                <span style='background:ivory'>{{ participant.instance.role }}</span>
+            {% elif participant.instance.role == 'neutral barman' or participant.instance.role == 'neutral doctor' or participant.instance.role == 'neutral killer' %}
+                <span style='background:#cccc99'>{{ participant.instance.role }}</span>
+            {% else%}
+            {{ participant.instance.role }}
+            {% endif %}
+            </div>
         </div>
         </div>
         </a>
@@ -100,7 +121,11 @@
                 {{ participant.sees_mil_q.label }} {{ participant.sees_mil_q }}
                 {{ participant.can_recruit.label }} {{ participant.can_recruit }}
                 {{ participant.checked_by_mil.label }} {{ participant.checked_by_mil }}
-
+                <p>
+                {% for vote in participant.instance.get_votes %}
+                    {{ vote }}<br>
+                {% endfor %}
+                </p>
           </div>
           <div class="panel-footer"><input type="submit" name="action" value="Изменить" class="btn btn-default btn-primary" /></div>
         </form>  

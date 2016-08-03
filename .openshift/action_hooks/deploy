@@ -10,6 +10,7 @@ if [ ! -f "$OPENSHIFT_DATA_DIR"secrets.json ]; then
 fi
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py migrate --noinput'"
+python "$OPENSHIFT_REPO_DIR"wsgi/mafpub/manage.py makemigrations mafiaapp--noinput
 python "$OPENSHIFT_REPO_DIR"wsgi/mafpub/manage.py migrate --noinput
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py collectstatic --noinput'"

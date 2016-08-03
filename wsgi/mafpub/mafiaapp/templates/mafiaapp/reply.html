@@ -1,5 +1,6 @@
 {% load filters %}
 
+{{ game_comment_form.media }}
 
 {% if not dead %}
     {% if post.allow_comment and user.is_authenticated %}
@@ -7,11 +8,8 @@
     <div class="col-md-8 col-centered">
         <form action="" method="post" name="Reply">
             {% csrf_token %}
-            <input type="text" name="number" value="{{ game.number }}" hidden>
-            
-            <label for="id_comment" style="margin-top:15px;">Сообщение:</label>
-            <textarea id="id_comment" name="comment" rows=
-            "5" cols="40" class="form-control" style="resize:none"></textarea>
+            {{ game_comment_form.number }}
+            {{ game_comment_form.comment }}
 
             <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px;margin-bottom:10px">
                 <input type="submit" name="action" value="Опубликовать" class="btn btn-default btn-primary btn-block">

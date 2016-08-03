@@ -7,8 +7,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django.db import models
+
+from pagedown.widgets import PagedownWidget
 
 from .models import *
 
@@ -63,16 +65,21 @@ class CreateGameForm(ModelForm):
     description = forms.CharField(widget=forms.Textarea, label='Описание')
     anchor = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
                                        label='Ведущие')
+    black_list = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
+                                           label='Бан', required=False)
     widgets = {
-            'anchor': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        'anchor': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        'black_list': forms.SelectMultiple(attrs={'class': 'form-control'}),
     }
 
     class Meta:
         model = Game
         anchor = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
                                            label='Ведущие')
+        black_list = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
+                                               label='Бан', required=False)
         fields = ['title', 'short', 'description', 'status', 'state', 'day', 'hasHeadMafia', 'hasRecruit', 'anchor',
-                  'slug']  # '__all__'
+                  'slug', 'black_list']  # '__all__'
 
 
 class CreateGamePostForm(ModelForm):
@@ -105,3 +112,8 @@ class UpdateGameParticipantForm(ModelForm):
         model = GameParticipant
         fields = ['user', 'mask', 'role', 'prevTarget', 'can_ask_killer', 'can_choose_side', 'sees_maf_q',
                   'sees_mil_q', 'can_recruit', 'checked_by_mil']
+
+
+class GameCommentForm(Form):
+    number = forms.CharField(widget=forms.HiddenInput)
+    comment = forms.CharField(label='Сообщение', widget=PagedownWidget)

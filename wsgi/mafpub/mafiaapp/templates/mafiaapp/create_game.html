@@ -38,7 +38,7 @@
 	<div class="col-md-6 col-centered" style="text-align:center">
 		<form action="" method="post" class="form-signin">
 			{% csrf_token %}
-			{{ form.as_p|add_class:'form-control'|safe }}
+			{{ form.as_p|add_class2:'form-control'|safe }}
 			<div class="col-md-4 col-centered">
 				<input type="submit" value="Создать" class="btn btn-default btn-primary btn-block" />
 			</div>

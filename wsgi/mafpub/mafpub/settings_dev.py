@@ -37,7 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mafiaapp.apps.MafiaAppConfig',
     'identicon.apps.IdenticonConfig',
+    # third party
     'widget_tweaks',
+    'pagedown',
     #'djangosecure',
     #'sslserver',
 )
@@ -70,6 +72,25 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    },
+}
 
 #SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 #SESSION_COOKIE_AGE = 1209600

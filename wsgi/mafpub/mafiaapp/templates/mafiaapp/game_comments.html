@@ -2,39 +2,41 @@
 
 <script>
 	function show_quote(c){
-		
-		var temp = []
+        quote = $("#"+c).clone();
+        console.log(quote);
+        quote.find("blockquote").remove();
+        console.log(quote);
+        marked_quote =  quote.text().split("\n"); //quote.innerHTML.split('\n');
+        console.log('marked_quote.length='+marked_quote.length);
+        for(var i = 0;i < marked_quote.length;i++){
+            marked_quote[i] = '> '+marked_quote[i]
+        }
+        console.log('marked_quote')
+        console.log(marked_quote)
 
-		quote = document.getElementById(c);
-		for (var i=0; i<quote.childNodes.length; i++) {
-			if (quote.childNodes[i].className == 'section comment-quote') {
-				temp.push(quote.childNodes[i].innerHTML);
-				quote.childNodes[i].innerHTML = '\r\n';
-			}
-		}
-		quote_author = document.getElementById('author'+quote.id).innerHTML;
+        quote_author = document.getElementById('author'+c).innerHTML;
 
-		inp = document.getElementById('ihatejs');
-		inp.value = '[['+quote_author+'('+quote.id+'): '+quote.textContent+']]';
-		inp.select();
-		document.execCommand('copy');
+        inp = document.getElementById('ihatejs');
+        inp.value = marked_quote.join("\n");
+        inp.select();
+        document.execCommand('copy');
 
-		ta = document.getElementById('id_comment');
-		if (ta.value == ''){
-			ta.value = '[['+quote_author+'('+quote.id+'): '+quote.textContent+']]'
-		}
-		else {
-			ta.value = ta.value+'\n[['+quote_author+'('+quote.id+'): '+quote.textContent+']]'
-		}
+        ta = document.getElementById('id_comment');
+        if (ta.value == ''){
+            ta.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite>\n\n'
+        }
+        else {
+            ta.value = ta.value+'\n'+marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite>\n\n'
+        }
 
-		for (var i=0; i<quote.childNodes.length; i++) {
-			if (quote.childNodes[i].className == 'section comment-quote') {
-				quote.childNodes[i].innerHTML = temp[i];
-			}
-		}
-
-		document.getElementById('id_comment').focus();
+        document.getElementById('id_comment').focus();
 	}
+
+    $(document).ready(function(){
+        $(".content-markdown").each(function(){
+            $(this).html( marked($(this).text()) )
+        })
+    })
 </script>
 
 <div class="row">
@@ -77,7 +79,15 @@
     <div class="col-md-8 col-centered comment-text">
       <h3>{# placeholder to match height with nickname on the left #}</h3><span>{{ comment.date|date:"Y-m-d H:i" }}</span>
       <span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span>
+      <!--
       <pre id="{{comment.id}}" >{{ comment.text|safe }}</pre>
+<div id="{{comment.id}}" class="content-markdown" style="background:#f5f5f5;border-radius:8px;">{{ comment.text }}</div>
+
+      -->
+
+      <pre id="{{comment.id}}" class="content-markdown">{{ comment.text }}</pre>
+
+
       <img src="{% static 'mafiaapp/Thumb-up.svg' %}" style="max-height:30px;cursor:pointer;"> {% if comment.like > 0 %}{{ comment.like }}{% endif %}
         {% if user.user.nickname in game.anchor %}
         <span>

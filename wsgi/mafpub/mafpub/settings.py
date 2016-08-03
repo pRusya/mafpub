@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'mafiaapp.apps.MafiaAppConfig',
     'identicon.apps.IdenticonConfig',
     'widget_tweaks',
+    'pagedown',
 )
 
 MIDDLEWARE_CLASSES = (

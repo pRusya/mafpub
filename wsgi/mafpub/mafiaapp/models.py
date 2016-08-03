@@ -65,6 +65,7 @@ class Game(models.Model):
     # recruit form not avail if True
     hasRecruit = models.BooleanField(default=False, verbose_name='Есть завербованный')
     anchor = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Ведущие')
+    black_list = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Бан', null=True, blank=True)
 
     def __str__(self):
         return self.title + '(id=' + str(self.number) + '). Фаза: ' + \
@@ -135,6 +136,9 @@ class GameParticipant(models.Model):
 
     def __str__(self):
         return str(self.user)+' as '+str(self.mask)
+
+    def get_votes(self):
+        return Vote.objects.filter(voter=self)
 
 
 class Post(models.Model):

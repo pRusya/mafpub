@@ -1,5 +1,6 @@
 import time
 import sys
+import logging
 import random
 import string
 from threading import Timer
@@ -17,6 +18,8 @@ from django.http import Http404
 from .forms import *
 from .models import User as mafpub_user
 from django.contrib.auth.decorators import login_required
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -1861,6 +1864,10 @@ def get_post(kwargs):
 def participate(request, kwargs):
     game = get_game(kwargs)
     user = get_user(request)
+    if user.user.nickname in game.black_list:
+        messages.add_message(request, messages.ERROR, 'Вы не можете принять участие в текущей игре так как находитесь'
+                                                      ' в черном списке.')
+        return
     participant = GameParticipant(game=game, user=user.user, mask=None)
     participant.save()
     private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.user.nickname,
@@ -1882,11 +1889,11 @@ def cancel_participation(request, kwargs):
 
 @login_required
 def post_game_comment(request, kwargs):
-    print(' post_comment()')
+    # print(' post_comment()')
     game = get_game(kwargs)
-    print('     game', game)
+    # print('     game', game)
     post = get_game_post(kwargs)
-    print('     post', post)
+    # print('     post', post)
     user = get_user(request)
 
     if user.user.nickname not in game.anchor:
@@ -1906,7 +1913,7 @@ def post_game_comment(request, kwargs):
 
     text = request.POST['comment']
     if request.session.get('last_comment_time', ''):
-        if int(time.time()) - request.session['last_comment_time'] < 1:
+        if int(time.time()) - request.session['last_comment_time'] < 15:
             messages.add_message(request, messages.ERROR, 'Комментарии можно оставлять не чаще одного раза '
                                                           'в 15 секунд. Подождите еще %s сек.' %
                                  (15 - (int(time.time()) - request.session['last_comment_time'])))
@@ -1914,6 +1921,7 @@ def post_game_comment(request, kwargs):
     if text.count('\r') >= 25 or len(text) >= 2000:
         messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
         return
+    """
     split = re.split('(?is)(\[\[.*?\]\])', text)
     print('         split', split)
     for i, item in enumerate(split):
@@ -1942,6 +1950,7 @@ def post_game_comment(request, kwargs):
                        '">#</a>):</h4><br>' + comment_text + '</div>'
 
     text = ''.join([x for x in split])
+    """
     comment = GameComment(post=post, author=user.user, text=text, mask=comment_participant.mask if user.user.nickname
                                                                                            not in game.anchor else None)
     comment.save()
@@ -1953,7 +1962,7 @@ def post_game_comment(request, kwargs):
         participant.comments_number += 1
         participant.save()
     request.session['last_comment_time'] = int(time.time())
-    print('     post comment success!')
+    # print('     post comment success!')
 
 
 # TODO
@@ -2394,6 +2403,14 @@ class DisplayGamePost(generic.ListView):
             context['participant'] = participant if participant else None
         if 'private' in self.game_post.tags and self.request.user.user.nickname in self.game_post.tags:
             context.update(self.allowed_actions(self.request.user))
+        msgs = messages.get_messages(self.request)
+        error_messages = [m for m in msgs if 'error' in m.tags]
+        if error_messages:
+            context['game_comment_form'] = GameCommentForm(initial={'number': self.request.POST.get('number',
+                                                                                                    self.game.number),
+                                                                    'comment': self.request.POST.get('comment', '')})
+        else:
+            context['game_comment_form'] = GameCommentForm(initial={'number': self.game.number})
         return context
 
     dispatcher = {
@@ -2429,6 +2446,7 @@ class DisplayGamePost(generic.ListView):
     def post(self, request, *args, **kwargs):
         self.game = get_game(kwargs)
         self.game_post = get_game_post(kwargs)
+        logger.info('DisplayGamePost POST '+str(request))
         if not self.allow_access(request):
             raise Http404
         if request.POST.get('action', '') in self.dispatcher.keys():
@@ -2437,6 +2455,7 @@ class DisplayGamePost(generic.ListView):
             raise Http404
         self.object_list = self.get_queryset()
         context = self.get_context_data()
+        context['request'] = request.POST
         return render(request, self.template_name, context=context)
 
     def get(self, request, *args, **kwargs):
@@ -2470,17 +2489,13 @@ class DisplayPost(generic.ListView):
     }
 
     def post(self, request, *args, **kwargs):
-        print('DisplayPost POST')
         self.post = get_post(kwargs)
-        print(' action', request.POST.get('action', ''))
         if request.POST.get('action', '') in self.dispatcher.keys():
-            print(' action in keys!')
             self.dispatcher[request.POST['action']](request, self.kwargs)
         else:
             raise Http404
         self.object_list = self.get_queryset()
         context = self.get_context_data()
-        print(' context', context)
         return render(request, self.template_name, context=context)
 
     def get(self, request, *args, **kwargs):
