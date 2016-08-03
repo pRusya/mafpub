@@ -9,7 +9,7 @@
 			<span>{# placeholder #}&#160;</span>
 			{% csrf_token %}
 
-			{{ form.as_p|add_class:'form-control'|safe }}
+			{{ form.as_p|add_class2:'form-control'|safe }}
 			<div class="col-md-8 col-centered">
 				<input type="submit" value="Сохранить" class="btn btn-default btn-primary btn-block" />
 			</div>

@@ -9,8 +9,13 @@ if [ ! -f "$OPENSHIFT_DATA_DIR"secrets.json ]; then
 	python "$OPENSHIFT_REPO_DIR"libs/secrets.py > "$OPENSHIFT_DATA_DIR"secrets.json
 fi
 
-echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py migrate --noinput'"
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py makemigrations mafiaapp --noinput'"
 python "$OPENSHIFT_REPO_DIR"wsgi/mafpub/manage.py makemigrations mafiaapp --noinput
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py migrate mafiaapp --noinput'"
+python "$OPENSHIFT_REPO_DIR"wsgi/mafpub/manage.py migrate mafiaapp --noinput
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py makemigrations --noinput'"
+python "$OPENSHIFT_REPO_DIR"wsgi/mafpub/manage.py makemigrations --noinput
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py migrate --noinput'"
 python "$OPENSHIFT_REPO_DIR"wsgi/mafpub/manage.py migrate --noinput
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mafpub/manage.py collectstatic --noinput'"
