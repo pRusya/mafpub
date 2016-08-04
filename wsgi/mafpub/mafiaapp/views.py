@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q, Count
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 from django.http import Http404
@@ -29,9 +29,10 @@ class IndexView(generic.ListView):
         return None
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return redirect('mafiaapp:dashboard')
-        else:
+        #if request.user.is_authenticated():
+            #return redirect('mafiaapp:dashboard')
+            #return redirect('mafiaapp:index')
+        #else:
             return render(request, 'mafiaapp/index.html')
 
     def post(self, request):
@@ -45,7 +46,8 @@ class IndexView(generic.ListView):
                 user = authenticate(username=user.username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('mafiaapp:dashboard')
+                    #return redirect('mafiaapp:dashboard')
+                    return redirect('mafiaapp:index')
                 else:
                     messages.add_message(request, messages.ERROR, 'Check your login credentials!')
                     return render(request, 'mafiaapp/index.html', {'form': form})

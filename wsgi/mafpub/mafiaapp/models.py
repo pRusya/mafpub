@@ -55,7 +55,7 @@ class Game(models.Model):
 
     # this is slug. used to navigate through list of past games
     short = models.CharField(max_length=50, verbose_name='URL')
-    slug = models.SlugField(verbose_name='slug URL', default=time.time())
+    slug = models.SlugField(verbose_name='slug URL', default=None, unique=True)
     # current day
     day = models.IntegerField(default=0, blank=True, verbose_name='День')
     # custom string to display more info
