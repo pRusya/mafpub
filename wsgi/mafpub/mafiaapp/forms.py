@@ -80,6 +80,10 @@ class CreateGameForm(ModelForm):
                                                label='Бан', required=False)
         fields = ['title', 'short', 'description', 'status', 'state', 'day', 'hasHeadMafia', 'hasRecruit', 'anchor',
                   'slug', 'black_list']  # '__all__'
+        widgets = {
+            'anchor': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'black_list': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
 
 
 class CreateGamePostForm(ModelForm):

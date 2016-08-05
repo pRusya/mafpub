@@ -29,10 +29,10 @@ class IndexView(generic.ListView):
         return None
 
     def get(self, request, *args, **kwargs):
-        #if request.user.is_authenticated():
-            #return redirect('mafiaapp:dashboard')
-            #return redirect('mafiaapp:index')
-        #else:
+        if request.user.is_authenticated():
+            return redirect('mafiaapp:dashboard')
+            return redirect('mafiaapp:index')
+        else:
             return render(request, 'mafiaapp/index.html')
 
     def post(self, request):
@@ -46,8 +46,7 @@ class IndexView(generic.ListView):
                 user = authenticate(username=user.username, password=password)
                 if user is not None:
                     login(request, user)
-                    #return redirect('mafiaapp:dashboard')
-                    return redirect('mafiaapp:index')
+                    return redirect('mafiaapp:dashboard')
                 else:
                     messages.add_message(request, messages.ERROR, 'Check your login credentials!')
                     return render(request, 'mafiaapp/index.html', {'form': form})
@@ -58,6 +57,7 @@ class IndexView(generic.ListView):
                 code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
                 ev = EmailValidation(email=email, code=code)
                 ev.save()
+                """
                 email_body = 'На форуме Галамафия 2.0 (http://www.maf.pub/) появилась регистрационная ' \
                              'запись,\r' \
                              'в которой был указал ваш электронный адрес (e-mail).\r' \
@@ -80,7 +80,8 @@ class IndexView(generic.ListView):
                              'Благодарим за регистрацию!'
                 send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code, 'Галамафия 2.0 <noreply@maf.pub>',
                           [email], fail_silently=False)
-                messages.add_message(request, messages.INFO, 'Check your email box to finish registration')
+                """
+                messages.add_message(request, messages.INFO, 'Check your email box to finish registration %s' % code)
                 return redirect('mafiaapp:index')
             else:
                 messages.add_message(request, messages.ERROR, 'Provide valid e-mail!111')

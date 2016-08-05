@@ -1666,3 +1666,2621 @@ Session data corrupted
 Session data corrupted
 Session data corrupted
 Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 393, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 365, in resolve
+    for pattern in self.url_patterns:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 401, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 395, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/ubuntu/mafpub/lib/python3.3/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1584, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1565, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1532, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 584, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1022, in load_module
+  File "<frozen importlib._bootstrap>", line 1003, in load_module
+  File "<frozen importlib._bootstrap>", line 560, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 868, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "./mafpub/urls.py", line 34, in <module>
+    url(r'^api/', include('mafiaapp.api.urls', namespace="api_mafiaapp")),
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/ubuntu/mafpub/lib/python3.3/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1584, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1565, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1532, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 584, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1022, in load_module
+  File "<frozen importlib._bootstrap>", line 1003, in load_module
+  File "<frozen importlib._bootstrap>", line 560, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 868, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "./mafiaapp/api/urls.py", line 5, in <module>
+    from . import views
+  File "./mafiaapp/api/views.py", line 4, in <module>
+    from .serializers import *
+  File "./mafiaapp/api/serializers.py", line 5, in <module>
+    class GameSerializer(serializers.ModelSerializer):
+  File "./mafiaapp/api/serializers.py", line 6, in GameSerializer
+    class Meta:
+  File "./mafiaapp/api/serializers.py", line 8, in Meta
+    anchor = serializers.MultipleChoiceField(many=True)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/fields.py", line 1308, in __init__
+    super(MultipleChoiceField, self).__init__(*args, **kwargs)
+TypeError: __init__() missing 1 required positional argument: 'choices'
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 393, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 365, in resolve
+    for pattern in self.url_patterns:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 401, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 395, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/ubuntu/mafpub/lib/python3.3/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1584, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1565, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1532, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 584, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1022, in load_module
+  File "<frozen importlib._bootstrap>", line 1003, in load_module
+  File "<frozen importlib._bootstrap>", line 560, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 868, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "./mafpub/urls.py", line 34, in <module>
+    url(r'^api/', include('mafiaapp.api.urls', namespace="api_mafiaapp")),
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/ubuntu/mafpub/lib/python3.3/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1584, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1565, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1532, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 584, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1022, in load_module
+  File "<frozen importlib._bootstrap>", line 1003, in load_module
+  File "<frozen importlib._bootstrap>", line 560, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 868, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "./mafiaapp/api/urls.py", line 5, in <module>
+    from . import views
+  File "./mafiaapp/api/views.py", line 4, in <module>
+    from .serializers import *
+  File "./mafiaapp/api/serializers.py", line 5, in <module>
+    class GameSerializer(serializers.ModelSerializer):
+  File "./mafiaapp/api/serializers.py", line 7, in GameSerializer
+    class Meta:
+  File "./mafiaapp/api/serializers.py", line 10, in Meta
+    anchor = serializers.MultipleChoiceField(many=True, choices=choices)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/fields.py", line 1308, in __init__
+    super(MultipleChoiceField, self).__init__(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/fields.py", line 1271, in __init__
+    super(ChoiceField, self).__init__(**kwargs)
+TypeError: __init__() got an unexpected keyword argument 'many'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 951, in get_fields
+    field_names, declared_fields, extra_kwargs
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1271, in get_uniqueness_extra_kwargs
+    field_names, declared_fields, extra_kwargs
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1354, in _get_model_fields
+    if '.' in source or source == '*':
+TypeError: argument of type 'ListSerializer' is not iterable
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 951, in get_fields
+    field_names, declared_fields, extra_kwargs
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1271, in get_uniqueness_extra_kwargs
+    field_names, declared_fields, extra_kwargs
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1354, in _get_model_fields
+    if '.' in source or source == '*':
+TypeError: argument of type 'ListSerializer' is not iterable
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1096, in build_field
+    elif hasattr(model_class, field_name):
+TypeError: hasattr(): attribute name must be string
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1096, in build_field
+    elif hasattr(model_class, field_name):
+TypeError: hasattr(): attribute name must be string
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 393, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 365, in resolve
+    for pattern in self.url_patterns:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 401, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 395, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/home/ubuntu/mafpub/lib/python3.3/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1584, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1565, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1532, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 584, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1022, in load_module
+  File "<frozen importlib._bootstrap>", line 1003, in load_module
+  File "<frozen importlib._bootstrap>", line 560, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 868, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "./mafpub/urls.py", line 34, in <module>
+    url(r'^api/', include('mafiaapp.api.urls', namespace="api_mafiaapp")),
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/home/ubuntu/mafpub/lib/python3.3/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1584, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1565, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1532, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 584, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1022, in load_module
+  File "<frozen importlib._bootstrap>", line 1003, in load_module
+  File "<frozen importlib._bootstrap>", line 560, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 868, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "./mafiaapp/api/urls.py", line 5, in <module>
+    from . import views
+  File "./mafiaapp/api/views.py", line 4, in <module>
+    from .serializers import *
+  File "./mafiaapp/api/serializers.py", line 9, in <module>
+    class GameSerializer(serializers.ModelSerializer):
+  File "./mafiaapp/api/serializers.py", line 11, in GameSerializer
+    class Meta:
+  File "./mafiaapp/api/serializers.py", line 14, in Meta
+    anchor = AnchorSerializer()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 531, in __init__
+    assert self.child is not None, '`child` is a required argument.'
+AssertionError: `child` is a required argument.
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/rest_framework/utils/field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 162, in __iter__
+    self._fetch_all()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 965, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 238, in iterator
+    results = compiler.execute_sql()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\sql\compiler.py", line 840, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\utils.py", line 98, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 162, in __iter__
+    self._fetch_all()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 965, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 238, in iterator
+    results = compiler.execute_sql()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\sql\compiler.py", line 840, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\utils.py", line 98, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 162, in __iter__
+    self._fetch_all()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 965, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 238, in iterator
+    results = compiler.execute_sql()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\sql\compiler.py", line 840, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\utils.py", line 98, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+psycopg2.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 162, in __iter__
+    self._fetch_all()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 965, in _fetch_all
+    self._result_cache = list(self.iterator())
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 238, in iterator
+    results = compiler.execute_sql()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\sql\compiler.py", line 840, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\utils.py", line 98, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\backends\utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: ОШИБКА:  колонка mafiaapp_game.black_list не существует
+LINE 1: ...app_game"."hasRecruit", "mafiaapp_game"."anchor", "mafiaapp_...
+                                                             ^
+
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 82, in post
+    [email], fail_silently=False)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\__init__.py", line 62, in send_mail
+    return mail.send()
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\backends\smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\backends\smtp.py", line 63, in open
+    self.connection.ehlo()
+  File "D:\Program Files\Python332\lib\smtplib.py", line 417, in ehlo
+    self.putcmd(self.ehlo_msg, name or self.local_hostname)
+  File "D:\Program Files\Python332\lib\smtplib.py", line 346, in putcmd
+    self.send(str)
+  File "D:\Program Files\Python332\lib\smtplib.py", line 338, in send
+    raise SMTPServerDisconnected('please run connect() first')
+smtplib.SMTPServerDisconnected: please run connect() first
+Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 81, in post
+    [email], fail_silently=False)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\__init__.py", line 62, in send_mail
+    return mail.send()
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\backends\smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "D:\Program Files\Python332\lib\site-packages\django\core\mail\backends\smtp.py", line 63, in open
+    self.connection.ehlo()
+  File "D:\Program Files\Python332\lib\smtplib.py", line 417, in ehlo
+    self.putcmd(self.ehlo_msg, name or self.local_hostname)
+  File "D:\Program Files\Python332\lib\smtplib.py", line 346, in putcmd
+    self.send(str)
+  File "D:\Program Files\Python332\lib\smtplib.py", line 338, in send
+    raise SMTPServerDisconnected('please run connect() first')
+smtplib.SMTPServerDisconnected: please run connect() first
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/creategame/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\edit.py", line 249, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\edit.py", line 215, in post
+    return self.form_valid(form)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 148, in form_valid
+    user = User.objects.get(username=self.request.user)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 334, in get
+    self.model._meta.object_name
+mafiaapp.models.DoesNotExist: User matching query does not exist.
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Internal Server Error: /dashboard/games/edit/2/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 1248, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "D:\Program Files\Python332\lib\http\client.py", line 1061, in request
+    self._send_request(method, url, body, headers)
+  File "D:\Program Files\Python332\lib\http\client.py", line 1099, in _send_request
+    self.endheaders(body)
+  File "D:\Program Files\Python332\lib\http\client.py", line 1057, in endheaders
+    self._send_output(message_body)
+  File "D:\Program Files\Python332\lib\http\client.py", line 902, in _send_output
+    self.send(msg)
+  File "D:\Program Files\Python332\lib\http\client.py", line 840, in send
+    self.connect()
+  File "D:\Program Files\Python332\lib\http\client.py", line 818, in connect
+    self.timeout, self.source_address)
+  File "D:\Program Files\Python332\lib\socket.py", line 417, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 346, in post
+    register_bots(request.POST.dict())
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 405, in register_bots
+    temp.write(urllib.request.urlopen('http://maf.pub/identicon/').read())
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 156, in urlopen
+    return opener.open(url, data, timeout)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 469, in open
+    response = self._open(req, data)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 487, in _open
+    '_open', req)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 447, in _call_chain
+    result = func(*args)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 1268, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 1251, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11004] getaddrinfo failed>
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Internal Server Error: /dashboard/games/edit/2/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 1248, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "D:\Program Files\Python332\lib\http\client.py", line 1061, in request
+    self._send_request(method, url, body, headers)
+  File "D:\Program Files\Python332\lib\http\client.py", line 1099, in _send_request
+    self.endheaders(body)
+  File "D:\Program Files\Python332\lib\http\client.py", line 1057, in endheaders
+    self._send_output(message_body)
+  File "D:\Program Files\Python332\lib\http\client.py", line 902, in _send_output
+    self.send(msg)
+  File "D:\Program Files\Python332\lib\http\client.py", line 840, in send
+    self.connect()
+  File "D:\Program Files\Python332\lib\http\client.py", line 818, in connect
+    self.timeout, self.source_address)
+  File "D:\Program Files\Python332\lib\socket.py", line 417, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+socket.gaierror: [Errno 11004] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 346, in post
+    register_bots(request.POST.dict())
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 405, in register_bots
+    temp.write(urllib.request.urlopen('http://maf.pub/identicon/').read())
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 156, in urlopen
+    return opener.open(url, data, timeout)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 469, in open
+    response = self._open(req, data)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 487, in _open
+    '_open', req)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 447, in _call_chain
+    result = func(*args)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 1268, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "D:\Program Files\Python332\lib\urllib\request.py", line 1251, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11004] getaddrinfo failed>
+Session data corrupted
+Session data corrupted
+Internal Server Error: /users/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 819, in _resolve_lookup
+    current = current[bit]
+TypeError: 'ImageFieldFile' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 164, in get_response
+    response = response.render()
+  File "D:\Program Files\Python332\lib\site-packages\django\template\response.py", line 158, in render
+    self.content = self.rendered_content
+  File "D:\Program Files\Python332\lib\site-packages\django\template\response.py", line 135, in rendered_content
+    content = template.render(context, self._request)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\backends\django.py", line 74, in render
+    return self.template.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 210, in render
+    return self._render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\debug.py", line 79, in render_node
+    return node.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\debug.py", line 79, in render_node
+    return node.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\debug.py", line 79, in render_node
+    return node.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\defaulttags.py", line 329, in render
+    return nodelist.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\debug.py", line 79, in render_node
+    return node.render(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\defaulttags.py", line 217, in render
+    nodelist.append(node.render(context))
+  File "D:\Program Files\Python332\lib\site-packages\django\template\debug.py", line 89, in render
+    output = self.filter_expression.resolve(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 648, in resolve
+    obj = self.var.resolve(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 789, in resolve
+    value = self._resolve_lookup(context)
+  File "D:\Program Files\Python332\lib\site-packages\django\template\base.py", line 827, in _resolve_lookup
+    current = getattr(current, bit)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\files.py", line 68, in _get_url
+    self._require_file()
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\files.py", line 46, in _require_file
+    raise ValueError("The '%s' attribute has no file associated with it." % self.field.name)
+ValueError: The 'avatar' attribute has no file associated with it.
+Session data corrupted
+Not Found: /media/UserMedia/Игровой_Бот/avatar_o3wXhf6.png
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/creategame/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\edit.py", line 249, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\edit.py", line 215, in post
+    return self.form_valid(form)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 148, in form_valid
+    user = User.objects.get(username=self.request.user)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 334, in get
+    self.model._meta.object_name
+mafiaapp.models.DoesNotExist: User matching query does not exist.
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Not Found: /media/UserMedia/Русич/avatar.jpg
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1146, in build_standard_field
+    'child', child_model_field
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1111, in build_standard_field
+    field_kwargs = get_field_kwargs(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\utils\field_mapping.py", line 223, in get_field_kwargs
+    'model_name': model_field.model._meta.verbose_name,
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1146, in build_standard_field
+    print('     child_model_field', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1146, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n', child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\n     child_model_field\n%s\n' % child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\r\n     child_model_field\r\n%s\r\n' % child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1146, in build_standard_field
+    print('\r\n     child_model_field\r\n%s\r\n' % child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1147, in build_standard_field
+    print('\r\n     model_field\r\n', model_field.base_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1087, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1148, in build_standard_field
+    print('\r\n     child_model_field\r\n%s\r\n' % child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Internal Server Error: /api/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 466, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\views.py", line 463, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\generics.py", line 200, in get
+    return self.list(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\mixins.py", line 48, in list
+    return Response(serializer.data)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 700, in data
+    ret = super(ListSerializer, self).data
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 239, in data
+    self._data = self.to_representation(self.instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 618, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 459, in to_representation
+    fields = self._readable_fields
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\functional.py", line 59, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 353, in _readable_fields
+    field for field in self.fields.values()
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 339, in fields
+    for key, value in self.get_fields().items():
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 965, in get_fields
+    field_name, info, model, depth
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1090, in build_field
+    return self.build_standard_field(field_name, model_field)
+  File "D:\Program Files\Python332\lib\site-packages\rest_framework\serializers.py", line 1151, in build_standard_field
+    print('\r\n     child_model_field\r\n%s\r\n' % child_model_field)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\fields\__init__.py", line 187, in __str__
+    model = self.model
+AttributeError: 'CharField' object has no attribute 'model'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /register/
+Internal Server Error: /users/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 393, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 365, in resolve
+    for pattern in self.url_patterns:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 401, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 395, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "D:\Program Files\Python332\lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1586, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1567, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1534, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 586, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1024, in load_module
+  File "<frozen importlib._bootstrap>", line 1005, in load_module
+  File "<frozen importlib._bootstrap>", line 562, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 870, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafpub\urls.py", line 33, in <module>
+    url(r'^', include('mafiaapp.urls', namespace="mafiaapp")),
+  File "D:\Program Files\Python332\lib\site-packages\django\conf\urls\__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "D:\Program Files\Python332\lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1586, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1567, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1534, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 586, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1024, in load_module
+  File "<frozen importlib._bootstrap>", line 1005, in load_module
+  File "<frozen importlib._bootstrap>", line 562, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 870, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\urls.py", line 5, in <module>
+    from . import views
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 18, in <module>
+    from .forms import *
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\forms.py", line 64, in <module>
+    class CreateGameForm(ModelForm):
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\forms.py", line 69, in CreateGameForm
+    for x in anchor:
+TypeError: 'MultipleChoiceField' object is not iterable
+Internal Server Error: /users/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 393, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 119, in get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 365, in resolve
+    for pattern in self.url_patterns:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 401, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\urlresolvers.py", line 395, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "D:\Program Files\Python332\lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1586, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1567, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1534, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 586, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1024, in load_module
+  File "<frozen importlib._bootstrap>", line 1005, in load_module
+  File "<frozen importlib._bootstrap>", line 562, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 870, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafpub\urls.py", line 33, in <module>
+    url(r'^', include('mafiaapp.urls', namespace="mafiaapp")),
+  File "D:\Program Files\Python332\lib\site-packages\django\conf\urls\__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "D:\Program Files\Python332\lib\importlib\__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1586, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1567, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1534, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 586, in _check_name_wrapper
+  File "<frozen importlib._bootstrap>", line 1024, in load_module
+  File "<frozen importlib._bootstrap>", line 1005, in load_module
+  File "<frozen importlib._bootstrap>", line 562, in module_for_loader_wrapper
+  File "<frozen importlib._bootstrap>", line 870, in _load_module
+  File "<frozen importlib._bootstrap>", line 313, in _call_with_frames_removed
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\urls.py", line 5, in <module>
+    from . import views
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 18, in <module>
+    from .forms import *
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\forms.py", line 64, in <module>
+    class CreateGameForm(ModelForm):
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\forms.py", line 69, in CreateGameForm
+    for x in anchor:
+TypeError: 'MultipleChoiceField' object is not iterable
+Not Found: /media/UserMedia/Игровой_Бот/avatar_KVEexfZ.png
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/creategame/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\edit.py", line 249, in post
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\edit.py", line 215, in post
+    return self.form_valid(form)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 148, in form_valid
+    user = User.objects.get(username=self.request.user)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\db\models\query.py", line 334, in get
+    self.model._meta.object_name
+mafiaapp.models.DoesNotExist: User matching query does not exist.
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg

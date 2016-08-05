@@ -64,7 +64,7 @@ class Game(models.Model):
     hasHeadMafia = models.BooleanField(default=False, verbose_name='ГлавМаф назначен')
     # recruit form not avail if True
     hasRecruit = models.BooleanField(default=False, verbose_name='Есть завербованный')
-    anchor = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Ведущие')
+    anchor = ArrayField(base_field=models.CharField(max_length=30, unique=True), default='{}', verbose_name='Ведущие')
     black_list = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Бан', null=True, blank=True)
 
     def __str__(self):
