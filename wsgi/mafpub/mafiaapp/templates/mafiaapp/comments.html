@@ -82,6 +82,7 @@
             {% csrf_token %}
             <input type="submit" value="Удалить" class="btn btn-primary" >
         </form>-->
+        <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
         </span>
       {% endif %}
       <span style='float:right;text-decoration:underline;cursor:pointer;' onClick='show_quote({{comment.id}});'><h4>Цитировать</h4></span>

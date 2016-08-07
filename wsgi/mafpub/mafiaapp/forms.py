@@ -78,7 +78,7 @@ class CreateGameForm(ModelForm):
                                            label='Ведущие')
         black_list = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
                                                label='Бан', required=False)
-        fields = ['title', 'short', 'description', 'status', 'state', 'day', 'hasHeadMafia', 'hasRecruit', 'anchor',
+        fields = ['number', 'title', 'short', 'description', 'status', 'state', 'day', 'hasHeadMafia', 'hasRecruit', 'anchor',
                   'slug', 'black_list']  # '__all__'
         widgets = {
             'anchor': forms.SelectMultiple(attrs={'class': 'form-control'}),

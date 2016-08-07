@@ -67,6 +67,9 @@ class Game(models.Model):
     anchor = ArrayField(base_field=models.CharField(max_length=30, unique=True), default='{}', verbose_name='Ведущие')
     black_list = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Бан', null=True, blank=True)
 
+    def get_description(self):
+        return GamePost.objects.filter(game=self, tags__contains=['description'])
+
     def __str__(self):
         return self.title + '(id=' + str(self.number) + '). Фаза: ' + \
                ('Регистрация' if self.state == 'upcoming' else 'В процессе' if self.state == 'current' else 'Завершена')
@@ -230,7 +233,7 @@ class GameComment(models.Model):
     # author = GenericForeignKey('content_type', 'object_id')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.IntegerField(default=0)
-    mask = models.ForeignKey(Mask, on_delete=models.CASCADE, null=True)
+    mask = models.ForeignKey(Mask, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.text

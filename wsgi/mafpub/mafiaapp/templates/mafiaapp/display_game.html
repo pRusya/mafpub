@@ -21,7 +21,7 @@
 
 {% if private_list or morgue_list %}
 	{# game is past. display all private quarters and morgue #}
-	{% if game.status == 'past' %}
+	{% if game.state == 'past' %}
         <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-1">Сообщений</div>

@@ -4284,3 +4284,485 @@ Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
 Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
 Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
 Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 81, in post
+    [email], fail_silently=False)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/__init__.py", line 62, in send_mail
+    return mail.send()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 58, in open
+    self.connection = connection_class(self.host, self.port, **connection_params)
+  File "/usr/lib/python3.3/smtplib.py", line 241, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/usr/lib/python3.3/smtplib.py", line 320, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/usr/lib/python3.3/smtplib.py", line 291, in _get_socket
+    self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 435, in create_connection
+    raise err
+  File "/usr/lib/python3.3/socket.py", line 426, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Session data corrupted
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 81, in post
+    [email], fail_silently=False)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/__init__.py", line 62, in send_mail
+    return mail.send()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 58, in open
+    self.connection = connection_class(self.host, self.port, **connection_params)
+  File "/usr/lib/python3.3/smtplib.py", line 241, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/usr/lib/python3.3/smtplib.py", line 320, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/usr/lib/python3.3/smtplib.py", line 291, in _get_socket
+    self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 435, in create_connection
+    raise err
+  File "/usr/lib/python3.3/socket.py", line 426, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 81, in post
+    [email], fail_silently=False)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/__init__.py", line 62, in send_mail
+    return mail.send()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 58, in open
+    self.connection = connection_class(self.host, self.port, **connection_params)
+  File "/usr/lib/python3.3/smtplib.py", line 241, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/usr/lib/python3.3/smtplib.py", line 320, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/usr/lib/python3.3/smtplib.py", line 291, in _get_socket
+    self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 435, in create_connection
+    raise err
+  File "/usr/lib/python3.3/socket.py", line 426, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Session data corrupted
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 81, in post
+    [email], fail_silently=False)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/__init__.py", line 62, in send_mail
+    return mail.send()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 58, in open
+    self.connection = connection_class(self.host, self.port, **connection_params)
+  File "/usr/lib/python3.3/smtplib.py", line 241, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/usr/lib/python3.3/smtplib.py", line 320, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/usr/lib/python3.3/smtplib.py", line 291, in _get_socket
+    self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 435, in create_connection
+    raise err
+  File "/usr/lib/python3.3/socket.py", line 426, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Session data corrupted
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 81, in post
+    [email], fail_silently=False)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/__init__.py", line 62, in send_mail
+    return mail.send()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 58, in open
+    self.connection = connection_class(self.host, self.port, **connection_params)
+  File "/usr/lib/python3.3/smtplib.py", line 241, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/usr/lib/python3.3/smtplib.py", line 320, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/usr/lib/python3.3/smtplib.py", line 291, in _get_socket
+    self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 435, in create_connection
+    raise err
+  File "/usr/lib/python3.3/socket.py", line 426, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Session data corrupted
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 81, in post
+    [email], fail_silently=False)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/__init__.py", line 62, in send_mail
+    return mail.send()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/message.py", line 303, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 100, in send_messages
+    new_conn_created = self.open()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/mail/backends/smtp.py", line 58, in open
+    self.connection = connection_class(self.host, self.port, **connection_params)
+  File "/usr/lib/python3.3/smtplib.py", line 241, in __init__
+    (code, msg) = self.connect(host, port)
+  File "/usr/lib/python3.3/smtplib.py", line 320, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+  File "/usr/lib/python3.3/smtplib.py", line 291, in _get_socket
+    self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 435, in create_connection
+    raise err
+  File "/usr/lib/python3.3/socket.py", line 426, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /admin/mafiaapp/game/2/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 618, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 1521, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "D:\Program Files\Python332\lib\contextlib.py", line 29, in inner
+    return func(*args, **kwds)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 1458, in changeform_view
+    ModelForm = self.get_form(request, obj)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\admin.py", line 16, in get_form
+    return super(GameAdmin, self).get_form(request, obj, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 677, in get_form
+    fields = flatten_fieldsets(self.get_fieldsets(request, obj))
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 354, in get_fieldsets
+    return [(None, {'fields': self.get_fields(request, obj)})]
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 666, in get_fields
+    form = self.get_form(request, obj, fields=None)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\admin.py", line 16, in get_form
+    return super(GameAdmin, self).get_form(request, obj, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 702, in get_form
+    return modelform_factory(self.model, **defaults)
+TypeError: modelform_factory() got an unexpected keyword argument 'description'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /admin/mafiaapp/game/2/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 618, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 1521, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "D:\Program Files\Python332\lib\contextlib.py", line 29, in inner
+    return func(*args, **kwds)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 1458, in changeform_view
+    ModelForm = self.get_form(request, obj)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\admin.py", line 15, in get_form
+    print(obj)
+  File "D:\Program Files\Python332\lib\encodings\cp866.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_map)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2160' in position 14: character maps to <undefined>
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /admin/mafiaapp/game/2/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 618, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\decorators\cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 1521, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\utils\decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "D:\Program Files\Python332\lib\contextlib.py", line 29, in inner
+    return func(*args, **kwds)
+  File "D:\Program Files\Python332\lib\site-packages\django\contrib\admin\options.py", line 1484, in changeform_view
+    form = ModelForm(instance=obj)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\forms.py", line 77, in __init__
+    print(self.fields['desciprion'])
+KeyError: 'desciprion'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Игровой_Бот/avatar_KVEexfZ.png
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /dashboard/games/game1/game1_private_Р‘РѕС‚_575754/
+Not Found: /dashboard/games/game1/game1_private_Р‘РѕС‚_357223/
+Not Found: /dashboard/games/game1/game1_militia_day2/
+Internal Server Error: /dashboard/games/game1/game1_private_Р‘РѕС‚_193668/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2479, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2416, in get_context_data
+    if 'private' in self.game_post.tags and self.request.user.user.nickname in self.game_post.tags:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 226, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'AnonymousUser' object has no attribute 'user'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Forbidden (CSRF token missing or incorrect.): /dashboard/games/edit/6/
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game1/game1_private_Р‘РѕС‚_504428/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2479, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2416, in get_context_data
+    if 'private' in self.game_post.tags and self.request.user.user.nickname in self.game_post.tags:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/functional.py", line 226, in inner
+    return func(self._wrapped, *args)
+AttributeError: 'AnonymousUser' object has no attribute 'user'
+Internal Server Error: /dashboard/games/edit/9/
+Traceback (most recent call last):
+  File "/usr/lib/python3.3/urllib/request.py", line 1248, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "/usr/lib/python3.3/http/client.py", line 1065, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.3/http/client.py", line 1103, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.3/http/client.py", line 1061, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.3/http/client.py", line 906, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.3/http/client.py", line 844, in send
+    self.connect()
+  File "/usr/lib/python3.3/http/client.py", line 822, in connect
+    self.timeout, self.source_address)
+  File "/usr/lib/python3.3/socket.py", line 417, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+socket.gaierror: [Errno -5] No address associated with hostname
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 350, in post
+    register_bots(request.POST.dict())
+  File "./mafiaapp/views.py", line 409, in register_bots
+    temp.write(urllib.request.urlopen('http://maf.pub/identicon/').read())
+  File "/usr/lib/python3.3/urllib/request.py", line 156, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.3/urllib/request.py", line 469, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.3/urllib/request.py", line 487, in _open
+    '_open', req)
+  File "/usr/lib/python3.3/urllib/request.py", line 447, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.3/urllib/request.py", line 1274, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.3/urllib/request.py", line 1251, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno -5] No address associated with hostname>
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted

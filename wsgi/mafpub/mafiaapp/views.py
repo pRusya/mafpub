@@ -57,7 +57,6 @@ class IndexView(generic.ListView):
                 code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
                 ev = EmailValidation(email=email, code=code)
                 ev.save()
-                """
                 email_body = 'На форуме Галамафия 2.0 (http://www.maf.pub/) появилась регистрационная ' \
                              'запись,\r' \
                              'в которой был указал ваш электронный адрес (e-mail).\r' \
@@ -75,13 +74,12 @@ class IndexView(generic.ListView):
                              'После активации учетной записи вы сможете войти в форум, используя выбранные вами ' \
                              'имя пользователя (login) и пароль.\r' \
                              '\r' \
-                             'С этого момента вы сможете оставлять сообщения.\r' \
+                             'С этого момента вы сможете оставлять сообщения и принимать участие в играх.\r' \
                              '\r' \
                              'Благодарим за регистрацию!'
                 send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code, 'Галамафия 2.0 <noreply@maf.pub>',
                           [email], fail_silently=False)
-                """
-                messages.add_message(request, messages.INFO, 'Check your email box to finish registration %s' % code)
+                messages.add_message(request, messages.INFO, 'Check your email box to finish registration')
                 return redirect('mafiaapp:index')
             else:
                 messages.add_message(request, messages.ERROR, 'Provide valid e-mail!111')
@@ -317,6 +315,12 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                 description.text = request.POST['description']
                 if context['game'].state != 'upcoming':
                     description.allow_comment = False
+                if context['game'].state == 'past':
+                    gamepost_list = GamePost.objects.filter(game=context['game'])
+                    for gamepost in gamepost_list:
+                        gamepost.allow_comment = False
+                        gamepost.allow_role = ['everyone']
+                        gamepost.save()
                 description.save()
                 context['description'] = description
             else:
@@ -377,10 +381,12 @@ def simulate_flood(d):
         mafia_post = GamePost.objects.get(game=game, tags__contains=['mafia_day', 'current'])
         militia_post = GamePost.objects.get(game=game, tags__contains=['militia_day', 'current'])
         for maf in mafia:
-            comment = GameComment(post=mafia_post, text=flood[random.randint(0, len(flood) - 1)], author=maf.user)
+            comment = GameComment(post=mafia_post, text=flood[random.randint(0, len(flood) - 1)], author=maf.user,
+                                  mask=maf.mask)
             comment.save()
         for mil in militia:
-            comment = GameComment(post=militia_post, text=flood[random.randint(0, len(flood) - 1)], author=mil.user)
+            comment = GameComment(post=militia_post, text=flood[random.randint(0, len(flood) - 1)], author=mil.user,
+                                  mask=mil.mask)
             comment.save()
     participants = GameParticipant.objects.filter(game=game)
     post = GamePost.objects.exclude(Q(tags__contains=['mafia_day']) | Q(tags__contains=['militia_day'])) \
@@ -402,7 +408,7 @@ def register_bots(d):
             available = False if User.objects.filter(nickname=name).first() else True
         user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123')
         temp = NamedTemporaryFile()
-        temp.write(urllib.request.urlopen('http://maf.pub/identicon/').read())
+        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
         user.avatar.save(os.path.basename(save_path(user, 'avatar.png')), File(temp))
         user.save()
@@ -2195,6 +2201,11 @@ class DisplayGame(generic.ListView):
 
         anonymous = isinstance(self.request.user, AnonymousUser)
         participant = GameParticipant.objects.filter(game=game, user=self.request.user).first() if not anonymous else None
+        if game.state == 'past':
+            context['mafia'] = True
+            context['mafia_core'] = True
+            context['militia'] = True
+            context['militia_core'] = True
         if participant:
             registered = True if participant else False
             context['registered'] = registered
@@ -2432,7 +2443,7 @@ class DisplayGamePost(generic.ListView):
     }
 
     def allow_access(self, request):
-        if 'everyone' in self.game_post.allow_role:
+        if 'everyone' in self.game_post.allow_role or self.game.state == 'past':
             return True
         user = get_user(request)
         if user.is_authenticated():
