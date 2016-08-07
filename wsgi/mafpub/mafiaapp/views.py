@@ -361,7 +361,7 @@ def create_random_masks(d):
     participants = GameParticipant.objects.exclude(mask=bot).filter(game=game, mask=None)
     for participant in participants:
         temp = NamedTemporaryFile()
-        temp.write(urllib.request.urlopen('http://python-prusya.rhcloud.com/identicon/').read())
+        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
 
         mask = Mask(game=game, username='Маска ' + participant.user.nickname)
