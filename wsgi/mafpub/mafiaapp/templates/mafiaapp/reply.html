@@ -2,7 +2,7 @@
 
 {{ game_comment_form.media }}
 
-{% if not dead %}
+{% if not dead or 'private' in post.tags %}
     {% if post.allow_comment and user.is_authenticated %}
 <div class="row">
     <div class="col-md-8 col-centered">
