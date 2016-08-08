@@ -4770,3 +4770,1080 @@ Session data corrupted
 Session data corrupted
 Session data corrupted
 Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_mafia_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/datastructures.py", line 320, in __getitem__
+    list_ = super(MultiValueDict, self).__getitem__(key)
+KeyError: 'game_slug'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2475, in post
+    kwargs={'game_slug': request.POST['game_slug'],
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/utils/datastructures.py", line 322, in __getitem__
+    raise MultiValueDictKeyError(repr(key))
+django.utils.datastructures.MultiValueDictKeyError: "'game_slug'"
+Session data corrupted
+Not Found: /dashboard/games/game3/game3_mafia_day2/
+Session data corrupted
+Not Found: /dashboard/games/game3/game3_mafia_day2/
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_private_Р‘РѕС‚_552050/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2477, in post
+    'messages': messages}))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 578, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/urlresolvers.py", line 495, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'display_game_post' with arguments '()' and keyword arguments '{'game_slug': 'game3', 'post_slug': 'game3_private_Р‘РѕС‚_552050', 'messages': <module 'django.contrib.messages' from '/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/messages/__init__.py'>}' not found. 1 pattern(s) tried: ['dashboard/games/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.Р°-СЏРђ-РЇ]+)/$']
+Session data corrupted
+Not Found: /dashboard/games/game3/game3_private_Р‘РѕС‚_552050/
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_private_Р‘РѕС‚_552050/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2476, in post
+    'post_slug': kwargs['post_slug']}))
+TypeError: reverse() got an unexpected keyword argument 'messages'
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_private_Р‘РѕС‚_110463/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2486, in get
+    if request.session['messages']:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/base.py", line 48, in __getitem__
+    return self._session[key]
+KeyError: 'messages'
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_private_Р‘РѕС‚_110463/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/middleware.py", line 50, in process_response
+    request.session.save()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/db.py", line 59, in save
+    session_data=self.encode(self._get_session(no_load=must_create)),
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/base.py", line 88, in encode
+    serialized = self.serializer().dumps(session_dict)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/signing.py", line 90, in dumps
+    return json.dumps(obj, separators=(',', ':')).encode('latin-1')
+  File "/usr/lib/python3.3/json/__init__.py", line 240, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.3/json/encoder.py", line 191, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.3/json/encoder.py", line 249, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.3/json/encoder.py", line 173, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <module 'django.contrib.messages' from '/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/messages/__init__.py'> is not JSON serializable
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_private_Р‘РѕС‚_110463/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/middleware.py", line 50, in process_response
+    request.session.save()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/db.py", line 59, in save
+    session_data=self.encode(self._get_session(no_load=must_create)),
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/base.py", line 88, in encode
+    serialized = self.serializer().dumps(session_dict)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/signing.py", line 90, in dumps
+    return json.dumps(obj, separators=(',', ':')).encode('latin-1')
+  File "/usr/lib/python3.3/json/__init__.py", line 240, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.3/json/encoder.py", line 191, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.3/json/encoder.py", line 249, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.3/json/encoder.py", line 173, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <module 'django.contrib.messages' from '/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/messages/__init__.py'> is not JSON serializable
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_private_Р‘РѕС‚_110463/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 223, in get_response
+    response = middleware_method(request, response)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/middleware.py", line 50, in process_response
+    request.session.save()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/db.py", line 59, in save
+    session_data=self.encode(self._get_session(no_load=must_create)),
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/base.py", line 88, in encode
+    serialized = self.serializer().dumps(session_dict)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/signing.py", line 90, in dumps
+    return json.dumps(obj, separators=(',', ':')).encode('latin-1')
+  File "/usr/lib/python3.3/json/__init__.py", line 240, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.3/json/encoder.py", line 191, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.3/json/encoder.py", line 249, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.3/json/encoder.py", line 173, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: <module 'django.contrib.messages' from '/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/messages/__init__.py'> is not JSON serializable
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /users/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 819, in _resolve_lookup
+    current = current[bit]
+TypeError: 'ImageFieldFile' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 164, in get_response
+    response = response.render()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 158, in render
+    self.content = self.rendered_content
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 135, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 210, in render
+    return self._render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 329, in render
+    return nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 217, in render
+    nodelist.append(node.render(context))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 89, in render
+    output = self.filter_expression.resolve(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 648, in resolve
+    obj = self.var.resolve(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 789, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 827, in _resolve_lookup
+    current = getattr(current, bit)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/db/models/fields/files.py", line 68, in _get_url
+    self._require_file()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/db/models/fields/files.py", line 46, in _require_file
+    raise ValueError("The '%s' attribute has no file associated with it." % self.field.name)
+ValueError: The 'avatar' attribute has no file associated with it.
+Session data corrupted
+Session data corrupted
+Not Found: /
+Not Found: /dashboard/games/game2/game2_description/
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game2/game2_description/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2474, in post
+    self.dispatcher[request.POST['action']](request, self.kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/auth/decorators.py", line 22, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 1964, in post_game_comment
+    not in game.anchor else None)
+UnboundLocalError: local variable 'comment_participant' referenced before assignment
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Not Found: /dashboard/games/game3/game3_general_day2/
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 338, in parse
+    compile_func = self.tags[command]
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 164, in get_response
+    response = response.render()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 158, in render
+    self.content = self.rendered_content
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 133, in rendered_content
+    template = self._resolve_template(self.template_name)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 88, in _resolve_template
+    new_template = self.resolve_template(template)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 78, in resolve_template
+    return loader.select_template(template, using=self.using)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader.py", line 64, in select_template
+    return engine.get_template(template_name, dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/backends/django.py", line 30, in get_template
+    return Template(self.engine.get_template(template_name, dirs))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/engine.py", line 167, in get_template
+    template, origin = self.find_template(template_name, dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/engine.py", line 141, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loaders/base.py", line 13, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loaders/base.py", line 23, in load_template
+    template = Template(source, origin, template_name, self.engine)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 191, in __init__
+    self.nodelist = engine.compile_string(template_string, origin)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/engine.py", line 261, in compile_string
+    return parser.parse()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 210, in do_extends
+    nodelist = parser.parse()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 184, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 1554, in do_with
+    nodelist = parser.parse(('endwith',))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 872, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 1554, in do_with
+    nodelist = parser.parse(('endwith',))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 1014, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 1014, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 340, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 395, in invalid_block_tag
+    (command, get_text_list(["'%s'" % p for p in parse_until])))
+django.template.base.TemplateSyntaxError: Invalid block tag: 'static', expected 'elif', 'else' or 'endif'
+Internal Server Error: /dashboard/games/game3/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 338, in parse
+    compile_func = self.tags[command]
+KeyError: 'loaf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 164, in get_response
+    response = response.render()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 158, in render
+    self.content = self.rendered_content
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 133, in rendered_content
+    template = self._resolve_template(self.template_name)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 88, in _resolve_template
+    new_template = self.resolve_template(template)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/response.py", line 78, in resolve_template
+    return loader.select_template(template, using=self.using)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader.py", line 64, in select_template
+    return engine.get_template(template_name, dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/backends/django.py", line 30, in get_template
+    return Template(self.engine.get_template(template_name, dirs))
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/engine.py", line 167, in get_template
+    template, origin = self.find_template(template_name, dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/engine.py", line 141, in find_template
+    source, display_name = loader(name, dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loaders/base.py", line 13, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loaders/base.py", line 23, in load_template
+    template = Template(source, origin, template_name, self.engine)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 191, in __init__
+    self.nodelist = engine.compile_string(template_string, origin)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/engine.py", line 261, in compile_string
+    return parser.parse()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 342, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 210, in do_extends
+    nodelist = parser.parse()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 340, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 396, in invalid_block_tag
+    raise self.error(token, "Invalid block tag: '%s'" % command)
+django.template.base.TemplateSyntaxError: Invalid block tag: 'loaf'
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2497, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2438, in get_context_data
+    if self.request.session['redirect']:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/contrib/sessions/backends/base.py", line 48, in __getitem__
+    return self._session[key]
+KeyError: 'redirect'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2498, in get
+    return render(request, self.template_name, context=context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 210, in render
+    return self._render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/loader_tags.py", line 159, in render
+    return template.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 212, in render
+    return self._render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 202, in _render
+    return self.nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 329, in render
+    return nodelist.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 905, in render
+    bit = self.render_node(node, context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 322, in render
+    match = condition.eval(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/defaulttags.py", line 937, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 648, in resolve
+    obj = self.var.resolve(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 789, in resolve
+    value = self._resolve_lookup(context)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/template/base.py", line 849, in _resolve_lookup
+    current = current()
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 132, in has_previous
+    return self.number > 1
+TypeError: unorderable types: str() > int()
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2498, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2440, in get_context_data
+    self.paginator.page = 'last'
+AttributeError: 'DisplayGamePost' object has no attribute 'paginator'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2501, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2440, in get_context_data
+    self.queryset, self.page_size, orphans=self.get_paginate_orphans(),
+AttributeError: 'DisplayGamePost' object has no attribute 'page_size'
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 34, in validate_number
+    number = int(number)
+ValueError: invalid literal for int() with base 10: 'last'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2501, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2442, in get_context_data
+    page = paginator.page('last')
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 36, in validate_number
+    raise PageNotAnInteger('That page number is not an integer')
+django.core.paginator.PageNotAnInteger: That page number is not an integer
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2501, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2442, in get_context_data
+    page = paginator.page(paginator.num_pages)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2501, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2442, in get_context_data
+    page = paginator.page(context['page_obj'].paginator.num_pages)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2502, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/list.py", line 78, in paginate_queryset
+    page = paginator.page(page_number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2502, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/list.py", line 78, in paginate_queryset
+    page = paginator.page(page_number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Session data corrupted
+Session data corrupted
+Internal Server Error: /dashboard/games/game3/game3_general_day2/
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "./mafiaapp/views.py", line 2502, in get
+    context = self.get_context_data()
+  File "./mafiaapp/views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/views/generic/list.py", line 78, in paginate_queryset
+    page = paginator.page(page_number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "/home/ubuntu/mafpub/lib/python3.3/site-packages/django/core/paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2502, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\list.py", line 78, in paginate_queryset
+    page = paginator.page(page_number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 72, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2502, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\list.py", line 79, in paginate_queryset
+    page = paginator.page(page_number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 50, in page
+    number = self.validate_number(number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 39, in validate_number
+    if number > self.num_pages:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 86, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 77, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 73, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2502, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\list.py", line 79, in paginate_queryset
+    page = paginator.page(page_number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 51, in page
+    number = self.validate_number(number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 40, in validate_number
+    if number > self.num_pages:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 87, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 78, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 74, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2502, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2440, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\list.py", line 79, in paginate_queryset
+    page = paginator.page(page_number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 52, in page
+    number = self.validate_number(number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 41, in validate_number
+    if number > self.num_pages:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 88, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 79, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 74, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2503, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2441, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\list.py", line 79, in paginate_queryset
+    page = paginator.page(page_number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 52, in page
+    number = self.validate_number(number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 41, in validate_number
+    if number > self.num_pages:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 88, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 79, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 75, in _get_count
+    self._count = self.object_list.count()
+AttributeError: 'NoneType' object has no attribute 'count'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2503, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2441, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(self.queryset, self.paginate_by)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\list.py", line 79, in paginate_queryset
+    page = paginator.page(page_number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 52, in page
+    number = self.validate_number(number)
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 41, in validate_number
+    if number > self.num_pages:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 89, in _get_num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+  File "D:\Program Files\Python332\lib\site-packages\django\core\paginator.py", line 80, in _get_count
+    self._count = len(self.object_list)
+TypeError: object of type 'NoneType' has no len()
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2509, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2416, in get_context_data
+    print('\nARGS\n %s \n' % args)
+TypeError: not enough arguments for format string
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2509, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2416, in get_context_data
+    print('\nARGS\n %s \n' % args)
+TypeError: not enough arguments for format string
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2509, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2416, in get_context_data
+    print('\nARGS\n %s \n' % args)
+TypeError: not enough arguments for format string
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2510, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2417, in get_context_data
+    print('\nARGS\n %s \n' % args)
+TypeError: not enough arguments for format string
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Internal Server Error: /dashboard/games/game1/game1_description/
+Traceback (most recent call last):
+  File "D:\Program Files\Python332\lib\site-packages\django\core\handlers\base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\Program Files\Python332\lib\site-packages\django\views\generic\base.py", line 89, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2508, in get
+    context = self.get_context_data()
+  File "E:\repo\Git\mafpub\wsgi\mafpub\mafiaapp\views.py", line 2418, in get_context_data
+    self.request.GET['page'] = 'last'
+  File "D:\Program Files\Python332\lib\site-packages\django\http\request.py", line 379, in __setitem__
+    self._assert_mutable()
+  File "D:\Program Files\Python332\lib\site-packages\django\http\request.py", line 376, in _assert_mutable
+    raise AttributeError("This QueryDict instance is immutable")
+AttributeError: This QueryDict instance is immutable
+Session data corrupted
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Not Found: /media/UserMedia/Русич/avatar_7YHoueH.jpg
+Session data corrupted
+Session data corrupted

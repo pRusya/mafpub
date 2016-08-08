@@ -62,7 +62,7 @@
 </div>
 
 {% for comment in page_obj %}
-<div class="row comment">
+<div class="row comment" {% if forloop.last %}id="last"{% endif %}>
     <div class="col-md-2 text-right">
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
         <h3 id='author{{comment.id}}' style="font-weight:600">{{ comment.author.user.nickname }}</h3><br>

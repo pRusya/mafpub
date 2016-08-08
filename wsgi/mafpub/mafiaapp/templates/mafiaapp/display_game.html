@@ -1,5 +1,6 @@
 {% extends 'mafiaapp/base.html' %}
 {% load filters %}
+{% load static %}
 
 {% block content %}
 
@@ -30,7 +31,11 @@
 
 		{% for private in private_list %}
             <div class="row">
-                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    {% if not private.allow_comment %}
+                    <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                    {% endif %}
+                </div>
                 <div class="col-md-4">
                     <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
                 </div>
@@ -51,7 +56,11 @@
 
 		{% for morgue in morgue_list %}
             <div class="row">
-                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    {% if not morgue.allow_comment %}
+                    <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                    {% endif %}
+                </div>
                 <div class="col-md-4">
                     <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
                 </div>
@@ -84,7 +93,11 @@
 
 				{% for private in private_list %}
                     <div class="row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            {% if not private.allow_comment %}
+                            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                            {% endif %}
+                        </div>
                         <div class="col-md-4">
                             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
                         </div>
@@ -105,7 +118,11 @@
 
                 {% for morgue in morgue_list %}
                     <div class="row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            {% if not morgue.allow_comment %}
+                            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                            {% endif %}
+                        </div>
                         <div class="col-md-4">
                             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
                         </div>
@@ -130,7 +147,11 @@
 				{% with private=private_list|filter_tag:user.user.nickname %}
 					{% for p in private %}
     				<div class="row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            {% if not p.allow_comment %}
+                            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                            {% endif %}
+                        </div>
         				<div class="col-md-4">
             				<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=p.slug %}">{{ p.text|safe }}</a></h3>
         				</div>
@@ -153,7 +174,11 @@
     			{% if dead %}
     				{% for morgue in morgue_list %}
     				    <div class="row">
-                            <div class="col-md-2"></div>
+                            <div class="col-md-2">
+                                {% if not morgue.allow_comment %}
+                                <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                                {% endif %}
+                            </div>
         				    <div class="col-md-4">
         	    			    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}">{{ morgue|safe }}</a></h3>
         				    </div>
@@ -210,7 +235,11 @@
     {% endif %}
     {% for day in days_list %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            {% if not day.allow_comment %}
+            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            {% endif %}
+        </div>
         <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
@@ -220,7 +249,7 @@
             <h3></h3>
             <span>{{ comments.count }}</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h3></h3>
             <span><h4 style="font-weight:600">{{ comments.last.author.mask }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
         </div>
@@ -254,7 +283,11 @@
     {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            {% if not day.allow_comment %}
+            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            {% endif %}
+        </div>
         <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
@@ -292,7 +325,11 @@
     {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            {% if not day.allow_comment %}
+            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            {% endif %}
+        </div>
         <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
@@ -338,7 +375,11 @@
     {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            {% if not day.allow_comment %}
+            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            {% endif %}
+        </div>
         <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
@@ -376,7 +417,11 @@
     {% endif %}
 	{% for day in days_list %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            {% if not day.allow_comment %}
+            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            {% endif %}
+        </div>
         <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=day.slug %}">{{ day|safe }}</a></h3>
         </div>
@@ -420,7 +465,11 @@
 {% endif %}
 {% for info in infos %}
     <div class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            {% if not day.allow_comment %}
+            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            {% endif %}
+        </div>
         <div class="col-md-4">
             <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=info.slug %}">{{ info|safe }}</a></h3>
         </div>

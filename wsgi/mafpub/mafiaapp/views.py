@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.models import AnonymousUser
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404, redirect, HttpResponseRedirect
 from django.shortcuts import render
@@ -671,7 +671,7 @@ def mafia_kill(d):
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # head mafia's target is doctor's target, so doctor heals target. Or, head mafia's target is already dead
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + shoot_vote.target.mask.username + 'спасён доктором.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором.'
         success_shot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
@@ -842,7 +842,7 @@ def maniac_kill_check(d):
     if check_vote:
         inform = GameComment(post=post, text=check_result, author=bot)
         inform.save()
-    return '\n\nПокушение киллера:' + success_result if success_shoot else ''
+    return '\n\nПокушение маньяка:' + success_result if success_shoot else ''
 
 
 def militia_check(d):
@@ -1905,7 +1905,7 @@ def post_game_comment(request, kwargs):
     # print('     post', post)
     user = get_user(request)
 
-    if user.user.nickname not in game.anchor:
+    if user.user.nickname not in game.anchor and 'description' not in post.tags:
         comment_participant = get_object_or_404(GameParticipant, game=game, user=user)
         if post.allow_comment:
             if 'everyone' not in post.allow_role:
@@ -1960,13 +1960,16 @@ def post_game_comment(request, kwargs):
 
     text = ''.join([x for x in split])
     """
-    comment = GameComment(post=post, author=user.user, text=text, mask=comment_participant.mask if user.user.nickname
-                                                                                           not in game.anchor else None)
-    comment.save()
+
     if 'description' in post.tags or user.user.nickname in game.anchor:
+        comment = GameComment(post=post, author=user.user, text=text, mask=None)
+        comment.save()
         user.user.comments_number += 1
         user.user.save()
     else:
+        comment = GameComment(post=post, author=user.user, text=text, mask=comment_participant.mask if user.user.nickname
+                              not in game.anchor else None)
+        comment.save()
         participant = get_object_or_404(GameParticipant, game=game, user=user)
         participant.comments_number += 1
         participant.save()
@@ -2186,6 +2189,12 @@ def contract(request, kwargs):
     comment.save()
     voter.can_ask_killer = False
     voter.save()
+
+
+def preserve_error_messages(request):
+    mstore = messages.get_messages(request)
+    for m in mstore:
+        messages.add_message(request, m.level, m.message, extra_tags=m.extra_tags)
 
 
 class DisplayGame(generic.ListView):
@@ -2411,12 +2420,13 @@ class DisplayGamePost(generic.ListView):
             self.template_name = 'mafiaapp/display_post.html'
             participants = GameParticipant.objects.filter(game=self.game).exclude(user__nickname='Игровой Бот')
             context['participants'] = participants
-        if self.request.user.is_authenticated():
-            participant = GameParticipant.objects.filter(game=self.game, user=self.request.user).first()
-            context['registered'] = True if participant else False
-            context['participant'] = participant if participant else None
-        if 'private' in self.game_post.tags and self.request.user.user.nickname in self.game_post.tags:
-            context.update(self.allowed_actions(self.request.user))
+        if self.game.state != 'past':
+            if self.request.user.is_authenticated():
+                participant = GameParticipant.objects.filter(game=self.game, user=self.request.user).first()
+                context['registered'] = True if participant else False
+                context['participant'] = participant if participant else None
+            if 'private' in self.game_post.tags and self.request.user.user.nickname in self.game_post.tags:
+                context.update(self.allowed_actions(self.request.user))
         msgs = messages.get_messages(self.request)
         error_messages = [m for m in msgs if 'error' in m.tags]
         if error_messages:
@@ -2470,7 +2480,11 @@ class DisplayGamePost(generic.ListView):
         self.object_list = self.get_queryset()
         context = self.get_context_data()
         context['request'] = request.POST
-        return render(request, self.template_name, context=context)
+        preserve_error_messages(request)
+        request.session['redirect'] = True
+        return HttpResponseRedirect(reverse('mafiaapp:display_game_post',
+                                            kwargs={'game_slug': kwargs['game_slug'],
+                                                    'post_slug': kwargs['post_slug']}) + "?page=last")
 
     def get(self, request, *args, **kwargs):
         self.game = get_game(kwargs)

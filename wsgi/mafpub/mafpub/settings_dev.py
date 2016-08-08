@@ -98,6 +98,7 @@ LOGGING = {
 
 #SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 #SESSION_COOKIE_AGE = 1209600
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 WSGI_APPLICATION = 'mafpub.wsgi.application'
 

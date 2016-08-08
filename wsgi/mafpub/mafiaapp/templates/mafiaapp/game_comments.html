@@ -27,10 +27,28 @@
         document.getElementById('id_comment').focus();
 	}
 
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    }
+
     $(document).ready(function(){
         $(".content-markdown").each(function(){
             $(this).html( marked($(this).text()) )
         })
+
+        var page = GetURLParameter('page');
+        if (page == 'last') {
+            //$("#last").focus();
+            document.getElementById('last').scrollIntoView();
+        }
     })
 </script>
 
@@ -57,7 +75,7 @@
 </div>
 
 {% for comment in page_obj %}
-<div class="row comment">
+<div class="row comment" {% if forloop.last %}id="last"{% endif %}>
     <div class="col-md-2 text-right">
     	<!--<a href="{% url 'mafiaapp:profile' user=comment.mask.username %}">-->
         {% if comment.author.user.nickname in game.anchor %}
