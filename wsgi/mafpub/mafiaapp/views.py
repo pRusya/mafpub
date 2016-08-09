@@ -97,9 +97,13 @@ class RegisterView(generic.CreateView):
 
     def get_initial(self):
         email = get_object_or_404(EmailValidation, code=self.kwargs['code'])
+        return {'email': email.email}
+
+    def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Registration successful. You may now login using your '
                                                           'credentials')
-        return {'email': email.email}
+        return super(RegisterView, self).form_valid(form)
+
 
 
 class DisplayUsersView(generic.ListView):
@@ -145,7 +149,7 @@ class CreateGame(generic.CreateView):
         self.object = form.save()
         user = User.objects.get(username=self.request.user)
         bot = User.objects.get(nickname='Игровой Бот')
-        description = GamePost(title='Описание', game=self.object, text=self.request.POST['description'], author=user,
+        description = GamePost(title='Регистрация', game=self.object, text=self.request.POST['description'], author=user,
                                tags=['general', 'description'], short='description',
                                slug=self.object.slug+'_description', allow_role=['everyone'])
         description.save()
@@ -173,7 +177,6 @@ class CreateGamePost(generic.CreateView):
     def form_valid(self, form):
         bot = User.objects.get(nickname='Игровой Бот')
         fcd = form.cleaned_data
-        print('     fcd', fcd)
         post = GamePost(title=fcd['title'], game=fcd['game'], text=self.request.POST['text'], author=bot,
                         tags=fcd['tags'], short=fcd['short'], slug=fcd['slug'], allow_role=fcd['allow_role'])
         post.save()
@@ -1345,510 +1348,6 @@ class DisplayGamesView(generic.ListView):
     model = Game
 
 
-class DisplayCurrentGameView(generic.ListView):
-    template_name = 'mafiaapp/current/current_game.html'
-
-    def get_queryset(self):
-        game = get_object_or_404(Game, state='current')
-        return GamePost.objects.filter(Q(tags__contains=['day']) | Q(tags__contains=['general']), game=game) \
-            .exclude(Q(tags__contains=['mafia']) | Q(tags__contains=['militia'])).order_by('-date')
-
-    def get_context_data(self, **kwargs):
-        context = super(DisplayCurrentGameView, self).get_context_data(**kwargs)
-        game = Game.objects.filter(state='current')
-        if isinstance(self.request.user, AnonymousUser):
-            context['registered'] = False
-            return context
-        participant = GameParticipant.objects.filter(game=game, user=self.request.user).first()
-        if participant is None:
-            context['registered'] = False
-        else:
-            role = participant.role
-            # mafia quarters
-            if role in ['mafia', 'head mafia', 'mafia doctor', 'mafia barman'] or participant.sees_maf_q:
-                context['mafia'] = True
-            # militia quarters
-            if role in ['militia', 'head militia', 'militia doctor', 'militia barman'] or participant.sees_mil_q:
-                context['militia'] = True
-            # morgue quarters
-            if role in ['dead']:
-                context['dead'] = True
-            context['registered'] = True
-        return context
-
-    def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        return render(request, self.template_name, context)
-
-
-class DisplayUpcomingGameView(generic.ListView):
-    template_name = 'mafiaapp/upcoming/upcoming_game_description.html'
-
-    def get_queryset(self):
-        game = get_object_or_404(Game, state='upcoming')
-        return game  # Game.objects.get(state='upcoming')
-
-    def get_context_data(self, **kwargs):
-        game = kwargs.pop('object_list', self.object_list)
-        registered = True if GameParticipant.objects.filter(game=game, user=self.request.user).first() else False
-        post = GamePost.objects.get(game=game, tags__contains=['description'])
-        comments = GameComment.objects.filter(post=post).order_by('date')
-        participants = GameParticipant.objects.filter(game=game).exclude(user__nickname='Игровой Бот')
-        paginator = Paginator(comments, 10)
-        page = self.request.GET.get('page')
-        try:
-            pages = paginator.page(page)
-        except PageNotAnInteger:
-            pages = paginator.page(1)
-        except EmptyPage:
-            pages = paginator.page(paginator.num_pages)
-        context = {
-            'paginator': paginator,
-            'page_obj': pages,
-            'is_paginated': pages.has_other_pages(),
-            'game': game,
-            'registered': registered,
-            'post': post,
-            #'comments': comments,
-            'participants': participants
-        }
-        return context
-
-    def post(self, request):
-        self.object_list = self.get_queryset()
-        action = request.POST.get('action', '')
-        context = self.get_context_data()
-        user = User.objects.get(username=request.user)
-        if action == 'Участвовать':
-            participant = GameParticipant(game=context['game'], user=user, mask=None)
-            participant.save()
-            private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % request.user.user.nickname,
-                                        game=context['game'], tags=['current', 'private', request.user.user.nickname],
-                                        short='private', author=user)
-            private_quarters.save()
-            context['registered'] = True
-            return render(request, self.template_name, context)
-        elif action == 'Отменить участие':
-            participant = GameParticipant.objects.get(game=context['game'], user=user)
-            participant.delete()
-            private_quarters = GamePost.objects.get(game=context['game'], author=user, tags__contains=['private'])
-            private_quarters.delete()
-            context['registered'] = False
-            return render(request, self.template_name, context)
-        elif action == 'Опубликовать':
-            post = GamePost.objects.get(game=context['game'], tags__contains=['description'])
-            #comment = GameComment(post=post, author=user, text=request.POST['comment'])
-            #comment.save()
-
-            user = User.objects.get(username=request.user)
-            text = request.POST['comment']
-            if request.session.get('last_comment_time', ''):
-                if int(time.time()) - request.session['last_comment_time'] < 15:
-                    messages.add_message(request, messages.ERROR, 'Комментарии можно оставлять не чаще одного раза '
-                                                                  'в 15 секунд. Подождите еще %s сек.' %
-                                         (15-(int(time.time()) - request.session['last_comment_time'])))
-                    return render(request, self.template_name, context)
-            if text.count('\r') >= 25 or len(text) >= 2000:
-                messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
-                return render(request, self.template_name, context)
-            split = re.split('(?is)(\[\[.*?\]\])', text)
-            for i, item in enumerate(split):
-                if re.search('(?is)\[\[.+\(\d+\):\s.+\]\]', item):
-                    author = re.sub('(?is)\[\[(.*?)\(.*', '\\1', item)
-                    comment_id = re.sub('(?is)\[\[.*?\(([\d]+)\).*', '\\1', item)
-                    if not author or not comment_id:
-                        messages.add_message(request, messages.ERROR, '#1 Не найдено цитируемое сообщение %s' % item)
-                        return render(request, 'mafiaapp/current/current_game_description.html', context)
-                    #participant = get_object_or_404(GameParticipant, game=context['game'], mask__username=author)
-                    quote = get_object_or_404(GameComment, id=int(comment_id))
-                    if quote.author != user:
-                        print(quote.author, user.nickname)
-                        messages.add_message(request, messages.ERROR, '#2 Не найдено цитируемое сообщение %s' % item)
-                        return render(request, 'mafiaapp/current/current_game_description.html', context)
-                    comment_text = re.sub('(?is)\[\[.*?\):\s*(.*)\]\]$', '\\1', item)
-                    if comment_text not in re.sub('(?is)<div.*?</div>', '', quote.text):
-                        messages.add_message(request, messages.ERROR, '#3 Не найдено цитируемое сообщение %s' % item)
-                        return render(request, 'mafiaapp/current/current_game_description.html', context)
-                    split[i] = '<div class="section comment-quote"><h4>'+author+'(<a href="#'+comment_id + \
-                               '">#</a>):</h4><br>'+comment_text+'</div>'
-            text = ''.join([x for x in split])
-            comment = GameComment(post=post, author=user, text=text)
-            comment.save()
-            user.comments_number += 1
-            user.save()
-            context = self.get_context_data()
-            request.session['last_comment_time'] = int(time.time())
-
-            return render(request, self.template_name, context)
-
-
-class DisplayCurrentGamePostView(generic.ListView):
-    template_name = 'mafiaapp/current/current_game_post.html'
-
-    def get_queryset(self):
-        game = get_object_or_404(Game, state='current')
-        return game  # Game.objects.get(state='current')
-
-    @staticmethod
-    def allowed_actions(game, user):
-        participant = GameParticipant.objects.get(game=game, user=user)
-        dead = True if participant.role == 'dead' else False
-        can_hang = True if participant.role != 'dead' else False
-        can_shoot = True if participant.role in \
-            ['head mafia', 'neutral killer', 'mafia killer', 'militia killer', 'maniac'] else False
-        can_check = True if participant.role in \
-            ['mafia recruit', 'head militia', 'militia', 'maniac'] else False
-        can_heal = True if participant.role in \
-            ['neutral doctor', 'mafia doctor', 'militia doctor'] else False
-        can_spoil = True if participant.role in \
-            ['neutral barman', 'mafia barman', 'militia barman'] else False
-        can_choose_leader = True if not game.hasHeadMafia and participant.role == 'mafia' else False
-        can_recruit = True if not game.hasRecruit and participant.role == 'head mafia' and participant.can_recruit \
-            else False
-        can_ask_killer = True if participant.can_ask_killer and participant.role \
-            not in ['neutral killer', 'mafia killer', 'militia killer'] else False
-        can_choose_side = participant.can_choose_side
-        allowed_actions = {
-            'dead': dead,
-            'can_hang': can_hang,
-            'can_shoot': can_shoot,
-            'can_check': can_check,
-            'can_heal': can_heal,
-            'can_spoil': can_spoil,
-            'can_choose_leader': can_choose_leader,
-            'can_recruit': can_recruit,
-            'can_ask_killer': can_ask_killer,
-            'can_choose_side': can_choose_side,
-        }
-        return allowed_actions
-
-    def get_context_data(self, **kwargs):
-        game = kwargs.pop('object_list', self.object_list)
-        short = self.kwargs.get('short', '')
-        side = self.kwargs.get('side', '')
-        context = {
-            'paginator': None,
-            'page_obj': None,
-            'is_paginated': False,
-            'game': game
-        }
-        anonymous = isinstance(self.request.user, AnonymousUser)
-        participant = GameParticipant.objects.filter(game=game, user=self.request.user).first() if not anonymous else None
-        registered = True if participant else False
-        context['registered'] = registered
-        # serve posts for dashboard/game/(mafia|militia)/
-        if short in ['mafia', 'militia']:
-            if anonymous or not registered or (short not in participant.role and participant.role not in
-                    ['mafia recruit', 'militia recruit']) or (short == 'militia' and not participant.sees_mil_q):
-                raise Http404()
-            if 'recruit' in participant.role:
-                post_list = GamePost.objects.filter(game=game, tags__contains=[short], short='secret')
-            else:
-                post_list = GamePost.objects.filter(game=game, tags__contains=[short]).order_by('-date')
-            context['post_list'] = post_list
-            # we only need to display post_list, so return here
-            return context
-        # serve post for dashboard/game/morgue
-        elif short == 'morgue':
-            if anonymous or not registered or participant.role != 'dead':
-                raise Http404()
-            post = GamePost.objects.filter(game=game, short=short, tags__contains=[short]).first()
-        # serve post for dashboard/game/private/
-        elif short == 'private':
-            if anonymous or not registered:
-                raise Http404()
-            post = GamePost.objects.get(game=game, short=short, tags__contains=[self.request.user.user.nickname])
-            context.update(self.allowed_actions(game, self.request.user))
-            # participants to hang
-            if context['can_hang']:
-                context['participants'] = GameParticipant.objects.filter(game=game) \
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-            # targets to heal
-            if context['can_heal'] or context['can_spoil']:
-                if participant.prevTarget:
-                    context['heal_spoil_targets'] = GameParticipant.objects.filter(game=game) \
-                        .exclude(id=participant.prevTarget.id) \
-                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-                else:
-                    context['heal_spoil_targets'] = GameParticipant.objects.filter(game=game) \
-                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-            # killer's targets to shoot
-            if context['can_shoot'] and participant.role in ['neutral killer', 'mafia killer', 'militia killer']:
-                contract_votes = Vote.objects.filter(game=game, day=game.day, action='contract') \
-                    .exclude(target__role__contains='killer')
-                if len(contract_votes) > 0:
-                    shoot_targets = []
-                    for vote in contract_votes:
-                        shoot_targets.append(vote.target)
-                    context['shoot_targets'] = shoot_targets
-                    # context['shoot_targets'] = GameParticipant.objects.filter(game=game)\
-                    #    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-            # targets to shoot
-            if context['can_shoot'] and participant.role in ['head mafia', 'maniac']:
-                context['shoot_targets'] = GameParticipant.objects.filter(game=game) \
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-            # candidates for head mafia
-            if context['can_choose_leader']:
-                context['leader_targets'] = GameParticipant.objects.filter(game=game, role='mafia')
-            # candidates for mafia recruit or militia recruit
-            if context['can_recruit']:
-                context['recruit_targets'] = GameParticipant.objects.filter(game=game) \
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-            # targets to check
-            if context['can_check']:
-                context['check_targets'] = GameParticipant.objects.filter(game=game) \
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-        # serve post for dashboard/game/(mafia|militia)/short
-        elif side in ['mafia', 'militia']:
-            if anonymous or not registered or (side not in participant.role and participant.role not in
-                    ['mafia recruit', 'militia recruit']):
-                raise Http404()
-            post = GamePost.objects.get(game=game, short=short, tags__contains=[side])
-        # serve post for dashboard/game/short
-        else:
-            post = GamePost.objects.exclude(Q(tags__contains=['mafia']) | Q(tags__contains=['militia'])) \
-                .get(game=game, short=short)  # .first()
-        context['post'] = post
-
-        # serve comments for post
-        if short == 'description':
-            comments = GameComment.objects.filter(post=post).order_by('date')
-            context['registered'] = 'noregister'
-        else:
-            comments = GameComment.objects.filter(post=post).order_by('date').values()
-            for comment in comments:
-                participant = GameParticipant.objects.get(user=comment['author_id'], game=game)
-                comment['mask'] = participant.mask
-                comment['author'] = participant.user
-        paginator = Paginator(comments, 10)
-        page = self.request.GET.get('page')
-        try:
-            pages = paginator.page(page)
-        except PageNotAnInteger:
-            pages = paginator.page(1)
-        except EmptyPage:
-            pages = paginator.page(paginator.num_pages)
-        context['comments'] = comments
-        context['paginator'] = paginator
-        context['page_obj'] = pages
-        context['is_paginated'] = pages.has_other_pages()
-        # print('     DisplayCurrentGamePostView context', context)
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        action = request.POST.get('action', '')
-        short = self.kwargs.get('short', '')
-        actions = {
-            'Повешать': 'hang',
-            'Выбрать': 'leader',
-            'Выстрелить': 'shoot',
-            'Проверить': 'check',
-            'Вылечить': 'heal',
-            'Напоить': 'spoil',
-            'Присоедениться': 'side',
-            'Завербовать': 'recruit',
-            'Заказать': 'contract',
-        }
-        if action == 'Опубликовать':
-            user = User.objects.get(username=request.user)
-            text = request.POST['comment']
-            if request.session.get('last_comment_time', ''):
-                if int(time.time()) - request.session['last_comment_time'] < 15:
-                    messages.add_message(request, messages.ERROR, 'Комментарии можно оставлять не чаще одного раза '
-                                                                  'в 15 секунд. Подождите еще %s сек.' %
-                                         (15-(int(time.time()) - request.session['last_comment_time'])))
-                    return render(request, self.template_name, context)
-            if text.count('\r') >= 25 or len(text) >= 2000:
-                messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
-                return render(request, self.template_name, context)
-            split = re.split('(?is)(\[\[.*?\]\])', text)
-            for i, item in enumerate(split):
-                if re.search('(?is)\[\[.+\(\d+\):\s.+\]\]', item):
-                    author = re.sub('(?is)\[\[(.*?)\(.*', '\\1', item)
-                    comment_id = re.sub('(?is)\[\[.*?\(([\d]+)\).*', '\\1', item)
-                    if not author or not comment_id:
-                        messages.add_message(request, messages.ERROR, '#1 Не найдено цитируемое сообщение %s' % item)
-                        return render(request, 'mafiaapp/current/current_game_description.html', context)
-                    participant = get_object_or_404(GameParticipant, game=context['game'], mask__username=author)
-                    quote = get_object_or_404(GameComment, id=int(comment_id))
-                    if quote.author != participant.user:
-                        messages.add_message(request, messages.ERROR, '#2 Не найдено цитируемое сообщение %s' % item)
-                        return render(request, 'mafiaapp/current/current_game_description.html', context)
-                    comment_text = re.sub('(?is)\[\[.*?\):\s*(.*)\]\]$', '\\1', item)
-                    if comment_text not in re.sub('(?is)<div.*?</div>', '', quote.text):
-                        messages.add_message(request, messages.ERROR, '#3 Не найдено цитируемое сообщение %s' % item)
-                        return render(request, 'mafiaapp/current/current_game_description.html', context)
-                    split[i] = '<div class="section comment-quote"><h4>'+author+'(<a href="#'+comment_id + \
-                               '">#</a>):</h4><br>'+comment_text+'</div>'
-            text = ''.join([x for x in split])
-            comment = GameComment(post=context['post'], author=user, text=text)
-            comment.save()
-            participant = get_object_or_404(GameParticipant, game=context['game'], user=user)
-            participant.comments_number += 1
-            participant.save()
-            context = self.get_context_data()
-            request.session['last_comment_time'] = int(time.time())
-            if short == 'description':
-                # To display list of participants
-                context['participants'] = GameParticipant.objects.filter(game=context['game']) \
-                    .exclude(user__nickname='Игровой Бот')
-                return render(request, 'mafiaapp/current/current_game_description.html', context)
-        elif action in actions.keys():
-            user = User.objects.get(username=request.user)
-            voter = GameParticipant.objects.get(user=user, game=context['game'])
-            # target = GameParticipant.objects.get(id=int(request.POST['target']), game=context['game'])
-            if action == 'Присоедениться':
-                side = request.POST['target']
-                if side in ['mafia_side', 'militia_side']:
-                    vote = Vote.objects.update_or_create(game=context['game'], day=context['game'].day, voter=voter,
-                                                         action=side, defaults={'target': voter})
-                else:
-                    raise Http404()
-            else:
-                try:
-                    target = get_object_or_404(GameParticipant, game=context['game'], id=int(request.POST['target']))
-                except KeyError:
-                    raise Http404()
-                vote = Vote.objects.update_or_create(game=context['game'], day=context['game'].day, voter=voter,
-                                                     action=actions[action], defaults={'target': target})
-
-            post = GamePost.objects.get(game=context['game'], short=short, tags__contains=[request.user.user.nickname])
-            author = User.objects.get(nickname='Игровой Бот')
-            comment = GameComment(post=post, text=str(vote[0]), author=author)
-            comment.save()
-
-            if action == 'Заказать':
-                voter.can_ask_killer = False
-                voter.save()
-            if action == 'Присоедениться':
-                voter.can_choose_side = False
-                voter.save()
-            if action == 'Завербовать':
-                target_post = GamePost.objects.get(game=context['game'], short=short,
-                                                   tags__contains=[target.user.nickname])
-                if target.role == 'peaceful':
-                    target.can_choose_side = True
-                    target.save()
-                    recruit_result = 'День ' + str(
-                        context['game'].day) + ': Мафия предлагает вам перейти на её сторону.' \
-                        '\nВы можете выбрать сторону мафии и раз в день выбирать игрока для проверки его роли.' \
-                        '\nВы можете выбрать сторону милиции. ' \
-                        '\nЧтобы остаться мирным, проигнорируйте вербовку и не выбирайте сторону.' \
-                        ' В таком случае ночью мафия получит уведомление об отказе от вербовки.'
-                else:
-                    recruit_result = 'День ' + str(
-                        context['game'].day) + ': Мафия предлагает вам перейти на её сторону.' \
-                                               '\nВы не можете принять вербовку и автоматически отказываетесь от неё.' \
-                                               '\nНочью мафия получит уведомление об отказе от вербовки.'
-                target_inform = GameComment(post=target_post, text=recruit_result, author=author)
-                target_inform.save()
-                voter.can_recruit = False
-                voter.save()
-
-            # check if we have enough votes to choose head mafia. change role of the chosen one to 'head mafia'
-            # and notify others
-            if action == 'Выбрать':
-                maf_count = GameParticipant.objects.filter(game=context['game'], role='mafia').count()
-                half = maf_count / 2
-                votes_count = Vote.objects.filter(game=context['game'], action='leader').count()
-                top_votes = Vote.objects.filter(game=context['game'], action='leader').values('target') \
-                    .annotate(Count('target')).order_by('-target__count')
-                if top_votes[0]['target__count'] >= half or votes_count == maf_count:
-                    game = context['game']
-                    game.hasHeadMafia = True
-                    game.save()
-                    context['game'] = game
-                    head_mafia = GameParticipant.objects.get(id=top_votes[0]['target'])
-                    head_mafia.role = 'head mafia'
-                    head_mafia.save()
-                    head_mafia_post = GamePost.objects.get(game=game, tags__contains=[head_mafia.user.nickname])
-                    author = User.objects.get(nickname='Игровой Бот')
-                    mafia_current_day_post = GamePost.objects. \
-                        get(game=game, tags__contains=['mafia', 'current'])
-                    comment = GameComment(post=mafia_current_day_post, author=author,
-                                          text='День ' + str(game.day) + ': игрок ' + str(head_mafia) +
-                                               ' был выбран главой мафии.')
-                    comment.save()
-                    comment = GameComment(post=head_mafia_post, author=author,
-                                          text='Вы были выбраны главой мафии. '
-                                               'Выберите цель для выстрела и цель для вербовки.')
-                    comment.save()
-            context = self.get_context_data()
-        return render(request, 'mafiaapp/current/current_game_post.html', context)
-
-    def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        short = kwargs['short']
-        if short == 'description':
-            # To display list of participants
-            context['participants'] = GameParticipant.objects.filter(game=context['game']) \
-                .exclude(user__nickname='Игровой Бот')
-            return render(request, 'mafiaapp/current/current_game_description.html', context)
-        elif short in ['mafia', 'militia']:
-            return render(request, 'mafiaapp/mafia_militia_quarters.html', context)
-        return render(request, 'mafiaapp/current/current_game_post.html', context)
-
-
-class DisplayPastGamesView(generic.ListView):
-    template_name = 'mafiaapp/past_games.html'
-
-    def get_queryset(self):
-        game = Game.objects.filter(state='past')
-        return GamePost.objects.filter(game=game)
-
-
-class DisplayPastGameView(generic.ListView):
-    template_name = 'mafiaapp/past/past_game.html'
-
-    def get_queryset(self):
-        game = get_object_or_404(Game, short=self.kwargs['short'])
-        return GamePost.objects.filter(game=game).order_by('-date')
-
-
-class DisplayPastGamePostView(generic.ListView):
-    template_name = 'mafiaapp/past/past_game_post.html'
-
-    def get_queryset(self):
-        game = get_object_or_404(Game, short=self.kwargs['short'])
-        return game  # GamePost.objects.get(game=game, id=int(self.kwargs['post_short']))
-
-    def get_context_data(self, **kwargs):
-        game = kwargs.pop('object_list', self.object_list)
-        post_id = self.kwargs.get('post_id', '')
-        context = {
-            'paginator': None,
-            'page_obj': None,
-            'is_paginated': False,
-            'game': game
-        }
-        if post_id in ['mafia', 'militia']:
-            post_list = GamePost.objects.filter(game=game, tags__contains=[post_id]).order_by('-date')
-            context['post_list'] = post_list
-            return context
-        post = GamePost.objects.get(game=game, id=post_id)
-        context['post'] = post
-        # serve comments for post
-        comments = GameComment.objects.filter(post=post).order_by('date').values()
-        for comment in comments:
-            participant = GameParticipant.objects.get(user=comment['author_id'], game=game)
-            comment['mask'] = participant.mask
-            comment['author'] = participant.user
-        context['comments'] = comments
-        context['comments'] = comments
-        return context
-
-    def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        if self.kwargs['post_id'] in ['mafia', 'militia']:
-            return render(request, 'mafiaapp/past/past_mafia_militia_quarters.html', context)
-        return render(request, self.template_name, context)
-
-
 class Profile(generic.DetailView):
     template_name = 'mafiaapp/profile.html'
     context_object_name = 'profile'
@@ -1898,27 +1397,27 @@ def cancel_participation(request, kwargs):
 
 @login_required
 def post_game_comment(request, kwargs):
-    # print(' post_comment()')
     game = get_game(kwargs)
-    # print('     game', game)
     post = get_game_post(kwargs)
-    # print('     post', post)
     user = get_user(request)
 
     if user.user.nickname not in game.anchor and 'description' not in post.tags:
         comment_participant = get_object_or_404(GameParticipant, game=game, user=user)
         if post.allow_comment:
+            if comment_participant.role == 'dead' and 'private' not in post.tags and 'morgue' not in post.tags:
+                messages.add_message(request, messages.ERROR, 'Мёртвых здесь не слышат.')
+                return False
             if 'everyone' not in post.allow_role:
                 if 'private' in post.allow_role:
                     if user.user.nickname not in post.tags:
                         messages.add_message(request, messages.ERROR, '#1 Вы не можете оставлять сообщения в данной теме.')
-                        return
+                        return False
                 elif comment_participant.role not in post.allow_role:
                     messages.add_message(request, messages.ERROR, '#2 Вы не можете оставлять сообщения в данной теме.')
-                    return
+                    return False
         else:
             messages.add_message(request, messages.ERROR, '#3 Вы не можете оставлять сообщения в данной теме.')
-            return
+            return False
 
     text = request.POST['comment']
     if request.session.get('last_comment_time', ''):
@@ -1926,40 +1425,10 @@ def post_game_comment(request, kwargs):
             messages.add_message(request, messages.ERROR, 'Комментарии можно оставлять не чаще одного раза '
                                                           'в 15 секунд. Подождите еще %s сек.' %
                                  (15 - (int(time.time()) - request.session['last_comment_time'])))
-            return
+            return False
     if text.count('\r') >= 25 or len(text) >= 2000:
         messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
-        return
-    """
-    split = re.split('(?is)(\[\[.*?\]\])', text)
-    print('         split', split)
-    for i, item in enumerate(split):
-        # search for [[<nickname>(id): <comment>]]
-        if re.search('(?is)\[\[.+\(\d+\):\s.*\]\]', item):
-            author = re.sub('(?is)\[\[(.*?)\(.*', '\\1', item)
-            comment_id = re.sub('(?is)\[\[.*?\(([\d]+)\).*', '\\1', item)
-            if not author or not comment_id:
-                messages.add_message(request, messages.ERROR, '#1 Не найдено цитируемое сообщение %s' % item)
-                return
-            if user.user.nickname in game.anchor:
-                participant = user
-            else:
-                participant = get_object_or_404(GameParticipant, game=game, mask__username=author)
-            quote = get_object_or_404(GameComment, id=int(comment_id))
-            if quote.author != participant.user:
-                messages.add_message(request, messages.ERROR, '#2 Не найдено цитируемое сообщение %s' % item)
-                return
-            comment_text = re.sub('(?is)(\[\[.*?\): *)(.*)\]\]$', '\\2', item)
-            if comment_text != re.sub('(?is)<div.*?</div>', '\r\n', quote.text):
-                print('         comment_text', comment_text)
-                print('         re.sub', re.sub('(?is)<div.*?</div>', '\r\n', quote.text))
-                messages.add_message(request, messages.ERROR, '#3 Не найдено цитируемое сообщение %s' % item)
-                return
-            split[i] = '<div class="section comment-quote"><h4>' + author + '(<a href="#' + comment_id + \
-                       '">#</a>):</h4><br>' + comment_text + '</div>'
-
-    text = ''.join([x for x in split])
-    """
+        return False
 
     if 'description' in post.tags or user.user.nickname in game.anchor:
         comment = GameComment(post=post, author=user.user, text=text, mask=None)
@@ -1974,7 +1443,7 @@ def post_game_comment(request, kwargs):
         participant.comments_number += 1
         participant.save()
     request.session['last_comment_time'] = int(time.time())
-    # print('     post comment success!')
+    return True
 
 
 # TODO
@@ -1989,6 +1458,9 @@ def hang(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -1999,6 +1471,7 @@ def hang(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
+    return True
 
 
 @login_required
@@ -2007,6 +1480,9 @@ def shoot(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -2017,6 +1493,7 @@ def shoot(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
+    return True
 
 
 @login_required
@@ -2025,6 +1502,9 @@ def choose_leader(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']), role='mafia')
@@ -2059,6 +1539,7 @@ def choose_leader(request, kwargs):
                               text='Вы были выбраны главой мафии. '
                                    'Выберите цель для выстрела и цель для вербовки.')
         comment.save()
+    return True
 
 
 @login_required
@@ -2067,6 +1548,9 @@ def check(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -2077,6 +1561,7 @@ def check(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
+    return True
 
 
 @login_required
@@ -2085,6 +1570,9 @@ def heal(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -2095,6 +1583,7 @@ def heal(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
+    return True
 
 
 @login_required
@@ -2103,6 +1592,9 @@ def spoil(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -2113,6 +1605,7 @@ def spoil(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
+    return True
 
 
 @login_required
@@ -2121,6 +1614,9 @@ def choose_side(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
 
     side = request.POST['target']
     if side in ['mafia_side', 'militia_side'] and voter.can_choose_side:
@@ -2133,6 +1629,7 @@ def choose_side(request, kwargs):
     comment.save()
     voter.can_choose_side = False
     voter.save()
+    return True
 
 
 @login_required
@@ -2141,6 +1638,9 @@ def recruit(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -2169,6 +1669,7 @@ def recruit(request, kwargs):
     target_inform.save()
     voter.can_recruit = False
     voter.save()
+    return True
 
 
 @login_required
@@ -2177,6 +1678,9 @@ def contract(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
     try:
         target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
                                    id=int(request.POST['target']))
@@ -2189,6 +1693,7 @@ def contract(request, kwargs):
     comment.save()
     voter.can_ask_killer = False
     voter.save()
+    return True
 
 
 def preserve_error_messages(request):
@@ -2425,6 +1930,7 @@ class DisplayGamePost(generic.ListView):
                 participant = GameParticipant.objects.filter(game=self.game, user=self.request.user).first()
                 context['registered'] = True if participant else False
                 context['participant'] = participant if participant else None
+                context['dead'] = True if participant and participant.role == 'dead' else False
             if 'private' in self.game_post.tags and self.request.user.user.nickname in self.game_post.tags:
                 context.update(self.allowed_actions(self.request.user))
         msgs = messages.get_messages(self.request)
@@ -2470,21 +1976,20 @@ class DisplayGamePost(generic.ListView):
     def post(self, request, *args, **kwargs):
         self.game = get_game(kwargs)
         self.game_post = get_game_post(kwargs)
-        logger.info('DisplayGamePost POST '+str(request))
         if not self.allow_access(request):
             raise Http404
         if request.POST.get('action', '') in self.dispatcher.keys():
-            self.dispatcher[request.POST['action']](request, self.kwargs)
+            result = self.dispatcher[request.POST['action']](request, self.kwargs)
         else:
             raise Http404
         self.object_list = self.get_queryset()
         context = self.get_context_data()
         context['request'] = request.POST
         preserve_error_messages(request)
-        request.session['redirect'] = True
         return HttpResponseRedirect(reverse('mafiaapp:display_game_post',
                                             kwargs={'game_slug': kwargs['game_slug'],
-                                                    'post_slug': kwargs['post_slug']}) + "?page=last")
+                                                    'post_slug': kwargs['post_slug']}) +
+                                    "?page=last" if result else "")
 
     def get(self, request, *args, **kwargs):
         self.game = get_game(kwargs)

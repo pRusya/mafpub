@@ -1,7 +1,7 @@
 {% load filters %}
 
 {{ game_comment_form.media }}
-{% if not dead and participant or 'private' in post.tags and participant or user.user.nickname in game.anchor %}
+{% if not dead and participant or 'private' in post.tags and participant or user.user.nickname in game.anchor or 'description' in post.tags %}
     {% if post.allow_comment and user.is_authenticated %}
 <div class="row">
     <div class="col-md-8 col-centered">

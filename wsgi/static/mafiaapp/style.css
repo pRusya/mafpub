@@ -42,6 +42,13 @@ pre {
   word-break:keep-all;
   border: 0px;
 }
+.notifyjs-copy-comment-base {
+  opacity: 0.85;
+  width: 200px;
+  background: #F5F5F5;
+  padding: 5px;
+  border-radius: 10px;
+}
 .comment-item {
   white-space: pre-wrap;
   /*font-weight: 100;
