@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-md-2">
                     {% if not private.allow_comment %}
-                    <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                    <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
                     {% endif %}
                 </div>
                 <div class="col-md-4">
@@ -47,9 +47,9 @@
                     </div>
                     <div class="col-md-3">
                         <h3></h3>
-                        <span><h4 style="font-weight:600">
+                        <span><h4 class="font-600">
                         {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                        </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                        </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
                     </div>
                 {% endif %}
                 {% endwith %}
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-md-2">
                     {% if not morgue.allow_comment %}
-                    <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                    <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
                     {% endif %}
                 </div>
                 <div class="col-md-4">
@@ -74,9 +74,9 @@
                     </div>
                     <div class="col-md-3">
                         <h3></h3>
-                        <span><h4 style="font-weight:600">
+                        <span><h4 class="font-600">
                         {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                        </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                        </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
                     </div>
                 {% endif %}
                 {% endwith %}
@@ -99,7 +99,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             {% if not private.allow_comment %}
-                            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
                             {% endif %}
                         </div>
                         <div class="col-md-4">
@@ -113,9 +113,9 @@
                         </div>
                         <div class="col-md-3">
                             <h3></h3>
-                            <span><h4 style="font-weight:600">
+                            <span><h4 class="font-600">
                             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -126,7 +126,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             {% if not morgue.allow_comment %}
-                            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
                             {% endif %}
                         </div>
                         <div class="col-md-4">
@@ -140,9 +140,9 @@
                         </div>
                         <div class="col-md-3">
                             <h3></h3>
-                            <span><h4 style="font-weight:600">
+                            <span><h4 class="font-600">
                             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -157,7 +157,7 @@
     				<div class="row">
                         <div class="col-md-2">
                             {% if not p.allow_comment %}
-                            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
                             {% endif %}
                         </div>
         				<div class="col-md-4">
@@ -171,9 +171,9 @@
                         </div>
                         <div class="col-md-3">
                             <h3></h3>
-                            <span><h4 style="font-weight:600">
+                            <span><h4 class="font-600">
                             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -186,7 +186,7 @@
     				    <div class="row">
                             <div class="col-md-2">
                                 {% if not morgue.allow_comment %}
-                                <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+                                <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
                                 {% endif %}
                             </div>
         				    <div class="col-md-4">
@@ -201,9 +201,9 @@
                         </div>
                         <div class="col-md-3">
                             <h3></h3>
-                            <span><h4 style="font-weight:600">
+                            <span><h4 class="font-600">
                             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+                            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -249,7 +249,7 @@
     <div class="row">
         <div class="col-md-2">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -261,11 +261,11 @@
             <h3></h3>
             <span>{{ comments.count }}</span>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <h3></h3>
-            <span><h4 style="font-weight:600">
+            <span><h4 class="font-600">
             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
         </div>
         {% endif %}
         {% endwith %}
@@ -299,7 +299,7 @@
     <div class="row">
         <div class="col-md-2">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -313,9 +313,9 @@
         </div>
         <div class="col-md-3">
             <h3></h3>
-            <span><h4 style="font-weight:600">
+            <span><h4 class="font-600">
             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
         </div>
         {% endif %}
         {% endwith %}
@@ -343,7 +343,7 @@
     <div class="row">
         <div class="col-md-2">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -357,9 +357,9 @@
         </div>
         <div class="col-md-3">
             <h3></h3>
-            <span><h4 style="font-weight:600">
+            <span><h4 class="font-600">
             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
         </div>
         {% endif %}
         {% endwith %}
@@ -395,7 +395,7 @@
     <div class="row">
         <div class="col-md-2">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -409,9 +409,9 @@
         </div>
         <div class="col-md-3">
             <h3></h3>
-            <span><h4 style="font-weight:600">
+            <span><h4 class="font-600">
             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
         </div>
         {% endif %}
         {% endwith %}
@@ -439,7 +439,7 @@
     <div class="row">
         <div class="col-md-2">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -453,9 +453,9 @@
         </div>
         <div class="col-md-3">
             <h3></h3>
-            <span><h4 style="font-weight:600">
+            <span><h4 class="font-600">
             {% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-            </h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            </h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
         </div>
         {% endif %}
         {% endwith %}
@@ -489,7 +489,7 @@
     <div class="row">
         <div class="col-md-2">
             {% if not info.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" style="max-height:22px;float:right;">
+            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -503,7 +503,7 @@
         </div>
         <div class="col-md-3">
             <h3></h3>
-            <span><h4 style="font-weight:600">{{ comments.last.author }}</h4> в <h4 style="font-weight:600">{{ comments.last.date|date:"H:i" }}</h4></span>
+            <span><h4 class="font-600">{{ comments.last.author }}</h4> в <h4 class="font-600">{{ comments.last.date|date:"H:i" }}</h4></span>
             
         </div>
         {% endif %}

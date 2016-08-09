@@ -103,33 +103,25 @@
 </div>
 
 {% for comment in page_obj %}
-<div class="row comment" {% if forloop.last %}id="last"{% else %}id="div{{comment.id}}"{% endif %}>
+<div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 text-right">
-    	<!--<a href="{% url 'mafiaapp:profile' user=comment.mask.username %}">-->
         {% if comment.author.user.nickname in game.anchor %}
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
-        <h3 id='author{{comment.id}}' style="font-weight:600">{{ comment.author.user.nickname }}</h3><br>
-        <img src="{{ comment.author.user.avatar.url }}" style="max-height:120px;max-width:100%;float:right" />
+        <h3 id='author{{comment.id}}' class="font-600">{{ comment.author.user.nickname }}</h3><br>
+        <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         {% else %}
-        <h3 id='author{{comment.id}}' style="font-weight:600">{{comment.mask.username}}</h3><br>
-        <img src="{{ comment.mask.avatar.url }}" style="max-height:120px;max-width:100%;float:right" />
+        <h3 id='author{{comment.id}}' class="font-600">{{comment.mask.username}}</h3><br>
+        <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
         {% endif %}
-        <!--</a>-->
     </div>
     <div class="col-md-8 col-centered comment-text">
       <h3>{# placeholder to match height with nickname on the left #}</h3><span>{{ comment.date|date:"Y-m-d H:i" }}</span>
       <a href="?page={{ page_obj.number }}#div{{comment.id}}"><span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span></a>
-      <!--
-      <pre id="{{comment.id}}" >{{ comment.text|safe }}</pre>
-<div id="{{comment.id}}" class="content-markdown" style="background:#f5f5f5;border-radius:8px;">{{ comment.text }}</div>
-
-      -->
 
       <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
 
-
-      <img src="{% static 'mafiaapp/Thumb-up.svg' %}" style="max-height:30px;cursor:pointer;display:inline"> {% if comment.like > 0 %}{{ comment.like }}{% endif %}
+      <img src="{% static 'mafiaapp/Thumb-up.svg' %}" class="img-thumb-up"> {% if comment.like > 0 %}{{ comment.like }}{% endif %}
         {% if user.user.nickname in game.anchor %}
         <span></span>
         <form action="{% url 'mafiaapp:delete_game_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">
@@ -138,12 +130,12 @@
         </form>
         <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
       {% endif %}
-      <span style='float:right;text-decoration:underline;cursor:pointer;' onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h4>Цитировать</h4></span>
+      <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h4>Цитировать</h4></span>
     </div>
 </div>
 {% endfor %}
 
-<div style="height:1px;overflow:hidden"><textarea id='ihatejs' value='' style="margin-top:2px;"></textarea></div>
+<div style="height:1px;overflow:hidden"><textarea id="ihatejs" value="" style="margin-top:2px;"></textarea></div>
 
 <div class="row">
 <div class="col-md-12 col-centered text-center">

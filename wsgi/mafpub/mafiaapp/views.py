@@ -1,23 +1,21 @@
-import time
-import sys
 import logging
 import random
 import string
-from threading import Timer
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.core.mail import send_mail
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
-from django.http import Http404
+
 from .forms import *
 from .models import User as mafpub_user
-from django.contrib.auth.decorators import login_required
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +29,6 @@ class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return redirect('mafiaapp:dashboard')
-            return redirect('mafiaapp:index')
         else:
             return render(request, 'mafiaapp/index.html')
 
@@ -77,7 +74,8 @@ class IndexView(generic.ListView):
                              'С этого момента вы сможете оставлять сообщения и принимать участие в играх.\r' \
                              '\r' \
                              'Благодарим за регистрацию!'
-                send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code, 'Галамафия 2.0 <noreply@maf.pub>',
+                send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code,
+                          'Галамафия 2.0 <noreply@maf.pub>',
                           [email], fail_silently=False)
                 messages.add_message(request, messages.INFO, 'Check your email box to finish registration')
                 return redirect('mafiaapp:index')
@@ -103,7 +101,6 @@ class RegisterView(generic.CreateView):
         messages.add_message(self.request, messages.INFO, 'Registration successful. You may now login using your '
                                                           'credentials')
         return super(RegisterView, self).form_valid(form)
-
 
 
 class DisplayUsersView(generic.ListView):
@@ -149,16 +146,17 @@ class CreateGame(generic.CreateView):
         self.object = form.save()
         user = User.objects.get(username=self.request.user)
         bot = User.objects.get(nickname='Игровой Бот')
-        description = GamePost(title='Регистрация', game=self.object, text=self.request.POST['description'], author=user,
+        description = GamePost(title='Регистрация', game=self.object, text=self.request.POST['description'],
+                               author=user,
                                tags=['general', 'description'], short='description',
-                               slug=self.object.slug+'_description', allow_role=['everyone'])
+                               slug=self.object.slug + '_description', allow_role=['everyone'])
         description.save()
         summary = GamePost(title='Итоги ночей', game=self.object, text='Итоги обновляются каждую игровую ночь.',
-                           author=bot, tags=['general', 'summary'], short='summary', slug=self.object.slug+'_summary',
+                           author=bot, tags=['general', 'summary'], short='summary', slug=self.object.slug + '_summary',
                            allow_comment=False, allow_role=['everyone'])
         summary.save()
         morgue = GamePost(title='Морг', game=self.object, text='Здесь уют.',
-                          author=bot, tags=['morgue'], short='morgue', slug=self.object.slug+'_morgue',
+                          author=bot, tags=['morgue'], short='morgue', slug=self.object.slug + '_morgue',
                           allow_role=['dead'])
         morgue.save()
         bot_mask = Mask(game=self.object, avatar=bot.avatar, username=bot.nickname)
@@ -190,7 +188,7 @@ class CreateGamePost(generic.CreateView):
                                    allow_role=fcd['allow_role'] + ['militia'])
             militia_day.save()
         return redirect(self.success_url)
-    
+
     def post(self, request, *args, **kwargs):
         self.object = None
         return super(CreateGamePost, self).post(request, *args, **kwargs)
@@ -244,7 +242,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(EditGameView, self).get_context_data(**kwargs)
-        #game = kwargs.pop('object_list', self.object_list)
+        # game = kwargs.pop('object_list', self.object_list)
         participants = GameParticipant.objects.filter(game=context['game']).exclude(user__nickname='Игровой Бот')
         masks = Mask.objects.filter(game=context['game']).exclude(username='Игровой Бот')
         description = GamePost.objects.get(game=context['game'], tags__contains=['description'])
@@ -425,7 +423,7 @@ def register_bots(d):
 
         private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.nickname,
                                     game=game, tags=['private', user.nickname],
-                                    short='private', author=user, slug=game.slug+'_private_'+user.username,
+                                    short='private', author=user, slug=game.slug + '_private_' + user.username,
                                     allow_role=['private'])
         private_quarters.save()
 
@@ -450,14 +448,15 @@ def vote_hang(d):
     for participant in participants:
         vote = Vote.objects.filter(game=game, day=game.day, voter=participant, action='hang').first()
         if vote:
-            votes_result += '\n  ' + participant.mask.username + '.'*(longest-len(participant.mask.username)) + '.....' \
-                           + vote.target.mask.username
+            votes_result += '\n  ' + participant.mask.username + '.' * (
+                longest - len(participant.mask.username)) + '.....' \
+                            + vote.target.mask.username
         else:
             hang1 = Vote(game=game, day=game.day, voter=participant, action='hang', target=participant)
             hang1.save()
             hang2 = Vote(game=game, day=game.day, voter=participant, action='hang', target=participant)
             hang2.save()
-            votes_result += '\n  ' + participant.mask.username + '.'*(longest-len(participant.mask.username)) \
+            votes_result += '\n  ' + participant.mask.username + '.' * (longest - len(participant.mask.username)) \
                             + '.....Не голосовал'
     all_votes = Vote.objects.filter(game=game, day=game.day, action='hang')
     # there are no votes for current day, so everybody dies of space plague
@@ -523,7 +522,6 @@ def barman_spoil(d):
     # barman's quarters
     post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
     bot = User.objects.get(nickname='Игровой Бот')
-    spoil_result = ''
     success_spoil = False
     # barman's target is dead
     if spoil_vote.target.role == 'dead':
@@ -579,7 +577,8 @@ def killer_kill(d):
             spoil_vote.target.save()
             shoot_result = ' Вы убили игрока ' + str(spoil_vote.target.mask.username) + '.'
             # barman's target quarters
-            spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private', spoil_vote.target.user.nickname])
+            spoil_target_post = GamePost.objects.get(game=game,
+                                                     tags__contains=['private', spoil_vote.target.user.nickname])
             spoil_target_result = 'Ночь ' + str(game.day) + ': Вы были убиты в трактире киллером. ' \
                                                             'Можете оставить последнее сообщение.'
             spoil_target_inform = GameComment(post=spoil_target_post, text=spoil_target_result, author=bot)
@@ -658,7 +657,8 @@ def mafia_kill(d):
             spoil_vote.target.save()
             shoot_result = ' Вы убили игрока ' + str(spoil_vote.target.mask.username) + '.'
             # barman's target quarters
-            spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private', spoil_vote.target.user.nickname])
+            spoil_target_post = GamePost.objects.get(game=game,
+                                                     tags__contains=['private', spoil_vote.target.user.nickname])
             spoil_target_result = 'Ночь ' + str(game.day) + ': Вы были убиты в трактире мафией. ' \
                                                             'Можете оставить последнее сообщение.'
             spoil_target_inform = GameComment(post=spoil_target_post, text=spoil_target_result, author=bot)
@@ -788,7 +788,8 @@ def maniac_kill_check(d):
             spoil_vote.target.save()
             shoot_result = ' Вы убили игрока ' + str(spoil_vote.target.mask.username) + '.'
             # barman's target quarters
-            spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private', spoil_vote.target.user.nickname])
+            spoil_target_post = GamePost.objects.get(game=game,
+                                                     tags__contains=['private', spoil_vote.target.user.nickname])
             spoil_target_result = 'Ночь ' + str(game.day) + ': Вы были убиты в трактире маньяком. ' \
                                                             'Можете оставить последнее сообщение.'
             spoil_target_inform = GameComment(post=spoil_target_post, text=spoil_target_result, author=bot)
@@ -1065,18 +1066,19 @@ def night(d):
             has_militia_post = True
             slug = game.slug + '_militia_day' + day
         if not game_ended:
-            new_post = GamePost(title='День ' + day, text='День ' + day, short='day' + day, tags=post.tags+['current'],
+            new_post = GamePost(title='День ' + day, text='День ' + day, short='day' + day,
+                                tags=post.tags + ['current'],
                                 game=game, author=author, allow_role=post.allow_role, slug=slug)
             new_post.save()
         comment = GameComment(post=post, text='День ' + ('' if game.day == 0 else str(game.day)) +
-                              ' завершен', author=author)
+                                              ' завершен', author=author)
         comment.save()
     mafia_roles = ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer']
     militia_roles = ['militia', 'head militia']  # , 'militia doctor', 'militia barman', 'militia killer']
     if not has_mafia_post:
         new_recruit_post = GamePost(title='Явочная', text='Явочная мафии', short='day' + day,
                                     tags=['mafia_day', 'mafia_secret'], game=game, author=author,
-                                    allow_role=mafia_roles+['mafia_recruit'], slug=game.slug + '_mafia_secret')
+                                    allow_role=mafia_roles + ['mafia_recruit'], slug=game.slug + '_mafia_secret')
         new_recruit_post.save()
         new_post = GamePost(title='День ' + day, text='Мафия. День ' + day, short='day' + day,
                             tags=['mafia_day', 'current'],
@@ -1085,7 +1087,7 @@ def night(d):
     if not has_militia_post:
         new_recruit_post = GamePost(title='Явочная', text='Явочная милиции', short='day' + day,
                                     tags=['militia_day', 'militia_secret'], game=game, author=author,
-                                    allow_role=mafia_roles+['militia_recruit'], slug=game.slug + '_militia_secret')
+                                    allow_role=mafia_roles + ['militia_recruit'], slug=game.slug + '_militia_secret')
         new_recruit_post.save()
         new_post = GamePost(title='День ' + day, text='Милиция. День ' + day, short='day' + day,
                             tags=['militia_day', 'current', 'militia_secret'],
@@ -1246,8 +1248,9 @@ def change_side(d):
                 neutral.role = roles_map[random_side][neutral.role]
                 neutral.save()
                 post = GamePost.objects.get(game=game, tags__contains=['private', neutral.user.nickname])
-                inform = GameComment(post=post, author=bot, text='Ночь ' + str(game.day) + ': ' + neutral.mask.username
-                    + ' наугад выбрал сторону ' + ('мафии.' if 'mafia' in neutral.role else 'милиции.'))
+                inform = GameComment(post=post, author=bot, text='Ночь ' + str(game.day) + ': ' +
+                                                                 neutral.mask.username + ' наугад выбрал сторону ' +
+                                                                 ('мафии.' if 'mafia' in neutral.role else 'милиции.'))
                 inform.save()
             side_result += roles_dict[neutral.role] + '.'
             neutral.can_choose_side = False
@@ -1380,7 +1383,7 @@ def participate(request, kwargs):
     participant.save()
     private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.user.nickname,
                                 game=game, tags=['private', user.user.nickname],
-                                short='private', author=user.user, slug=game.slug+'_private_'+user.username,
+                                short='private', author=user.user, slug=game.slug + '_private_' + user.username,
                                 allow_role=['private'])
     private_quarters.save()
 
@@ -1410,7 +1413,8 @@ def post_game_comment(request, kwargs):
             if 'everyone' not in post.allow_role:
                 if 'private' in post.allow_role:
                     if user.user.nickname not in post.tags:
-                        messages.add_message(request, messages.ERROR, '#1 Вы не можете оставлять сообщения в данной теме.')
+                        messages.add_message(request, messages.ERROR,
+                                             '#1 Вы не можете оставлять сообщения в данной теме.')
                         return False
                 elif comment_participant.role not in post.allow_role:
                     messages.add_message(request, messages.ERROR, '#2 Вы не можете оставлять сообщения в данной теме.')
@@ -1436,8 +1440,8 @@ def post_game_comment(request, kwargs):
         user.user.comments_number += 1
         user.user.save()
     else:
-        comment = GameComment(post=post, author=user.user, text=text, mask=comment_participant.mask if user.user.nickname
-                              not in game.anchor else None)
+        comment = GameComment(post=post, author=user.user, text=text,
+                              mask=comment_participant.mask if user.user.nickname not in game.anchor else None)
         comment.save()
         participant = get_object_or_404(GameParticipant, game=game, user=user)
         participant.comments_number += 1
@@ -1657,14 +1661,14 @@ def recruit(request, kwargs):
         target.can_choose_side = True
         target.save()
         recruit_result = 'День ' + str(game.day) + ': Мафия предлагает вам перейти на её сторону.' \
-            '\nВы можете выбрать сторону мафии и раз в день выбирать игрока для проверки его роли.' \
-            '\nВы можете выбрать сторону милиции. ' \
-            '\nЧтобы остаться мирным, проигнорируйте вербовку и не выбирайте сторону.' \
-            ' В таком случае ночью мафия получит уведомление об отказе от вербовки.'
+                                                   '\nВы можете выбрать сторону мафии и раз в день выбирать игрока для проверки его роли.' \
+                                                   '\nВы можете выбрать сторону милиции. ' \
+                                                   '\nЧтобы остаться мирным, проигнорируйте вербовку и не выбирайте сторону.' \
+                                                   ' В таком случае ночью мафия получит уведомление об отказе от вербовки.'
     else:
         recruit_result = 'День ' + str(game.day) + ': Мафия предлагает вам перейти на её сторону.' \
-            '\nВы не можете принять вербовку и автоматически отказываетесь от неё.' \
-            '\nНочью мафия получит уведомление об отказе от вербовки.'
+                                                   '\nВы не можете принять вербовку и автоматически отказываетесь от неё.' \
+                                                   '\nНочью мафия получит уведомление об отказе от вербовки.'
     target_inform = GameComment(post=target_post, text=recruit_result, author=author)
     target_inform.save()
     voter.can_recruit = False
@@ -1714,7 +1718,8 @@ class DisplayGame(generic.ListView):
         context['game'] = game
 
         anonymous = isinstance(self.request.user, AnonymousUser)
-        participant = GameParticipant.objects.filter(game=game, user=self.request.user).first() if not anonymous else None
+        participant = GameParticipant.objects.filter(game=game,
+                                                     user=self.request.user).first() if not anonymous else None
         if game.state == 'past':
             context['mafia'] = True
             context['mafia_core'] = True
@@ -1731,7 +1736,8 @@ class DisplayGame(generic.ListView):
                 elif participant.role in ['mafia recruit']:
                     context['mafia'] = True
                     context['mafia_recruit'] = True
-                elif participant.role in ['militia', 'head militia', 'militia doctor', 'militia barman', 'militia killer']:
+                elif participant.role in ['militia', 'head militia', 'militia doctor', 'militia barman',
+                                          'militia killer']:
                     context['militia'] = True
                     context['militia_core'] = True
                 elif participant.role in ['militia recruit']:
@@ -1765,18 +1771,19 @@ class DisplayGamePost(generic.ListView):
         dead = True if participant.role == 'dead' else False
         can_hang = True if participant.role != 'dead' else False
         can_shoot = True if participant.role in \
-            ['head mafia', 'neutral killer', 'mafia killer', 'militia killer', 'maniac'] else False
+                            ['head mafia', 'neutral killer', 'mafia killer', 'militia killer', 'maniac'] else False
         can_check = True if participant.role in \
-            ['mafia recruit', 'head militia', 'militia', 'maniac'] else False
+                            ['mafia recruit', 'head militia', 'militia', 'maniac'] else False
         can_heal = True if participant.role in \
-            ['neutral doctor', 'mafia doctor', 'militia doctor'] else False
+                           ['neutral doctor', 'mafia doctor', 'militia doctor'] else False
         can_spoil = True if participant.role in \
-            ['neutral barman', 'mafia barman', 'militia barman'] else False
+                            ['neutral barman', 'mafia barman', 'militia barman'] else False
         can_choose_leader = True if not self.game.hasHeadMafia and participant.role == 'mafia' else False
         can_recruit = True if not self.game.hasRecruit and participant.role == 'head mafia' and \
-            participant.can_recruit else False
+                              participant.can_recruit else False
         can_ask_killer = True if participant.can_ask_killer and participant.role \
-            not in ['neutral killer', 'mafia killer', 'militia killer'] else False
+                                                                not in ['neutral killer', 'mafia killer',
+                                                                        'militia killer'] else False
         can_choose_side = participant.can_choose_side
         allowed_actions = {
             'dead': dead,
@@ -1799,7 +1806,8 @@ class DisplayGamePost(generic.ListView):
                 # make order: [target, queryset w/o target]
                 allowed_actions['vote_hang'] = True
                 allowed_actions['participants'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game)
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
+                                                                       .exclude(
+                    Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
             else:
                 allowed_actions['participants'] = GameParticipant.objects.filter(game=self.game) \
                     .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
@@ -1813,9 +1821,10 @@ class DisplayGamePost(generic.ListView):
                 if vote:
                     # make order: [target, queryset w/o target]
                     allowed_actions['vote_heal'] = True
-                    allowed_actions['heal_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game) \
-                        .exclude(id=participant.prevTarget.id).exclude(id=vote.target.id) \
-                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')))
+                    allowed_actions['heal_targets'] = [vote.target] + list(
+                        GameParticipant.objects.filter(game=self.game) \
+                            .exclude(id=participant.prevTarget.id).exclude(id=vote.target.id) \
+                            .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')))
                 else:
                     allowed_actions['heal_targets'] = GameParticipant.objects.filter(game=self.game) \
                         .exclude(id=participant.prevTarget.id) \
@@ -1824,9 +1833,10 @@ class DisplayGamePost(generic.ListView):
                 if vote:
                     # make order: [target, queryset w/o target]
                     allowed_actions['vote_heal'] = True
-                    allowed_actions['heal_targets'] = [vote.target] + list(GameParticipant.objects\
-                        .filter(game=self.game).exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))\
-                        .exclude(id=vote.target.id))
+                    allowed_actions['heal_targets'] = [vote.target] + list(GameParticipant.objects \
+                                                                           .filter(game=self.game).exclude(
+                        Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                                                                           .exclude(id=vote.target.id))
                 else:
                     allowed_actions['heal_targets'] = GameParticipant.objects.filter(game=self.game) \
                         .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
@@ -1839,9 +1849,10 @@ class DisplayGamePost(generic.ListView):
                 if vote:
                     # make order: [target, queryset w/o target]
                     allowed_actions['vote_spoil'] = True
-                    allowed_actions['spoil_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game) \
-                        .exclude(id=participant.prevTarget.id).exclude(id=vote.target.id) \
-                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')))
+                    allowed_actions['spoil_targets'] = [vote.target] + list(
+                        GameParticipant.objects.filter(game=self.game) \
+                            .exclude(id=participant.prevTarget.id).exclude(id=vote.target.id) \
+                            .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')))
                 else:
                     allowed_actions['spoil_targets'] = GameParticipant.objects.filter(game=self.game) \
                         .exclude(id=participant.prevTarget.id) \
@@ -1850,9 +1861,10 @@ class DisplayGamePost(generic.ListView):
                 if vote:
                     # make order: [target, queryset w/o target]
                     allowed_actions['vote_spoil'] = True
-                    allowed_actions['spoil_targets'] = [vote.target] + list(GameParticipant.objects\
-                        .filter(game=self.game).exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))\
-                        .exclude(id=vote.target.id))
+                    allowed_actions['spoil_targets'] = [vote.target] + list(GameParticipant.objects \
+                                                                            .filter(game=self.game).exclude(
+                        Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                                                                            .exclude(id=vote.target.id))
                 else:
                     allowed_actions['spoil_targets'] = GameParticipant.objects.filter(game=self.game) \
                         .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
@@ -1862,7 +1874,7 @@ class DisplayGamePost(generic.ListView):
             vote = Vote.objects.filter(game=self.game, day=self.game.day, voter=participant, action='shoot').first()
             if vote:
                 contract_votes = Vote.objects.filter(game=self.game, day=self.game.day, action='contract') \
-                    .exclude(Q(target__role__contains='killer') | Q(target__role__contains='dead'))\
+                    .exclude(Q(target__role__contains='killer') | Q(target__role__contains='dead')) \
                     .exclude(target=vote.target)
             else:
                 contract_votes = Vote.objects.filter(game=self.game, day=self.game.day, action='contract') \
@@ -1881,7 +1893,8 @@ class DisplayGamePost(generic.ListView):
             if vote:
                 allowed_actions['vote_shoot'] = True
                 allowed_actions['shoot_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game)
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
+                                                                        .exclude(
+                    Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
             else:
                 allowed_actions['shoot_targets'] = GameParticipant.objects.filter(game=self.game) \
                     .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
@@ -1894,7 +1907,8 @@ class DisplayGamePost(generic.ListView):
                 # make order: [target, queryset w/o target]
                 allowed_actions['vote_leader'] = True
                 allowed_actions['leader_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game,
-                    role='mafia').exclude(id=vote.target.id))
+                                                                                                        role='mafia').exclude(
+                    id=vote.target.id))
             else:
                 allowed_actions['leader_targets'] = GameParticipant.objects.filter(game=self.game, role='mafia')
 
@@ -1911,7 +1925,8 @@ class DisplayGamePost(generic.ListView):
                 # make order: [target, queryset w/o target]
                 allowed_actions['vote_check'] = True
                 allowed_actions['check_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game) \
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
+                                                                        .exclude(
+                    Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
             else:
                 allowed_actions['check_targets'] = GameParticipant.objects.filter(game=self.game) \
                     .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))

@@ -1,7 +1,7 @@
 {% block register %}
 
 {% if user.is_authenticated and user.user.nickname not in game.black_list %}
-<div class="row" style="margin-top:20px">
+<div class="row row-space" >
     <div class="col-md-4 col-centered text-center">
     {% if game.state != 'upcoming' %}
         <h4>Регистрация завершена</h4>
@@ -21,7 +21,7 @@
 </div>
 {% endif %}
 
-<div class="row" style="margin-top:20px">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
         <h3>Зарегистрированные участники</h1>
     </div>
@@ -48,7 +48,7 @@
     </div>
 {% endif %}
 
-<div class="row" style="margin-top:20px">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
         <h3>Модераторы</h1>
     </div>
@@ -76,7 +76,7 @@
 {% endif %}
 
 {% if game.black_list %}
-<div class="row" style="margin-top:20px">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
         <h3>Черный список</h1>
     </div>

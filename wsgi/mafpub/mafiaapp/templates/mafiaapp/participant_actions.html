@@ -3,7 +3,7 @@
 <script type="text/javascript">    
     $(document).ready(function(){ 
         $("#id_heal, #id_hang, #id_spoil, #id_shoot, #id_leader, #id_recruit, #id_contract, #id_check, #id_choose").change(function(){
-            var vote = $(this).find(".vote");
+            var vote = $(this).find(".vote-target-selected");
             var selected = $(this).find(":selected");
             if (selected.text() != vote.text()) {
                 $(this).css("background-color", "#fff");
@@ -22,17 +22,17 @@
         <h3>Общее голосование</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Hang" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Hang">
             {% csrf_token %}
             <label for="id_hang">Я вешаю:</label>
-            <select id="id_hang" name="target"  class="form-control" style="max-width:30%;display:inline-block;{% if vote_hang %}background-color:lightgreen{% endif %}">
+            <select id="id_hang" name="target" class="form-control vote-select{% if vote_hang %} vote-target{% endif %}">
             {% for participant in participants %}
-                <option value="{{participant.id}}" {% if vote_hang and forloop.counter == 1 %}style="background-color:lightgreen" class="vote"{% else %}style="background-color:#fff"{% endif %}>{{participant.mask.username}}</option>
+                <option value="{{participant.id}}" class="{% if vote_hang and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Повешать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -46,17 +46,17 @@
         <h3>Лечение</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Heal" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Heal">
             {% csrf_token %}
             <label for="id_heal">Я лечу:</label>
-            <select id="id_heal" name="target"  class="form-control" style="max-width:30%;display:inline-block;{% if vote_heal %}background-color:lightgreen{% endif %}">
+            <select id="id_heal" name="target" class="form-control vote-select{% if vote_heal %} vote-target{% endif %}">
             {% for participant in heal_targets %}
-                <option value="{{participant.id}}" {% if vote_heal and forloop.counter == 1 %}style="background-color:lightgreen" class="vote"{% else %}style="background-color:#fff"{% endif %}>{{participant.mask.username}}</option>
+                <option value="{{participant.id}}" class="{% if vote_heal and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Вылечить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -70,17 +70,17 @@
         <h3>Спаивание</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Spoil" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Spoil">
             {% csrf_token %}
             <label for="id_spoil">Я спаиваю:</label>
-            <select id="id_spoil" name="target"  class="form-control" style="max-width:30%;display:inline-block;{% if vote_spoil %}background-color:lightgreen{% endif %}">
+            <select id="id_spoil" name="target" class="form-control vote-select{% if vote_spoil %} vote-target{% endif %}">
             {% for participant in spoil_targets %}
-                <option value="{{participant.id}}" {% if vote_spoil and forloop.counter == 1 %}style="background-color:lightgreen" class="vote"{% else %}style="background-color:#fff"{% endif %}>{{participant.mask.username}}</option>
+                <option value="{{participant.id}}" class="{% if vote_spoil and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Напоить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -94,23 +94,23 @@
         <h3>Выстрел</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
         {% if shoot_targets %}
-        <form action="" method="post" name="Shoot" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Shoot">
             {% csrf_token %}
             <label for="id_shoot">Я стреляю в:</label>
-            <select id="id_shoot" name="target"  class="form-control" style="max-width:30%;display:inline-block;{% if vote_shoot %}background-color:lightgreen{% endif %}">
+            <select id="id_shoot" name="target" class="form-control vote-select{% if vote_shoot %} vote-target{% endif %}">
             {% for participant in shoot_targets %}
-                <option value="{{participant.id}}" {% if vote_shoot and forloop.counter == 1 %}style="background-color:lightgreen" class="vote"{% else %}style="background-color:#fff"{% endif %}>{{participant.mask.username}}</option>
+                <option value="{{participant.id}}" class="{% if vote_shoot and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Выстрелить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
         {% else %}
-        <h3 style="margin-bottom:25px;display:block">Нет доступных целей.</h3>
+        <h3>Нет доступных целей.</h3>
         {% endif %}
     </div>
 </div>
@@ -122,17 +122,17 @@
         <h3>Выбор главы мафии</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Hang" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Leader">
             {% csrf_token %}
             <label for="id_leader">Я выбираю:</label>
-            <select id="id_leader" name="target"  class="form-control" style="max-width:30%;display:inline-block;{% if vote_leader %}background-color:lightgreen{% endif %}">
+            <select id="id_leader" name="target" class="form-control vote-select{% if vote_leader %} vote-target{% endif %}">
             {% for participant in leader_targets %}
-                <option value="{{participant.id}}" {% if vote_leader and forloop.counter == 1 %}style="background-color:lightgreen" class="vote"{% else %}style="background-color:#fff"{% endif %}>{{participant.mask.username}}</option>
+                <option value="{{participant.id}}" class="{% if vote_leader and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Выбрать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -146,17 +146,17 @@
         <h3>Вербовка</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Hang" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Recruit">
             {% csrf_token %}
             <label for="id_recruit">Я вербую:</label>
-            <select id="id_recruit" name="target"  class="form-control" style="max-width:30%;display:inline-block">
+            <select id="id_recruit" name="target"  class="form-control vote-select">
             {% for participant in recruit_targets %}
                 <option value="{{participant.id}}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Завербовать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -170,17 +170,17 @@
         <h3>Проверка</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Check" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Check">
             {% csrf_token %}
             <label for="id_check">Я проверяю:</label>
-            <select id="id_check" name="target"  class="form-control" style="max-width:30%;display:inline-block;{% if vote_check %}background-color:lightgreen{% endif %}">
+            <select id="id_check" name="target" class="form-control vote-select{% if vote_check %} vote-target{% endif %}">
             {% for participant in check_targets %}
-                <option value="{{participant.id}}" {% if vote_check and forloop.counter == 1 %}style="background-color:lightgreen" class="vote"{% else %}style="background-color:#fff"{% endif %}>{{participant.mask.username}}</option>
+                <option value="{{participant.id}}" class="{% if vote_check and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Проверить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -194,17 +194,17 @@
         <h3>Заявка киллеру</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Hang" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Contract">
             {% csrf_token %}
             <label for="id_contract">Я заказываю:</label>
-            <select id="id_contract" name="target"  class="form-control" style="max-width:30%;display:inline-block">
+            <select id="id_contract" name="target"  class="form-control vote-select">
             {% for participant in participants %}
                 <option value="{{participant.id}}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-3 col-centered submit-div">
                 <input type="submit" name="action" value="Заказать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -218,17 +218,17 @@
         <h3>Выбор стороны</h3>
     </div>
 </div>
-<div class="row">
+<div class="row row-space">
     <div class="col-md-6 col-centered text-center">
-        <form action="" method="post" name="Choose" style="margin-top:25px;margin-bottom:25px">
+        <form action="" method="post" name="Choose">
             {% csrf_token %}
             <label for="id_choose">Я выбираю:</label>
-            <select id="id_choose" name="target" class="form-control" style="max-width:30%;display:inline-block">
+            <select id="id_choose" name="target" class="form-control vote-select">
                 <option value="mafia_side">Мафию</option>
                 <option value="militia_side">Милицию</option>
                 <!--<option value="peaceful">Мирную жизнь</option>-->
             </select>
-            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+            <div class="col-md-4 col-centered submit-div">
                 <input type="submit" name="action" value="Присоедениться" class="btn btn-default btn-primary btn-block">
             </div>
         </form>

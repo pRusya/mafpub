@@ -22,9 +22,35 @@ option:not(:checked) {
   text-align: center;
   background-color: #f5f5f5;
 }
+.footer img {
+  position: absolute;
+  max-height:100%;
+  display:inline;
+}
 .navbar{
   background-color: #f5f5f5;
   font-family: 'Forum';
+}
+.navbar img {
+  height:70px;
+  width:auto;
+  display:inline;
+}
+.navbar a {
+  margin-right:7px;
+  margin-left:7px;
+}
+.title-super40-div {
+  position:relative;
+  padding-top:0px;
+  height:70px;
+}
+.title-super40-user {
+  position:absolute;
+  display:inline-block;
+  right:0;
+  margin:0 auto;
+  padding:0px;
 }
 h1 {
   font-family: 'Forum';
@@ -32,6 +58,9 @@ h1 {
 h4, h3 {
   display: inline;
   font-family: 'Forum';
+}
+.font-600 {
+  font-weight:600;
 }
 pre {
   white-space: pre-wrap;
@@ -115,6 +144,8 @@ a {
   line-height: 100%;
   height: 100%;
   text-decoration: none;
+  display:inline-block;
+  margin-top:10px
 }
 .col-centered {
   float: none;
@@ -128,13 +159,60 @@ a {
   /*background:#BCBBBB;*/
   min-height:200px;
 }
+.post img {
+  max-height:120px;
+  max-width:100%;
+}
 .comment {
   overflow:hidden;
   min-height:180px;
   padding-bottom: 30px;
 }
+.comment-avatar {
+  max-height:120px;
+  max-width:100%;
+  float:right;
+}
+.img-post-locked {
+  max-height:22px;
+  float:right;
+}
+.img-thumb-up {
+  max-height:30px;
+  cursor:pointer;
+  display:inline;
+  float:none;
+}
 .comment-quote {
   background: #FFE3D1;
+}
+.cite {
+  float:right;
+  text-decoration:underline;
+  cursor:pointer;
+}
+.submit-div {
+  padding-left:0px;
+  padding-right:0px;
+  margin-top:20px;
+  margin-bottom:10px;
+}
+.row-space {
+  margin-top:20px;
+  margin-bottom:20px;
+}
+.vote-select {
+  max-width:30%;
+  display:inline-block;
+}
+.vote-target {
+  background-color:lightgreen;
+}
+.vote-target-selected {
+  background-color:lightgreen !important;
+}
+.vote-option {
+  background-color:#fff;
 }
 .botton-link {
   background: none !important;
