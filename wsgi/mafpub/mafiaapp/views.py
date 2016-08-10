@@ -805,7 +805,7 @@ def maniac_kill_check(d):
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # maniac's shoot target is doctor's target. doctor heals target.
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + spoil_vote.target.mask.username + 'спасён доктором.'
+        success_result += '\n  ' + heal_vote.target.mask.username + 'спасён доктором.'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
@@ -1953,7 +1953,7 @@ class DisplayGamePost(generic.ListView):
         if error_messages:
             context['game_comment_form'] = GameCommentForm(initial={'number': self.request.POST.get('number',
                                                                                                     self.game.number),
-                                                                    'comment': self.request.POST.get('comment', '')})
+                                                                    'comment': self.request.session.get('comment', '')})
         else:
             context['game_comment_form'] = GameCommentForm(initial={'number': self.game.number})
         return context
@@ -2001,6 +2001,7 @@ class DisplayGamePost(generic.ListView):
         context = self.get_context_data()
         context['request'] = request.POST
         preserve_error_messages(request)
+        request.session['comment'] = request.POST.get('comment', '')
         return HttpResponseRedirect(reverse('mafiaapp:display_game_post',
                                             kwargs={'game_slug': kwargs['game_slug'],
                                                     'post_slug': kwargs['post_slug']}) +

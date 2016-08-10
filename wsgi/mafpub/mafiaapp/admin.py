@@ -8,6 +8,10 @@ from .forms import *
 #admin.site.register(Game)
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
+    def render_change_form(self, request, context, obj, *args, **kwargs):
+        context['adminform'].form.fields['description'].initial = obj.get_description().text
+        return super(GameAdmin, self).render_change_form(request, context, args, kwargs)
+
     form = CreateGameForm
 
 

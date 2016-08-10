@@ -68,7 +68,7 @@ class Game(models.Model):
     black_list = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Бан', null=True, blank=True)
 
     def get_description(self):
-        return GamePost.objects.filter(game=self, tags__contains=['description'])
+        return GamePost.objects.filter(game=self, tags__contains=['description']).first()
 
     def __str__(self):
         return self.title + '(id=' + str(self.number) + '). Фаза: ' + \

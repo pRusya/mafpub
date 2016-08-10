@@ -111,12 +111,24 @@
         <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         {% else %}
-        <h3 id='author{{comment.id}}' class="font-600">{{comment.mask.username}}</h3><br>
+        <h3 id='author{{comment.id}}' class="font-600">
+        {% if game.state == 'past' %}{{comment.mask.username}}<br>
+            <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">{{ comment.author.user.nickname }}</a>
+        {% else %}{{comment.mask.username}}
+        {% endif %}
+        </h3><br>
         <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
         {% endif %}
     </div>
     <div class="col-md-8 col-centered comment-text">
-      <h3>{# placeholder to match height with nickname on the left #}</h3><span>{{ comment.date|date:"Y-m-d H:i" }}</span>
+      {# placeholder to match height with nickname on the left #}
+      {% if game.state == 'past' %}
+        {% if comment.author.user.nickname in game.anchor %}<h3></h3>
+        {% else %}<h3></h3><br><h3></h3>
+        {% endif %}
+      {% else %}<h3></h3>
+      {% endif %}
+      <span>{{ comment.date|date:"Y-m-d H:i" }}</span>
       <a href="?page={{ page_obj.number }}#div{{comment.id}}"><span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span></a>
 
       <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>

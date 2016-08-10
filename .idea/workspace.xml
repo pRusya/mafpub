@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e740304-2ce7-4d32-bca7-0dd211887a69" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/debug.log" afterPath="$PROJECT_DIR$/wsgi/mafpub/debug.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/base.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/display_game.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/display_game.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/game_comments.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/game_comments.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/participant_actions.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/participant_actions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/participate.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/participate.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/post.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/post.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/reply.html" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/templates/mafiaapp/reply.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/static/mafiaapp/style.css" afterPath="$PROJECT_DIR$/wsgi/mafpub/static/mafiaapp/style.css" />
     </list>
     <ignored path="mafpub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,24 +30,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="1806" column="38" selection-start-line="1806" selection-start-column="32" selection-end-line="1806" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="252" column="44" selection-start-line="252" selection-start-column="44" selection-end-line="252" selection-end-column="44" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1470757709797" expanded="true" signature="850:859" placeholder="..." />
+                <marker date="1470837834996" expanded="true" signature="850:859" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="admin.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.21186441">
+              <caret line="10" column="73" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -94,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+              <caret line="70" column="89" selection-start-line="70" selection-start-column="89" selection-end-line="70" selection-end-column="89" />
               <folding>
                 <element signature="e#24#72#0" expanded="true" />
               </folding>
@@ -106,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+              <caret line="64" column="28" selection-start-line="64" selection-start-column="28" selection-end-line="64" selection-end-column="28" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -128,15 +125,15 @@
         <option value="D:/Program Files/Python332/Lib/site-packages/rest_framework/serializers.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/api/serializers.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafpub/urls.py" />
-        <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/forms.py" />
-        <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafpub/settings_dev.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py" />
         <option value="D:/Program Files/Python332/Lib/site-packages/django/views/generic/list.py" />
         <option value="D:/Program Files/Python332/Lib/site-packages/django/core/paginator.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/urls.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py" />
+        <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py" />
+        <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py" />
       </list>
     </option>
   </component>
@@ -367,37 +364,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-          <folding>
-            <element signature="e#24#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="45" selection-start-line="42" selection-start-column="45" selection-end-line="42" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="39" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1470757709797" expanded="true" signature="850:859" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -470,7 +436,7 @@
           <caret line="86" column="39" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1470757709797" expanded="true" signature="850:859" placeholder="..." />
+            <marker date="1470837834996" expanded="true" signature="850:859" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -566,9 +532,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#70#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -583,20 +546,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33262712">
           <caret line="1345" column="8" selection-start-line="1345" selection-start-column="8" selection-end-line="1345" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/forms/widgets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.43008474">
-          <caret line="497" column="6" selection-start-line="497" selection-start-column="6" selection-end-line="497" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/forms/fields.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33262712">
-          <caret line="823" column="6" selection-start-line="823" selection-start-column="6" selection-end-line="823" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -649,24 +598,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="74" selection-start-line="86" selection-start-column="74" selection-end-line="86" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/http/response.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33262712">
@@ -678,7 +609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40983605">
           <caret line="190" column="19" selection-start-line="190" selection-start-column="17" selection-end-line="190" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -693,14 +623,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5572034">
           <caret line="523" column="4" selection-start-line="523" selection-start-column="4" selection-end-line="523" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings_dev.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="100" column="74" selection-start-line="100" selection-start-column="74" selection-end-line="100" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -722,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14194915">
           <caret line="112" column="6" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -730,6 +651,62 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19491525">
           <caret line="119" column="47" selection-start-line="119" selection-start-column="47" selection-end-line="119" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/views/generic/edit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.74788135">
+          <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="117" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../p/shit/v-g_grab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/contrib/admin/views/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33262712">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/contrib/admin/options.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16313559">
+          <caret line="1105" column="91" selection-start-line="1105" selection-start-column="91" selection-end-line="1105" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="252" column="44" selection-start-line="252" selection-start-column="44" selection-end-line="252" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1470837834996" expanded="true" signature="850:859" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="74" selection-start-line="86" selection-start-column="74" selection-end-line="86" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings_dev.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="100" column="74" selection-start-line="100" selection-start-column="74" selection-end-line="100" selection-end-column="74" />
           <folding />
         </state>
       </provider>
@@ -744,41 +721,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/views/generic/edit.py">
+    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/forms/widgets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.74788135">
-          <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="117" selection-end-column="6" />
+        <state vertical-scroll-proportion="-1.2563559">
+          <caret line="171" column="6" selection-start-line="171" selection-start-column="6" selection-end-line="171" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py">
+    <entry file="file://D:/Program Files/Python332/Lib/site-packages/django/forms/fields.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-          <folding>
-            <element signature="e#24#72#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.33262712">
+          <caret line="211" column="8" selection-start-line="211" selection-start-column="8" selection-end-line="211" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <caret line="64" column="28" selection-start-line="64" selection-start-column="28" selection-end-line="64" selection-end-column="28" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py">
+    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="1806" column="38" selection-start-line="1806" selection-start-column="32" selection-end-line="1806" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="89" selection-start-line="70" selection-start-column="89" selection-end-line="70" selection-end-column="89" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1470757709797" expanded="true" signature="850:859" placeholder="..." />
+            <element signature="e#24#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21186441">
+          <caret line="10" column="73" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
