@@ -105,7 +105,7 @@
 {% for comment in page_obj %}
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 text-right">
-        {% if comment.author.user.nickname in game.anchor %}
+        {% if comment.author.user.nickname in game.anchor or game.day == 0 %}
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
         <h3 id='author{{comment.id}}' class="font-600">{{ comment.author.user.nickname }}</h3><br>
         <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
