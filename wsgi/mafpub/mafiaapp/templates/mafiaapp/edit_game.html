@@ -84,7 +84,7 @@
 {% for participant in participants_form %}
     <div class="panel-group" style="margin-bottom:0px;">
       <div class="panel panel-default">
-        <a data-toggle="collapse" href="#collapse{{forloop.counter}}" style="text-decoration:none;">
+        <a data-toggle="collapse" href="#collapse{{forloop.counter}}">
         <div class="panel-heading section">
           <div class="row">
             <div class="col-md-2">{{participant.instance.user.nickname}}</div>
@@ -133,63 +133,6 @@
       </div>
     </div>
 {% endfor %}
-
-<!--
-<div class="row" style="margin-top:10px;">
-    {% for participant in participants %}
-    <div class="col-md-2 text-center">
-        {{ participant.user }}<br>
-        as {{ participant.mask }}<br>
-        {% if participant.role == 'peaceful' %}
-            <span style='background:lightgreen'>{{ participant.role }}</span>
-        {% elif participant.role == 'mafia' or participant.role == 'head mafia' or participant.role == 'mafia barman' or participant.role == 'mafia doctor' or participant.role == 'mafia killer' %}
-            <span style='background:lightblue'>{{ participant.role }}</span>
-        {% elif participant.role == 'maniac' %}
-            <span style='background:pink'>{{ participant.role }}</span>
-        {% elif participant.role == 'militia' or participant.role == 'head militia' or participant.role == 'militia barman' or participant.role == 'militia doctor' or participant.role == 'militia killer' %}
-            <span style='background:ivory'>{{ participant.role }}</span>
-        {% elif participant.role == 'neutral barman' or participant.role == 'neutral doctor' or participant.role == 'neutral killer' %}
-            <span style='background:lightgray'>{{ participant.role }}</span>
-        {% else%}
-            {{ participant.role }}
-        {% endif %}
-    </div>
-    <div class="col-md-2 text-center" style="margin-bottom:10px">
-        <form action="" method="post" class="form-signin">
-            {% csrf_token %}
-            <input type="text" value="{{ game.number }}" name="game" style="display:none" />
-            <input type="text" value="{{ participant.id }}" name="id" style="display:none" />
-            <label style="margin:0 auto">Роль</label>
-            <select style="max-width:80%;" name="role">
-                <option value="mafia">mafia</option>
-                <option value="head mafia">head mafia</option>
-                <option value="mafia barman">mafia barman</option>
-                <option value="mafia doctor">mafia doctor</option>
-                <option value="mafia killer">mafia killer</option>
-                <option value="mafia recruit">mafia recruit</option>
-                <option value="militia">militia</option>
-                <option value="head militia">head militia</option>
-                <option value="militia barman">militia barman</option>
-                <option value="militia doctor">militia doctor</option>
-                <option value="militia killer">militia killer</option>
-                <option value="militia recruit">militia recruit</option>
-                <option value="maniac">maniac</option>
-                <option value="peaceful">peaceful</option>
-                <option value="dead">dead</option>
-                <option value="neutral barman">neutral barman</option>
-                <option value="neutral doctor">neutral doctor</option>
-                <option value="neutral killer">neutral killer</option>
-            </select>
-            <input type="submit" name="action" value="Изменить" />
-        </form>
-    </div>
-        {% if forloop.counter|divisibleby:"3" and not forloop.last %}
-</div>
-<div class="row" style="margin-top:10px;">
-        {% endif %}
-    {% endfor %}
-</div>
--->
 
 <div class="row">
     <div class="col-md-4 col-centered text-center">

@@ -105,6 +105,8 @@ class CreateGamePostForm(ModelForm):
         #}
 
 
+
+
 class CreateGameMaskForm(ModelForm):
     class Meta:
         model = Mask

@@ -277,4 +277,4 @@ class Vote(models.Model):
             'recruit': ' пробует вербовать игрока ',
             'contract': ' заказывает убийство игрока ',
         }
-        return 'День '+str(self.day)+': '+str(self.voter.mask)+d[self.action]+str(self.target.mask)
+        return 'День '+str(self.day)+': '+str(self.voter.mask)+d[self.action]+str(self.target.mask)+'.'

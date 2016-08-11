@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.views import password_reset
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
@@ -650,7 +651,7 @@ def mafia_kill(d):
     # if head mafia's target is barman, then he kills barman's target first(if it's not dead already)
     if (shoot_vote and barman and shoot_vote.target == barman) and (spoil_vote and spoil_vote.target.role != 'dead'):
         if heal_vote and heal_vote.target == barman:
-            success_result += '\n  ' + spoil_vote.target.mask.username + 'спасён доктором.'
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором.'
         else:
             success_result += '\n  ' + spoil_vote.target.mask.username
             spoil_vote.target.role = 'dead'
@@ -805,7 +806,7 @@ def maniac_kill_check(d):
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # maniac's shoot target is doctor's target. doctor heals target.
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + heal_vote.target.mask.username + 'спасён доктором.'
+        success_result += '\n  ' + heal_vote.target.mask.username + ' спасён доктором.'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
@@ -877,7 +878,7 @@ def militia_check(d):
         check_result = 'Ночь ' + str(game.day) + ': Проверка: игрок ' + check_vote.target.mask.username + ' - ' \
                        + roles_dict[check_vote.target.role] + '.' + check_result
         if spoil_vote.target.role in militia_roles:
-            spoil_vote.target.see_mil_q = True
+            spoil_vote.target.sees_mil_q = True
             spoil_vote.target.checked_by_mil = True
             spoil_vote.target.save()
             check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + spoil_vote.target.mask + '.'
@@ -886,6 +887,16 @@ def militia_check(d):
             spoil_target_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
             spoil_target_inform = GameComment(post=spoil_target_post, text=spoil_target_result, author=bot)
             spoil_target_inform.save()
+        if barman.role in militia_roles:
+            barman.sees_mil_q = True
+            barman.checked_by_mil = True
+            barman.save()
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + barman.mask + '.'
+            # barman's quarters
+            barman_post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
+            barman_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
+            barman_inform = GameComment(post=barman_post, text=barman_result, author=bot)
+            barman_inform.save()
     # militia's check target is barman's target. no one checked
     elif spoil_vote and check_vote and spoil_vote.target == check_vote.target:
         check_result = 'Ночь ' + str(
@@ -896,7 +907,7 @@ def militia_check(d):
         check_vote.target.checked_by_mil = True
         check_vote.target.save()
         if check_vote.target.role in militia_roles:
-            check_vote.target.see_mil_q = True
+            check_vote.target.sees_mil_q = True
             spoil_vote.target.checked_by_mil = True
             check_vote.target.save()
             check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask + '.'
@@ -950,7 +961,7 @@ def head_militia_arrest(d):
             spoil_vote.target.role = 'dead'
             spoil_vote.target.checked_by_mil = True
             spoil_vote.target.save()
-            arrest_result = ' Вы арестовали игрока ' + spoil_vote.target.mask.username + '.'
+            arrest_result = 'Ночь ' + str(game.day) + ': Вы арестовали игрока ' + spoil_vote.target.mask.username + '.'
             # barman's target quarters
             spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                                 spoil_vote.target.user.nickname])
@@ -958,16 +969,43 @@ def head_militia_arrest(d):
                                                             'Можете оставить последнее сообщение.'
             spoil_target_inform = GameComment(post=spoil_target_post, text=spoil_target_result, author=bot)
             spoil_target_inform.save()
+        if barman.role in mafia_roles:
+            success_result += '\n  ' + barman.mask.username
+            success_arrest = True
+            barman.target.role = 'dead'
+            barman.target.checked_by_mil = True
+            barman.target.save()
+            if arrest_result:
+                arrest_result = arrest_result + ' Вы арестовали игрока ' + barman.mask.username + '.'
+            else:
+                arrest_result = 'Ночь ' + str(game.day) + ': Вы арестовали игрока ' + barman.mask.username + '.'
+            # barman's quarters
+            barman_post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
+            barman_result = 'Ночь ' + str(game.day) + \
+                            ': Вы были арестованы в трактире комиссаром милиции. Можете оставить последнее сообщение.'
+            barman_inform = GameComment(post=barman_post, text=barman_result, author=bot)
+            barman_inform.save()
         if spoil_vote.target.role in militia_roles:
-            spoil_vote.target.see_mil_q = True
+            spoil_vote.target.sees_mil_q = True
             spoil_vote.target.checked_by_mil = True
             spoil_vote.target.save()
             check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + spoil_vote.target.mask + '.'
+            # barman's target quarters
             spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                                 spoil_vote.target.user.nickname])
             spoil_target_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
             spoil_target_inform = GameComment(post=spoil_target_post, text=spoil_target_result, author=bot)
             spoil_target_inform.save()
+        if barman.role in militia_roles:
+            barman.sees_mil_q = True
+            barman.checked_by_mil = True
+            barman.save()
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + barman.mask + '.'
+            # barman's quarters
+            barman_post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
+            barman_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
+            barman_inform = GameComment(post=barman_post, text=barman_result, author=bot)
+            barman_inform.save()
     # militia's check target is barman's target. no one checked
     elif check_vote and spoil_vote and spoil_vote.target == check_vote.target:
         check_result = 'Ночь ' + str(
@@ -983,7 +1021,7 @@ def head_militia_arrest(d):
             check_vote.target.role = 'dead'
             check_vote.target.save()
             arrest_result = 'Ночь ' + str(game.day) + ': Вы арестовали игрока ' \
-                            + spoil_vote.target.mask.username + '.' + arrest_result
+                            + check_vote.target.mask.username + '.' + arrest_result
             # head mafia's target quarters
             check_target_post = GamePost.objects.get(game=game,
                                                      tags__contains=['private', check_vote.target.user.nickname])
@@ -992,7 +1030,7 @@ def head_militia_arrest(d):
             check_target_inform = GameComment(post=check_target_post, text=check_target_result, author=bot)
             check_target_inform.save()
         if check_vote.target.role in militia_roles:
-            check_vote.target.see_mil_q = True
+            check_vote.target.sees_mil_q = True
             check_vote.target.save()
             check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask + '.'
             check_vote_target_post = GamePost.objects.get(game=game, tags__contains=['private',
@@ -1004,8 +1042,9 @@ def head_militia_arrest(d):
     if check_vote:
         inform = GameComment(post=post, text=check_result, author=bot)
         inform.save()
-        inform = GameComment(post=post, text=arrest_result, author=bot)
-        inform.save()
+        if arrest_result:
+            inform = GameComment(post=post, text=arrest_result, author=bot)
+            inform.save()
     return '\n\nАрестованы:' + success_result if success_arrest else ''
 
 
@@ -1054,6 +1093,10 @@ def night(d):
     author = User.objects.get(nickname='Игровой Бот')
     has_mafia_post = False
     has_militia_post = False
+    quicks = GameParticipant.objects.filter(game=game).exclude(role='dead')
+    quicks_info = '\nЖивые:'
+    for quick in quicks:
+        quicks_info += '\n  ' + quick.mask.username
     for post in posts:
         post.allow_comment = False
         post.tags.remove('current')
@@ -1066,7 +1109,7 @@ def night(d):
             has_militia_post = True
             slug = game.slug + '_militia_day' + day
         if not game_ended:
-            new_post = GamePost(title='День ' + day, text='День ' + day, short='day' + day,
+            new_post = GamePost(title='День ' + day, text='День ' + day + quicks_info, short='day' + day,
                                 tags=post.tags + ['current'],
                                 game=game, author=author, allow_role=post.allow_role, slug=slug)
             new_post.save()
@@ -1080,7 +1123,7 @@ def night(d):
                                     tags=['mafia_day', 'mafia_secret'], game=game, author=author,
                                     allow_role=mafia_roles + ['mafia_recruit'], slug=game.slug + '_mafia_secret')
         new_recruit_post.save()
-        new_post = GamePost(title='День ' + day, text='Мафия. День ' + day, short='day' + day,
+        new_post = GamePost(title='День ' + day, text='Мафия. День ' + day + quicks_info, short='day' + day,
                             tags=['mafia_day', 'current'],
                             game=game, author=author, allow_role=mafia_roles, slug=game.slug + '_mafia_day' + day)
         new_post.save()
@@ -1089,7 +1132,7 @@ def night(d):
                                     tags=['militia_day', 'militia_secret'], game=game, author=author,
                                     allow_role=mafia_roles + ['militia_recruit'], slug=game.slug + '_militia_secret')
         new_recruit_post.save()
-        new_post = GamePost(title='День ' + day, text='Милиция. День ' + day, short='day' + day,
+        new_post = GamePost(title='День ' + day, text='Милиция. День ' + day + quicks_info, short='day' + day,
                             tags=['militia_day', 'current', 'militia_secret'],
                             game=game, author=author, allow_role=militia_roles, slug=game.slug + '_militia_day' + day)
         new_post.save()
@@ -1132,8 +1175,8 @@ def create_missing_killer_vote(d):
             shoot_votes = Vote.objects.filter(game=game, day=game.day, action='contract') \
                 .exclude(target__role__contains='killer')
             if len(shoot_votes) > 0:
-                shoot = random.choice(list(shoot_votes))
-                shoot_vote = Vote(game=game, day=game.day, voter=killer, action='shoot', target=shoot.target)
+                shoot_choice = random.choice(list(shoot_votes))
+                shoot_vote = Vote(game=game, day=game.day, voter=killer, action='shoot', target=shoot_choice.target)
                 shoot_vote.save()
 
 
@@ -1175,8 +1218,8 @@ def create_missing_votes(d):
             shoot_votes = Vote.objects.filter(game=game, day=game.day, action='contract') \
                 .exclude(target__role__contains='killer')
             if len(shoot_votes) > 0:
-                shoot = random.choice(list(shoot_votes))
-                shoot_vote = Vote(game=game, day=game.day, voter=killer, action='shoot', target=shoot.target)
+                shoot_choice = random.choice(list(shoot_votes))
+                shoot_vote = Vote(game=game, day=game.day, voter=killer, action='shoot', target=shoot_choice.target)
                 shoot_vote.save()
     # maniac's shoot and check votes
     maniac = GameParticipant.objects.filter(game=game, role='maniac').first()
@@ -1475,7 +1518,8 @@ def hang(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1497,7 +1541,8 @@ def shoot(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1540,10 +1585,11 @@ def choose_leader(request, kwargs):
                                    ' был выбран главой мафии.')
         comment.save()
         comment = GameComment(post=head_mafia_post, author=author,
-                              text='Вы были выбраны главой мафии. '
+                              text='День ' + str(game.day) + ':Вы были выбраны главой мафии. '
                                    'Выберите цель для выстрела и цель для вербовки.')
         comment.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1565,7 +1611,8 @@ def check(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1587,7 +1634,8 @@ def heal(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1609,7 +1657,8 @@ def spoil(request, kwargs):
     author = User.objects.get(nickname='Игровой Бот')
     comment = GameComment(post=post, text=str(vote[0]), author=author)
     comment.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1633,7 +1682,8 @@ def choose_side(request, kwargs):
     comment.save()
     voter.can_choose_side = False
     voter.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1661,19 +1711,20 @@ def recruit(request, kwargs):
         target.can_choose_side = True
         target.save()
         recruit_result = 'День ' + str(game.day) + ': Мафия предлагает вам перейти на её сторону.' \
-                                                   '\nВы можете выбрать сторону мафии и раз в день выбирать игрока для проверки его роли.' \
-                                                   '\nВы можете выбрать сторону милиции. ' \
-                                                   '\nЧтобы остаться мирным, проигнорируйте вербовку и не выбирайте сторону.' \
-                                                   ' В таком случае ночью мафия получит уведомление об отказе от вербовки.'
+            '\nВы можете выбрать сторону мафии и раз в день выбирать игрока для проверки его роли.' \
+            '\nВы можете выбрать сторону милиции. ' \
+            '\nЧтобы остаться мирным, проигнорируйте вербовку и не выбирайте сторону.' \
+            ' В таком случае ночью мафия получит уведомление об отказе от вербовки.'
     else:
         recruit_result = 'День ' + str(game.day) + ': Мафия предлагает вам перейти на её сторону.' \
-                                                   '\nВы не можете принять вербовку и автоматически отказываетесь от неё.' \
-                                                   '\nНочью мафия получит уведомление об отказе от вербовки.'
+            '\nВы не можете принять вербовку и автоматически отказываетесь от неё.' \
+            '\nНочью мафия получит уведомление об отказе от вербовки.'
     target_inform = GameComment(post=target_post, text=recruit_result, author=author)
     target_inform.save()
     voter.can_recruit = False
     voter.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 @login_required
@@ -1697,7 +1748,8 @@ def contract(request, kwargs):
     comment.save()
     voter.can_ask_killer = False
     voter.save()
-    return True
+    # though action is success, return False to not scroll to last comment
+    return False
 
 
 def preserve_error_messages(request):
@@ -1833,9 +1885,9 @@ class DisplayGamePost(generic.ListView):
                 if vote:
                     # make order: [target, queryset w/o target]
                     allowed_actions['vote_heal'] = True
-                    allowed_actions['heal_targets'] = [vote.target] + list(GameParticipant.objects \
-                                                                           .filter(game=self.game).exclude(
-                        Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                    allowed_actions['heal_targets'] = [vote.target] + list(GameParticipant.objects
+                                                                           .filter(game=self.game)
+                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
                                                                            .exclude(id=vote.target.id))
                 else:
                     allowed_actions['heal_targets'] = GameParticipant.objects.filter(game=self.game) \
@@ -1861,9 +1913,9 @@ class DisplayGamePost(generic.ListView):
                 if vote:
                     # make order: [target, queryset w/o target]
                     allowed_actions['vote_spoil'] = True
-                    allowed_actions['spoil_targets'] = [vote.target] + list(GameParticipant.objects \
-                                                                            .filter(game=self.game).exclude(
-                        Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                    allowed_actions['spoil_targets'] = [vote.target] + list(GameParticipant.objects
+                                                                            .filter(game=self.game)
+                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
                                                                             .exclude(id=vote.target.id))
                 else:
                     allowed_actions['spoil_targets'] = GameParticipant.objects.filter(game=self.game) \
@@ -1893,8 +1945,7 @@ class DisplayGamePost(generic.ListView):
             if vote:
                 allowed_actions['vote_shoot'] = True
                 allowed_actions['shoot_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game)
-                                                                        .exclude(
-                    Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
+                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
             else:
                 allowed_actions['shoot_targets'] = GameParticipant.objects.filter(game=self.game) \
                     .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
@@ -1907,8 +1958,8 @@ class DisplayGamePost(generic.ListView):
                 # make order: [target, queryset w/o target]
                 allowed_actions['vote_leader'] = True
                 allowed_actions['leader_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game,
-                                                                                                        role='mafia').exclude(
-                    id=vote.target.id))
+                                                                                                        role='mafia')
+                    .exclude(id=vote.target.id))
             else:
                 allowed_actions['leader_targets'] = GameParticipant.objects.filter(game=self.game, role='mafia')
 
@@ -1924,9 +1975,8 @@ class DisplayGamePost(generic.ListView):
             if vote:
                 # make order: [target, queryset w/o target]
                 allowed_actions['vote_check'] = True
-                allowed_actions['check_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game) \
-                                                                        .exclude(
-                    Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
+                allowed_actions['check_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game)
+                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
             else:
                 allowed_actions['check_targets'] = GameParticipant.objects.filter(game=self.game) \
                     .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
@@ -2027,7 +2077,7 @@ class DisplayPost(generic.ListView):
         return Comment.objects.filter(post=self.post)
 
     def get_context_data(self, **kwargs):
-        context = super(DisplayGamePost, self).get_context_data(**kwargs)
+        context = super(DisplayPost, self).get_context_data(**kwargs)
         context['post'] = self.post
         return context
 

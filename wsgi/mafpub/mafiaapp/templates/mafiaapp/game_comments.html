@@ -11,6 +11,7 @@
                 "text-align": "center",
                 "font-weight": "bold",
                 "padding": "8px 15px 8px 14px",
+                "margin-bottom": "20px",
                 "text-shadow": "0 1px 0 rgba(255, 255, 255, 0.5)",
                 "background-color": "#fcf8e3",
                 "border": "1px solid #fbeed5",
@@ -37,22 +38,25 @@
             marked_quote[i] = '> '+marked_quote[i]
         }
 
-        quote_author = document.getElementById('author'+c).innerHTML;
+        quote_author = document.getElementById('author'+c).innerHTML.trim();
 
-        inp = document.getElementById('ihatejs');
+        inp = document.getElementById('ihatejs'+c);
         inp.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
         inp.select();
         document.execCommand('copy');
 
-        ta = document.getElementById('id_comment');
-        if (ta.value == ''){
-            ta.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
-        }
-        else {
-            ta.value = ta.value+'\n'+marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
+        if(document.getElementById('id_comment')) {
+            ta = document.getElementById('id_comment');
+            if (ta.value == ''){
+                ta.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
+            }
+            else {
+                ta.value = ta.value+'\n'+marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
+            }
+
+            document.getElementById('id_comment').focus();
         }
 
-        document.getElementById('id_comment').focus();
         $.notify("Цитата скопирована в буфер обмена.",  { position:"bottom right", className: 'info', style: 'copy-comment'});
 	}
 
@@ -66,7 +70,38 @@
                 return sParameterName[1];
             }
         }
+        
     }
+
+    function HighlightComment() {
+        var url = window.location.href;
+        var div = url.split('#');
+        pattern = /^div\d+$/;
+        if (div.length > 1 && pattern.test(div[1])) {
+            $('#'+div[1]).addClass('section');
+            setTimeout(function(){
+                $('#'+div[1]).removeClass('section');
+            }, 5000);
+        }
+    }
+
+    var alreadyFocused = false;
+    $(window).on("blur focus", function(e) {
+        var prevType = $(this).data("prevType");
+        if (prevType != e.type) {   //  reduce double fire issues
+            switch (e.type) {
+                case "blur":
+                    break;
+                case "focus":
+                    if (!alreadyFocused) {
+                        HighlightComment();
+                        alreadyFocused = true;
+                    }
+                    break;
+            }
+        }
+        $(this).data("prevType", e.type);
+    })
 
     $(document).ready(function(){
         $(".content-markdown").each(function(){
@@ -103,6 +138,8 @@
 </div>
 
 {% for comment in page_obj %}
+
+<div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 text-right">
         {% if comment.author.user.nickname in game.anchor or game.day == 0 %}
