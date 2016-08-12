@@ -13,19 +13,9 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.http import HttpResponse
-import os, sys
 
-from django.conf.urls.static import static
-from django.views.generic import RedirectView
-
-def index(request):
-    s = "<br>".join([k+'='+v for (k,v) in os.environ.items()])
-    s += "<br><br>SESSION" + str(request.session.items())
-    return HttpResponse("os.environ = %s" % s)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

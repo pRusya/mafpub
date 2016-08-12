@@ -6,7 +6,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.contrib.auth.views import password_reset
+from django.contrib.auth.views import (
+    password_reset_done,
+    password_reset_confirm,
+    password_reset_complete,
+    password_reset
+)
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
@@ -19,6 +24,29 @@ from .forms import *
 from .models import User as mafpub_user
 
 logger = logging.getLogger(__name__)
+
+
+def wrap_password_reset(request):
+    return password_reset(request,
+                          template_name='mafiaapp/password_reset_form.html',
+                          post_reset_redirect=reverse('mafiaapp:password_reset_done'),
+                          email_template_name='mafiaapp/password_reset_email.html')
+
+
+def wrap_password_reset_done(request):
+    return password_reset_done(request,
+                               template_name='mafiaapp/password_reset_done.html')
+
+
+def wrap_password_reset_confirm(request, uidb64, token):
+    return password_reset_confirm(request, uidb64=uidb64, token=token,
+                                  template_name='mafiaapp/password_reset_confirm.html',
+                                  post_reset_redirect=reverse('mafiaapp:password_reset_complete'))
+
+
+def wrap_password_reset_complete(request):
+    return password_reset_complete(request,
+                                   template_name='mafiaapp/password_reset_complete.html')
 
 
 class IndexView(generic.ListView):
@@ -38,8 +66,8 @@ class IndexView(generic.ListView):
         if action == 'Логин':
             form = LoginForm(request.POST)
             if form.is_valid():
-                nickname = form.cleaned_data['nickname']
-                user = get_object_or_404(mafpub_user, nickname__iexact=nickname)
+                email = form.cleaned_data['email']
+                user = get_object_or_404(User, email__iexact=email)
                 password = form.cleaned_data['password']
                 user = authenticate(username=user.username, password=password)
                 if user is not None:
@@ -48,10 +76,19 @@ class IndexView(generic.ListView):
                 else:
                     messages.add_message(request, messages.ERROR, 'Check your login credentials!')
                     return render(request, 'mafiaapp/index.html', {'form': form})
+            else:
+                    messages.add_message(request, messages.ERROR, 'Check your login credentials!')
+                    return render(request, 'mafiaapp/index.html', {'form': form})
         elif action == 'Регистрация':
             form = EmailValidationForm(request.POST)
             if form.is_valid():
                 email = request.POST['email']
+                registered_emails = EmailValidation.objects.all().values('email')
+                for record in registered_emails:
+                    if email == record['email']:
+                        messages.add_message(request, messages.ERROR, 'Данный адрес уже зарегистророван. '
+                                                                      'Укажите другой.')
+                        return redirect('mafiaapp:index')
                 code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
                 ev = EmailValidation(email=email, code=code)
                 ev.save()
@@ -204,7 +241,7 @@ class CreateGameMask(generic.CreateView):
 
 class DeleteGameView(generic.DeleteView):
     model = Game
-    success_url = '/dashboard/games/'
+    success_url = reverse_lazy('mafiaapp:display_games')
 
 
 class DeleteGameComment(generic.DeleteView):
@@ -219,12 +256,16 @@ class GameParticipantUpdate(generic.UpdateView):
     model = GameParticipant
     fields = ['role', 'prevTarget', 'can_ask_killer', 'can_choose_side', 'sees_maf_q', 'sees_mil_q',
               'can_recruit', 'checked_by_mil']
-    success_url = '/dashboard/games'
+    success_url = reverse_lazy('mafiaapp:display_games')
 
-    """def get_object(self, queryset=None):
-        print('===\nKWARGS\n===\n', self.kwargs, file=sys.stderr)
-        participant = get_object_or_404(GameParticipant, id=int(self.request.POST['id']))
-        return participant  # Game.objects.get(number=self.kwargs['pk'])"""
+    """
+    def get_success_url(self):
+        next_url = self.request.GET.get('next', None)
+        if next_url:
+            return redirect(next_url)
+        else:
+            return reverse_lazy('mafiaapp:display_games')
+    """
 
 
 class EditGameView(generic.ListView, generic.edit.UpdateView):
@@ -972,9 +1013,9 @@ def head_militia_arrest(d):
         if barman.role in mafia_roles:
             success_result += '\n  ' + barman.mask.username
             success_arrest = True
-            barman.target.role = 'dead'
-            barman.target.checked_by_mil = True
-            barman.target.save()
+            barman.role = 'dead'
+            barman.checked_by_mil = True
+            barman.save()
             if arrest_result:
                 arrest_result = arrest_result + ' Вы арестовали игрока ' + barman.mask.username + '.'
             else:
@@ -1093,7 +1134,7 @@ def night(d):
     author = User.objects.get(nickname='Игровой Бот')
     has_mafia_post = False
     has_militia_post = False
-    quicks = GameParticipant.objects.filter(game=game).exclude(role='dead')
+    quicks = GameParticipant.objects.filter(game=game).exclude(Q(role='dead') | Q(user=author))
     quicks_info = '\nЖивые:'
     for quick in quicks:
         quicks_info += '\n  ' + quick.mask.username

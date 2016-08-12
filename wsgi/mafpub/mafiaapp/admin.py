@@ -1,16 +1,51 @@
 from django.contrib import admin
+from django.contrib.auth import get_user
 from .models import *
 from .forms import *
 
 
 # Register your models here.
 
-#admin.site.register(Game)
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
     def render_change_form(self, request, context, obj, *args, **kwargs):
-        context['adminform'].form.fields['description'].initial = obj.get_description().text
+        if obj:
+            context['adminform'].form.fields['description'].initial = obj.get_description().text
         return super(GameAdmin, self).render_change_form(request, context, args, kwargs)
+
+    def save_model(self, request, obj, form, change):
+        obj.save()
+        user = get_user(request)
+        description, created = GamePost.objects.get_or_create(game=obj, tags__contains=['description'],
+                                                              defaults={
+                                                                  "title": "Регистрация",
+                                                                  "text": form.cleaned_data['description'],
+                                                                  "game": obj,
+                                                                  "tags": ["general","description"],
+                                                                  "short": "description",
+                                                                  "slug": "game"+str(obj.number)+"_description",
+                                                                  "allow_comment": True,
+                                                                  "allow_role": ["everyone"],
+                                                                  # user inherits default user. default user required
+                                                                  "author": user.user
+                                                              })
+        if not created:
+            description.text = form.cleaned_data['description']
+            description.save()
+        else:
+            bot = User.objects.get(nickname='Игровой Бот')
+            summary = GamePost(title='Итоги ночей', game=self.object, text='Итоги обновляются каждую игровую ночь.',
+                               author=bot, tags=['general', 'summary'], short='summary',
+                               slug=self.object.slug + '_summary', allow_comment=False, allow_role=['everyone'])
+            summary.save()
+            morgue = GamePost(title='Морг', game=self.object, text='Здесь уют.',
+                              author=bot, tags=['morgue'], short='morgue', slug=self.object.slug + '_morgue',
+                              allow_role=['dead'])
+            morgue.save()
+            bot_mask = Mask(game=self.object, avatar=bot.avatar, username=bot.nickname)
+            bot_mask.save()
+            bot_participant = GameParticipant(game=self.object, user=bot, mask=bot_mask)
+            bot_participant.save()
 
     form = CreateGameForm
 

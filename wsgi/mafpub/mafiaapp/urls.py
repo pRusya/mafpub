@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 from . import views
 
@@ -6,34 +8,41 @@ urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^register/(?P<code>[a-zA-Z0-9]+)$', views.RegisterView.as_view(), name='register'),
 
+    # password reset links
+    url(r'^p/$', views.wrap_password_reset, name='password_reset'),
+    url(r'^p/confirm/(?P<uidb64>[0-9A-Za-z_-]+)/(?P<token>[0-9A-Za-z]+-[0-9A-Za-z]+)/$',
+        views.wrap_password_reset_confirm, name='password_reset_confirm'),
+    url(r'^p/complete/$', views.wrap_password_reset_complete, name='password_reset_complete'),
+    url(r'^p/done/$', views.wrap_password_reset_done, name='password_reset_done'),
+
     # TODO
-    url(r'^profile/(?P<user>.*?)/$', views.Profile.as_view(), name='profile'),
+    url(r'^u/(?P<user>.*?)/$', views.Profile.as_view(), name='profile'),
     url(r'^logout/$', views.Logout.as_view(), name='logout'),
 
-    url(r'^users/$', views.DisplayUsersView.as_view(), name='display_users'),
-    url(r'^masks/$', views.DisplayMasksView.as_view(), name='display_masks'),
-    url(r'^users/delete/(?P<pk>[0-9]+)/$', views.DeleteUser.as_view(), name='delete_user'),
+    #url(r'^users/$', views.DisplayUsersView.as_view(), name='display_users'),
+    url(r'^masks/$', staff_member_required(views.DisplayMasksView.as_view()), name='display_masks'),
+    url(r'^users/delete/(?P<pk>[0-9]+)/$', staff_member_required(views.DeleteUser.as_view()), name='delete_user'),
 
     url(r'^dashboard/$', views.Dashboard.as_view(), name='dashboard'),
     # game urls
-    url(r'^dashboard/games/$', views.DisplayGamesView.as_view(), name='display_games'),
-    url(r'^dashboard/games/delete/(?P<pk>[0-9]+)/$', views.DeleteGameView.as_view(), name='delete_game'),
-    url(r'^dashboard/games/edit/(?P<pk>[0-9]+)/$', views.EditGameView.as_view(), name='edit_game'),
+    url(r'^dashboard/g/$', staff_member_required(views.DisplayGamesView.as_view()), name='display_games'),
+    url(r'^dashboard/g/delete/(?P<pk>[0-9]+)/$', staff_member_required(views.DeleteGameView.as_view()), name='delete_game'),
+    url(r'^dashboard/g/edit/(?P<pk>[0-9]+)/$', staff_member_required(views.EditGameView.as_view()), name='edit_game'),
 
-    url(r'^dashboard/games/(?P<game_slug>game[0-9]+)/$', views.DisplayGame.as_view(), name='display_game'),
-    url(r'^dashboard/games/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/$',
+    url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/$', views.DisplayGame.as_view(), name='display_game'),
+    url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/$',
         views.DisplayGamePost.as_view(), name='display_game_post'),
     url(
-        r'^dashboard/games/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/deletecomment/(?P<pk>[0-9]+)/$',
-        views.DeleteGameComment.as_view(), name='delete_game_comment'),
+        r'^dashboard/g/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/deletecomment/(?P<pk>[0-9]+)/$',
+        staff_member_required(views.DeleteGameComment.as_view()), name='delete_game_comment'),
     # post urls
     url(r'^dashboard/posts/(?P<post_slug>)[a-z0-9_]+/$', views.DisplayPost.as_view(), name='display_post'),
 
-    url(r'^dashboard/creategame/$', views.CreateGame.as_view(), name='create_game'),
-    url(r'^dashboard/creategamepost/$', views.CreateGamePost.as_view(), name='create_game_post'),
-    url(r'^dashboard/creategamemask/$', views.CreateGameMask.as_view(), name='create_game_mask'),
+    url(r'^dashboard/creategame/$', staff_member_required(views.CreateGame.as_view()), name='create_game'),
+    url(r'^dashboard/creategamepost/$', staff_member_required(views.CreateGamePost.as_view()), name='create_game_post'),
+    url(r'^dashboard/creategamemask/$', staff_member_required(views.CreateGameMask.as_view()), name='create_game_mask'),
 
-    url(r'^dashboard/gameparticipant/(?P<pk>[0-9]+)/$', views.GameParticipantUpdate.as_view(),
+    url(r'^dashboard/gameparticipant/(?P<pk>[0-9]+)/$', staff_member_required(views.GameParticipantUpdate.as_view()),
         name='participant_update'),
 
 ]

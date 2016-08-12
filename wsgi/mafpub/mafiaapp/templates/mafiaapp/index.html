@@ -43,12 +43,13 @@
 
 		<form action="" method="post" class="form-signin">
 			{% csrf_token %}
-			<input type="text" name="nickname" placeholder="Nickname" class="form-control" />
+			<input type="email" name="email" placeholder="Email address" class="form-control" />
 			<input type="password" name="password" placeholder="Password" class="form-control" />
 			<div class="col-md-4 col-centered" style="padding:0px">
 				<input type="submit" name="submit" value="Логин" class="btn btn-default btn-primary btn-block" />
 			</div>
 		</form>
+		<a href="{% url 'mafiaapp:password_reset' %}">Восстановить пароль</a>
 	</div>
 </div>
 

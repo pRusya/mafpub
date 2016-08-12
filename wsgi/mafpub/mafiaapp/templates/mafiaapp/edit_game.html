@@ -108,7 +108,7 @@
         </div>
         </a>
         <div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
-        <form action="{% url 'mafiaapp:participant_update' pk=participant.instance.id %}" method="post" class="form-signin">
+        <form action="{% url 'mafiaapp:participant_update' pk=participant.instance.id %}?next={{request.path}}" method="post" class="form-signin">
           <div class="panel-body">
                 {% csrf_token %}
                 <input type="text" value="{{ game.number }}" name="game" style="display:none" />
