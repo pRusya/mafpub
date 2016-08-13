@@ -1,6 +1,7 @@
 import logging
 import random
 import string
+from itertools import islice
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user
@@ -449,7 +450,8 @@ def register_bots(d):
         while not available:
             name = 'Бот ' + str(random.randint(1, 999999))
             available = False if User.objects.filter(nickname=name).first() else True
-        user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123')
+        user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123',
+                                        email=re.sub(r'[^\w.@+-]', '_', name)+'@maf.pub')
         temp = NamedTemporaryFile()
         temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
@@ -1135,9 +1137,18 @@ def night(d):
     has_mafia_post = False
     has_militia_post = False
     quicks = GameParticipant.objects.filter(game=game).exclude(Q(role='dead') | Q(user=author))
+    logger.info('ЖИВЫЕ ', quicks)
+    # quicks for general_day
     quicks_info = '\nЖивые:'
-    for quick in quicks:
-        quicks_info += '\n  ' + quick.mask.username
+    # quicks for militia_day
+    checked_quicks_info = '\nЖивые:'
+    for x in range(0, len(quicks), 3):
+        line = islice(quicks, x, x+3)
+        quicks_info += '\n    ' + ', '.join(quick.mask.username for quick in line)
+        checked_quicks_info += '\n    ' + ', '.join(
+            quick.mask.username+"("+quick.role+")" if quick.checked_by_mil
+            else quick.mask.username
+            for quick in line)
     for post in posts:
         post.allow_comment = False
         post.tags.remove('current')
@@ -1150,10 +1161,16 @@ def night(d):
             has_militia_post = True
             slug = game.slug + '_militia_day' + day
         if not game_ended:
-            new_post = GamePost(title='День ' + day, text='День ' + day + quicks_info, short='day' + day,
-                                tags=post.tags + ['current'],
-                                game=game, author=author, allow_role=post.allow_role, slug=slug)
-            new_post.save()
+            if 'militia_day' in post.tags:
+                new_post = GamePost(title='День ' + day, text='День ' + day + checked_quicks_info, short='day' + day,
+                                    tags=post.tags + ['current'],
+                                    game=game, author=author, allow_role=post.allow_role, slug=slug)
+                new_post.save()
+            else:
+                new_post = GamePost(title='День ' + day, text='День ' + day + quicks_info, short='day' + day,
+                                    tags=post.tags + ['current'],
+                                    game=game, author=author, allow_role=post.allow_role, slug=slug)
+                new_post.save()
         comment = GameComment(post=post, text='День ' + ('' if game.day == 0 else str(game.day)) +
                                               ' завершен', author=author)
         comment.save()

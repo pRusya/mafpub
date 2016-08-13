@@ -70,7 +70,6 @@
                 return sParameterName[1];
             }
         }
-        
     }
 
     function HighlightComment() {
@@ -138,7 +137,6 @@
 </div>
 
 {% for comment in page_obj %}
-
 <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 text-right">
@@ -178,7 +176,7 @@
             <input type="submit" value="Удалить" class="btn btn-primary" >
         </form>
         <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
-      {% endif %}
+        {% endif %}
       <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h4>Цитировать</h4></span>
     </div>
 </div>

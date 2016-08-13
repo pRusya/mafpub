@@ -21,9 +21,9 @@ class GameAdmin(admin.ModelAdmin):
                                                                   "title": "Регистрация",
                                                                   "text": form.cleaned_data['description'],
                                                                   "game": obj,
-                                                                  "tags": ["general","description"],
+                                                                  "tags": ["general", "description"],
                                                                   "short": "description",
-                                                                  "slug": "game"+str(obj.number)+"_description",
+                                                                  "slug": "game"+obj.slug+"_description",
                                                                   "allow_comment": True,
                                                                   "allow_role": ["everyone"],
                                                                   # user inherits default user. default user required
@@ -34,17 +34,17 @@ class GameAdmin(admin.ModelAdmin):
             description.save()
         else:
             bot = User.objects.get(nickname='Игровой Бот')
-            summary = GamePost(title='Итоги ночей', game=self.object, text='Итоги обновляются каждую игровую ночь.',
+            summary = GamePost(title='Итоги ночей', game=obj, text='Итоги обновляются каждую игровую ночь.',
                                author=bot, tags=['general', 'summary'], short='summary',
-                               slug=self.object.slug + '_summary', allow_comment=False, allow_role=['everyone'])
+                               slug=obj.slug + '_summary', allow_comment=False, allow_role=['everyone'])
             summary.save()
-            morgue = GamePost(title='Морг', game=self.object, text='Здесь уют.',
-                              author=bot, tags=['morgue'], short='morgue', slug=self.object.slug + '_morgue',
+            morgue = GamePost(title='Морг', game=obj, text='Здесь уют.',
+                              author=bot, tags=['morgue'], short='morgue', slug=obj.slug + '_morgue',
                               allow_role=['dead'])
             morgue.save()
-            bot_mask = Mask(game=self.object, avatar=bot.avatar, username=bot.nickname)
+            bot_mask = Mask(game=obj, avatar=bot.avatar, username=bot.nickname)
             bot_mask.save()
-            bot_participant = GameParticipant(game=self.object, user=bot, mask=bot_mask)
+            bot_participant = GameParticipant(game=obj, user=bot, mask=bot_mask)
             bot_participant.save()
 
     form = CreateGameForm

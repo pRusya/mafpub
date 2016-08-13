@@ -1,18 +1,42 @@
 {% load staticfiles %}
 
 <script>
+    $.notify.addStyle('copy-comment', {
+        html: "<div>\n<span data-notify-text></span>\n</div>",
+        classes: {
+      
+            base: {
+                "height": "100px",
+                "width": "200px",
+                "text-align": "center",
+                "font-weight": "bold",
+                "padding": "8px 15px 8px 14px",
+                "margin-bottom": "20px",
+                "text-shadow": "0 1px 0 rgba(255, 255, 255, 0.5)",
+                "background-color": "#fcf8e3",
+                "border": "1px solid #fbeed5",
+                "border-radius": "4px",
+                "white-space": "pre-wrap",
+                "padding-left": "25px",
+                "background-repeat": "no-repeat",
+                "background-position": "3px 7px"
+            },
+            info: {
+                "color": "#3A87AD",
+                "background-color": "#D9EDF7",
+                "border-color": "#BCE8F1",
+                "background-image": "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QYFAhkSsdes/QAAA8dJREFUOMvVlGtMW2UYx//POaWHXg6lLaW0ypAtw1UCgbniNOLcVOLmAjHZolOYlxmTGXVZdAnRfXQm+7SoU4mXaOaiZsEpC9FkiQs6Z6bdCnNYruM6KNBw6YWewzl9z+sHImEWv+vz7XmT95f/+3/+7wP814v+efDOV3/SoX3lHAA+6ODeUFfMfjOWMADgdk+eEKz0pF7aQdMAcOKLLjrcVMVX3xdWN29/GhYP7SvnP0cWfS8caSkfHZsPE9Fgnt02JNutQ0QYHB2dDz9/pKX8QjjuO9xUxd/66HdxTeCHZ3rojQObGQBcuNjfplkD3b19Y/6MrimSaKgSMmpGU5WevmE/swa6Oy73tQHA0Rdr2Mmv/6A1n9w9suQ7097Z9lM4FlTgTDrzZTu4StXVfpiI48rVcUDM5cmEksrFnHxfpTtU/3BFQzCQF/2bYVoNbH7zmItbSoMj40JSzmMyX5qDvriA7QdrIIpA+3cdsMpu0nXI8cV0MtKXCPZev+gCEM1S2NHPvWfP/hL+7FSr3+0p5RBEyhEN5JCKYr8XnASMT0xBNyzQGQeI8fjsGD39RMPk7se2bd5ZtTyoFYXftF6y37gx7NeUtJJOTFlAHDZLDuILU3j3+H5oOrD3yWbIztugaAzgnBKJuBLpGfQrS8wO4FZgV+c1IxaLgWVU0tMLEETCos4xMzEIv9cJXQcyagIwigDGwJgOAtHAwAhisQUjy0ORGERiELgG4iakkzo4MYAxcM5hAMi1WWG1yYCJIcMUaBkVRLdGeSU2995TLWzcUAzONJ7J6FBVBYIggMzmFbvdBV44Corg8vjhzC+EJEl8U1kJtgYrhCzgc/vvTwXKSib1paRFVRVORDAJAsw5FuTaJEhWM2SHB3mOAlhkNxwuLzeJsGwqWzf5TFNdKgtY5qHp6ZFf67Y/sAVadCaVY5YACDDb3Oi4NIjLnWMw2QthCBIsVhsUTU9tvXsjeq9+X1d75/KEs4LNOfcdf/+HthMnvwxOD0wmHaXr7ZItn2wuH2SnBzbZAbPJwpPx+VQuzcm7dgRCB57a1uBzUDRL4bfnI0RE0eaXd9W89mpjqHZnUI5Hh2l2dkZZUhOqpi2qSmpOmZ64Tuu9qlz/SEXo6MEHa3wOip46F1n7633eekV8ds8Wxjn37Wl63VVa+ej5oeEZ/82ZBETJjpJ1Rbij2D3Z/1trXUvLsblCK0XfOx0SX2kMsn9dX+d+7Kf6h8o4AIykuffjT8L20LU+w4AZd5VvEPY+XpWqLV327HR7DzXuDnD8r+ovkBehJ8i+y8YAAAAASUVORK5CYII=)"
+            },
+        }
+    });
+
 	function show_quote(c){
         quote = $("#"+c).clone();
-        console.log(quote);
         quote.find("blockquote").remove();
-        console.log(quote);
-        marked_quote =  quote.text().split("\n"); //quote.innerHTML.split('\n');
-        console.log('marked_quote.length='+marked_quote.length);
+        marked_quote =  quote.text().split("\n");
         for(var i = 0;i < marked_quote.length;i++){
             marked_quote[i] = '> '+marked_quote[i]
         }
-        console.log('marked_quote')
-        console.log(marked_quote)
 
         quote_author = document.getElementById('author'+c).innerHTML;
 
@@ -32,10 +56,57 @@
         document.getElementById('id_comment').focus();
     }
 
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    }
+
+    function HighlightComment() {
+        var url = window.location.href;
+        var div = url.split('#');
+        pattern = /^div\d+$/;
+        if (div.length > 1 && pattern.test(div[1])) {
+            $('#'+div[1]).addClass('section');
+            setTimeout(function(){
+                $('#'+div[1]).removeClass('section');
+            }, 5000);
+        }
+    }
+
+    var alreadyFocused = false;
+    $(window).on("blur focus", function(e) {
+        var prevType = $(this).data("prevType");
+        if (prevType != e.type) {   //  reduce double fire issues
+            switch (e.type) {
+                case "blur":
+                    break;
+                case "focus":
+                    if (!alreadyFocused) {
+                        HighlightComment();
+                        alreadyFocused = true;
+                    }
+                    break;
+            }
+        }
+        $(this).data("prevType", e.type);
+    })
+
     $(document).ready(function(){
         $(".content-markdown").each(function(){
             $(this).html( marked($(this).text()) )
         })
+
+        var page = GetURLParameter('page');
+        if (page == 'last') {
+            document.getElementById('last').scrollIntoView();
+        }
     })
 </script>
 
@@ -62,7 +133,8 @@
 </div>
 
 {% for comment in page_obj %}
-<div class="row comment" {% if forloop.last %}id="last"{% endif %}>
+<div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
+<div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 text-right">
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
         <h3 id='author{{comment.id}}' class="font-600">{{ comment.author.user.nickname }}</h3><br>
@@ -72,25 +144,25 @@
     </div>
 
     <div class="col-md-8 col-centered comment-text">
-        <h3>{# placeholder to match height with nickname on the left #}</h3><span>{{ comment.date|date:"Y-m-d H:i" }}</span>
-        <span style="float:right">Сообщение #{{page_obj.number}}/{{ forloop.counter }}</span>
-        <pre id="{{comment.id}}" class="content-markdown">{{ comment.text }}</pre>
+        <h3>{# placeholder to match height with nickname on the left #}</h3>
+        <span>{{ comment.date|date:"Y-m-d H:i" }}</span>
+        <a href="?page={{ page_obj.number }}#div{{comment.id}}"><span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span></a>
+
+        <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
+        
         <img src="{% static 'mafiaapp/Thumb-up.svg' %}" class="img-thumb-up"> {% if comment.like > 0 %}{{ comment.like }}{% endif %}
         {% if user.user.nickname in game.anchor %}
-        <span>
-        <!--<form action="{#% url 'mafiaapp:delete_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %#}" method="post" class="inline">
+        <span></span>
+        <form action="{% url 'mafiaapp:delete_game_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">
             {% csrf_token %}
             <input type="submit" value="Удалить" class="btn btn-primary" >
-        </form>-->
+        </form>
         <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
-        </span>
-      {% endif %}
-      <span class="cite" onClick='show_quote({{comment.id}});'><h4>Цитировать</h4></span>
+        {% endif %}
+      <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h4>Цитировать</h4></span>
     </div>
 </div>
 {% endfor %}
-
-<div style="height:1px;overflow:hidden"><input id='ihatejs' value='' style="margin-top:2px;"></div>
 
 <div class="row">
 <div class="col-md-12 col-centered text-center">

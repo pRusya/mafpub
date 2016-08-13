@@ -12,3 +12,5 @@ wsgi/mafpub/mafiaapp/migrations/*
 __pycache__/
 secret.txt
 debug.log
+print.log
+psql.log

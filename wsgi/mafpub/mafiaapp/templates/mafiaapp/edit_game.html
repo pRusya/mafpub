@@ -127,7 +127,10 @@
                 {% endfor %}
                 </p>
           </div>
-          <div class="panel-footer"><input type="submit" name="action" value="Изменить" class="btn btn-default btn-primary" /></div>
+          <div class="panel-footer">
+            <input type="submit" name="action" value="Изменить" class="btn btn-default btn-primary" />
+            <span>{{ participant.instance.user.email }}</span>
+            </div>
         </form>  
         </div>
       </div>
