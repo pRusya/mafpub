@@ -24,3 +24,5 @@ urlpatterns = [
     # url(r'^api/', include('mafiaapp.api.urls', namespace="api_mafiaapp")),
     # url(r'^test/$', index)#
 ]
+
+urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]

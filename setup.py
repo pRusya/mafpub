@@ -13,7 +13,8 @@ setup(name='mafpub',
         'Pillow==3.1.1',
         'requests',
         'django-widget-tweaks==1.4.1',
-        'django-pagedown==0.1.1'
+        'django-pagedown==0.1.1',
+        'django-silk'
       ],
       dependency_links=[
         'https://pypi.python.org/simple/django/'

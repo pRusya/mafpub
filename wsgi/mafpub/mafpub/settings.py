@@ -51,6 +51,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mafiaapp.apps.MafiaAppConfig',
     'identicon.apps.IdenticonConfig',
+    # third party
+    'silk',
     'widget_tweaks',
     'pagedown',
 )
@@ -64,6 +66,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # third party
+    'silk.middleware.SilkyMiddleware',
 )
 
 ROOT_URLCONF = 'mafpub.urls'
@@ -85,6 +89,9 @@ TEMPLATES = [
 ]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+SILKY_AUTHENTICATION = True  # User must login
+SILKY_AUTHORISATION = True  # User must have permissions
 
 WSGI_APPLICATION = 'mafpub.wsgi.application'
 
