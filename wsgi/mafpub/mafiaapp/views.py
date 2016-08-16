@@ -1,6 +1,7 @@
 import logging
 import random
 import string
+import time
 from itertools import islice
 
 from django.contrib import messages
@@ -409,7 +410,7 @@ def create_random_masks(d):
         temp.flush()
 
         mask = Mask(game=game, username='Маска ' + participant.user.nickname)
-        mask.avatar.save(os.path.basename(save_path(mask, 'avatar.png')), File(temp))
+        mask.avatar.save(os.path.basename(save_path_avatar(mask, 'avatar.png')), File(temp))
         mask.save()
 
         participant.mask = mask
@@ -455,11 +456,11 @@ def register_bots(d):
         temp = NamedTemporaryFile()
         temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
-        user.avatar.save(os.path.basename(save_path(user, 'avatar.png')), File(temp))
+        user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         user.save()
 
         mask = Mask(game=game, username=user.nickname)
-        mask.avatar.save(os.path.basename(save_path(mask, 'avatar.png')), File(temp))
+        mask.avatar.save(os.path.basename(save_path_avatar(mask, 'avatar.png')), File(temp))
         mask.save()
 
         participant = GameParticipant(game=game, user=user, mask=mask)
@@ -1345,7 +1346,9 @@ def change_side(d):
                 neutral.save()
             else:
                 random.seed(time.time())
-                random_side = random.choice(['mafia_side', 'militia_side'])
+                # repeat mafia_side/militia_side to make it more random
+                random_side = random.choice(['mafia_side', 'militia_side', 'mafia_side', 'militia_side',
+                                             'mafia_side', 'militia_side', 'mafia_side', 'militia_side'])
                 neutral.role = roles_map[random_side][neutral.role]
                 neutral.save()
                 post = GamePost.objects.get(game=game, tags__contains=['private', neutral.user.nickname])
@@ -1359,12 +1362,14 @@ def change_side(d):
             # post = GamePost.objects.get(game=game, tags__contains=['private', neutral.user.nickname])
             # inform = GameComment(post=post, author=bot, text=roles_description[neutral.role])
             # inform.save()
+            """
             if 'mafia' in neutral.role:
                 neutral.sees_maf_q = True
                 neutral.save()
             elif ('militia' in neutral.role) and neutral.checked_by_mil:
                 neutral.sees_mil_q = True
                 neutral.save()
+            """
     # recruitment by mafia is the last block of code anyway, so just return if game.hasRecruit
     if game.hasRecruit:
         return ('\n\nВыбор стороны:' + side_result) if len(side_result) > 0 else ''
@@ -1810,6 +1815,39 @@ def contract(request, kwargs):
     return False
 
 
+@login_required
+def invite(request, kwargs):
+    game = get_game(kwargs)
+    post = get_post(kwargs)
+    user = get_user(request)
+    voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
+    author = User.objects.get(nickname='Игровой Бот')
+    try:
+        target = get_object_or_404(GameParticipant, ~Q(user__nickname='Игровой Бот') | ~Q(role='dead'), game=game,
+                                   id=int(request.POST['target']))
+    except KeyError:
+        raise Http404()
+    vote = Vote.objects.update_or_create(game=game, day=game.day, voter=voter,
+                                         action='invite', defaults={'target': target})
+    comment = GameComment(post=post, text=str(vote[0]), author=author)
+    comment.save()
+    if 'mafia' in target.role:
+        target.sees_maf_q = True
+    if 'militia' in target.role:
+        target.sees_mil_q = True
+    target.save()
+    target_post = GamePost.objects.get(game=game, tags__contains=[target.user.nickname])
+    invite_result = 'День ' + str(game.day) + ': Вы были добавлены в каюты ' + \
+                    ('мафии.' if 'mafia' in target.role else 'милиции.')
+    target_inform = GameComment(post=target_post, text=invite_result, author=author)
+    target_inform.save()
+    # though action is success, return False to not scroll to last comment
+    return False
+
+
 def preserve_error_messages(request):
     mstore = messages.get_messages(request)
     for m in mstore:
@@ -1894,6 +1932,7 @@ class DisplayGamePost(generic.ListView):
         can_ask_killer = True if participant.can_ask_killer and participant.role \
                                                                 not in ['neutral killer', 'mafia killer',
                                                                         'militia killer'] else False
+        can_invite = True if participant.role in ['head mafia', 'head militia'] else False
         can_choose_side = participant.can_choose_side
         allowed_actions = {
             'dead': dead,
@@ -1906,6 +1945,7 @@ class DisplayGamePost(generic.ListView):
             'can_recruit': can_recruit,
             'can_ask_killer': can_ask_killer,
             'can_choose_side': can_choose_side,
+            'can_invite': can_invite,
         }
 
         # participants to hang
@@ -2038,6 +2078,19 @@ class DisplayGamePost(generic.ListView):
             else:
                 allowed_actions['check_targets'] = GameParticipant.objects.filter(game=self.game) \
                     .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
+
+        # targets to invite
+        if allowed_actions['can_invite']:
+            invitees = None
+            # invitees for head mafia
+            if participant.role == 'head mafia':
+                invitees = GameParticipant.objects.filter(game=self.game, sees_maf_q=False)\
+                    .filter(Q(role='mafia barman') | Q(role='mafia killer') | Q(role='mafia doctor'))
+            # invitees for head militia
+            if participant.role == 'head militia':
+                invitees = GameParticipant.objects.filter(game=self.game, sees_mil_q=False, checked_by_mil=True) \
+                    .filter(Q(role='militia barman') | Q(role='militia killer') | Q(role='militia doctor'))
+            allowed_actions['invitees'] = invitees
         return allowed_actions
 
     def get_context_data(self, **kwargs):

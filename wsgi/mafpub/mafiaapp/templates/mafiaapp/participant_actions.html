@@ -235,7 +235,35 @@
     </div>
 </div>
 {% endif %}
+
+{% if can_invite %}
+<div class="row">
+    <div class="col-md-4 col-centered text-center">
+        <h3>Добавить в каюту</h3>
+    </div>
+</div>
+<div class="row row-space">
+    <div class="col-md-6 col-centered text-center">
+        {% if invitees %}
+        <form action="" method="post" name="Invite">
+            {% csrf_token %}
+            <label for="id_invite">Я добавляю:</label>
+            <select id="id_invite" name="target"  class="form-control vote-select">
+            {% for invitee in invitees %}
+                <option value="{{invitee.id}}">{{invitee.get_literary_role}}</option>
+            {% endfor %}
+            </select>
+            <div class="col-md-3 col-centered submit-div">
+                <input type="submit" name="action" value="Пригласить" class="btn btn-default btn-primary btn-block">
+            </div>
+        </form>
+        {% else %}
+        <h3>Нет доступных целей.</h3>
+        {% endif %}
+    </div>
+</div>
 {% endif %}
+{% endif %}{# end if game.day > 0 #}
 {% endif %}{# end if not dead #}
 
 {% endblock participant_actions %}

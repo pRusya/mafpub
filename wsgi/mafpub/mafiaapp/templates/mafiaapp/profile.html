@@ -9,35 +9,49 @@
     </div>
 </div>
 
-<!--<div class="row">
-    <div class="col-md-7 col-centered">
-        <h1>{# placeholder #}&#160;</h3>
-    </div>
-</div>-->
-
 <div class="row">
 	<div class="col-md-12 text-center">
 		<p><h1>{{ profile.nickname }}</h1></p>
 	</div>
 </div>
+
+<div class="row" style="height:200px;">
+		<div class="col-md-6 text-center" style="border-right: 1px solid #ccc; height:100%;">
+			<img src="{{ profile.avatar.url }}" class="img-responsive" style="vertical-align:middle; height:100%; display:inline-block; top:50%;">
+		</div>
+		<div class="col-md-1" style="border-left: 1px solid #ccc; height:100%;"></div>
+		<div class="col-md-5">
+			<p><h3>Рега: {{ profile.date_joined|date:"Y-m-d" }}</h3></p>
+			<p><h3>Количество игр: {{ profile.game_number }}</h3></p>
+			<p><h3>Лайки: {{ profile.like_number }}</h3></p>
+		</div>
+</div>
+
 <div class="row">
-<div class="col-md-1">{# placeholder #}&#160;</div>
-<div class="col-md-11">
-	<div class="col-md-5 text-right">
-		<p><h3></h3><img src="{{ profile.avatar.url }}"></p>
+	<div class="col-md-12 text-center">
+		<p><h1>Ачивки</h1></p>
 	</div>
-	<div class="col-md-1">{# placeholder #}&#160;</div>
-	<div class="col-md-5">
-		<p><h3>Рега: {{ profile.date_joined|date:"Y-m-d" }}</h3></p>
-		<p><h3>Количество игр: XX</h3></p>
-		<p><h3>Лайки: XX</h3></p>
+</div>
+{% for achiev in profile.achievment_set.all %}
+<div class="row">
+	<div class="col-md-8 col-centered">
+		<div class="col-md-4">
+			<img src="{{ achiev.img.url }}" class="img-responsive" style="max-height: 50px; float: right;">
+		</div>
+		<div class="col-md-8">
+			<p>
+				<h3>{{ achiev.name }} {{ achiev.grade }}. {{ achiev.description }}.</h3>
+			</p>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="row">
+	<div class="col-md-8 col-centered text-center">
 		<p>
-			<h3>Ачивки: </h3>
-			<img src="{% static 'mafiaapp/Box.svg' %}" style="max-height:50px" alt="Коробка" title="Коробка">
-			<img src="{% static 'mafiaapp/Bread.svg' %}" style="max-height:50px" alt="Хлеб" title="Хлеб">
-			<img src="{% static 'mafiaapp/Bus.svg' %}" style="max-height:50px" alt="Автобус" title="Автобус">
+			<h3>Нет ачивок</h3>
 		</p>
 	</div>
-</div>	
 </div>
+{% endfor %}
 {% endblock content %}

@@ -1,15 +1,41 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User as U
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
-from django import forms
 from django.db import models
-import time
+import re
 
 
 # Create your models here.
 
-def save_path(instance, filename):
+# roles are ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer', 'mafia recruit',
+#            'militia', 'head militia', 'militia doctor', 'militia barman', 'militia killer', 'militia recruit',
+#            'neutral doctor', 'neutral barman', 'neutral killer',
+#            'maniac',
+#            'peaceful',
+#            'dead']
+roles_dict = {
+    'mafia': 'рядовой мафиози',
+    'head mafia': 'глава мафии',
+    'mafia doctor': 'тёмный доктор',
+    'mafia barman': 'тёмный трактирщик',
+    'mafia killer': 'тёмный киллер',
+    'mafia recruit': 'адвокат мафии',
+    'militia': 'помощник комиссара милиции',
+    'head militia': 'комиссар милиции',
+    'militia doctor': 'светлый доктор',
+    'militia barman': 'светлый трактирщик',
+    'militia killer': 'светлый киллер',
+    'militia recruit': 'двойной агент милиции',
+    'neutral doctor': 'нейтральный доктор',
+    'neutral barman': 'нейтральный трактирщик',
+    'neutral killer': 'нейтральный киллер',
+    'maniac': 'маньяк',
+    'peaceful': 'мирный',
+    'dead': 'мертвец',
+}
+
+
+def save_path_avatar(instance, filename):
     name, ext = filename.split('.')
     if hasattr(instance, 'game'):
         return 'MaskMedia/%s/avatar.%s' % (instance.username, ext)
@@ -17,14 +43,31 @@ def save_path(instance, filename):
         return 'UserMedia/%s/avatar.%s' % (instance.username, ext)
 
 
+def save_path_achievment(instance, filename):
+    name, ext = filename.split('.')
+    return 'Achievment/%s/img.%s' % (instance.short, ext)
+
+
+def game_slug():
+    last_game = Game.objects.order_by('slug').last()
+    if last_game:
+        last_number = int(re.sub('^game(\d+)', '\\1', last_game.slug))
+    else:
+        last_number = 0
+    return 'game'+str(last_number+1)
+
+
 class User(U):
-    avatar = models.ImageField(upload_to=save_path, blank=True)
+    avatar = models.ImageField(upload_to=save_path_avatar, blank=True)
     nickname = models.CharField(max_length=30, default='', unique=True)
-    # number of received likes
-    like = models.IntegerField(default=0)
+    # number of likes user received
+    like_number = models.IntegerField(default=0)
     # list of comment id's user liked
-    liked = ArrayField(models.IntegerField(), default='{}')
+    liked = ArrayField(models.IntegerField(), default=[])
+    # number of comments user left
     comments_number = models.IntegerField(default=0)
+    # number of games user participated in
+    game_number = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nickname
@@ -36,6 +79,7 @@ class EmailValidation(models.Model):
 
 
 class Game(models.Model):
+    # this is id
     number = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50, verbose_name='Заголовок')
 
@@ -52,10 +96,7 @@ class Game(models.Model):
         ('past',        'Завершена'),
     )
     state = models.CharField(max_length=10, choices=STATE_CHOICES, default='upcoming', verbose_name='Фаза')
-
-    # this is slug. used to navigate through list of past games
-    short = models.CharField(max_length=50, verbose_name='URL')
-    slug = models.SlugField(verbose_name='slug URL', default=None, unique=True)
+    slug = models.SlugField(verbose_name='URL', default=game_slug, unique=True)
     # current day
     day = models.IntegerField(default=0, blank=True, verbose_name='День')
     # custom string to display more info
@@ -64,7 +105,9 @@ class Game(models.Model):
     hasHeadMafia = models.BooleanField(default=False, verbose_name='ГлавМаф назначен')
     # recruit form not avail if True
     hasRecruit = models.BooleanField(default=False, verbose_name='Есть завербованный')
+    # list of users who have access to every gamepost
     anchor = ArrayField(base_field=models.CharField(max_length=30, unique=True), default='{}', verbose_name='Ведущие')
+    # list of users not allowed to participate
     black_list = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Бан', null=True, blank=True)
 
     def get_description(self):
@@ -77,7 +120,7 @@ class Game(models.Model):
 
 class Mask(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to=save_path)
+    avatar = models.ImageField(upload_to=save_path_avatar)
     taken = models.BooleanField(default=False)
     username = models.CharField(max_length=50)
 
@@ -143,6 +186,9 @@ class GameParticipant(models.Model):
     def get_votes(self):
         return Vote.objects.filter(voter=self)
 
+    def get_literary_role(self):
+        return roles_dict(self.role)
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -151,7 +197,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = ArrayField(models.CharField(max_length=20))
     short = models.CharField(max_length=50)
-    slug = models.SlugField(verbose_name='slug URL', default=time.time())
+    # TODO
+    slug = models.SlugField(verbose_name='slug URL', default='', unique=True)
     allow_comment = models.BooleanField(default=True)
 
 
@@ -188,16 +235,16 @@ class GamePost(models.Model):
         ('mafia_secret', 'mafia_secret'),
         ('militia_secret', 'militia_secret'),
         ('private', 'private'),
-        #('description', 'description'),
-        #('summary', 'summary'),
-        #('morgue', 'morgue'),
+        # ('description', 'description'),
+        # ('summary', 'summary'),
+        # ('morgue', 'morgue'),
         ('current', 'current'),
-        #('departure', 'departure'),
+        # ('departure', 'departure'),
     )
     tags = ArrayField(models.CharField(max_length=20), verbose_name='Тэги(без пробелов, через запятую)')
 
-    short = models.CharField(max_length=50, verbose_name='URL')
-    slug = models.SlugField(verbose_name='slug URL', default=time.time())
+    short = models.CharField(max_length=50, verbose_name='Short')
+    slug = models.SlugField(verbose_name='Slug', default='game', unique=True)
     allow_comment = models.BooleanField(default=True)
     ALLOW_ROLE_CHOICES = (
         ('mafia_core',      'mafia_core'),
@@ -241,6 +288,7 @@ class GameComment(models.Model):
 
 class Vote(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    # game.day
     day = models.IntegerField()
     voter = models.ForeignKey(GameParticipant, on_delete=models.CASCADE, related_name='voter')
     # actions are
@@ -276,5 +324,18 @@ class Vote(models.Model):
             'militia_side': ' выбирает сторону милиции. Ночью произойдет смена роли игрока ',
             'recruit': ' пробует вербовать игрока ',
             'contract': ' заказывает убийство игрока ',
+            'invite': ' приглашает игрока ',
         }
-        return 'День '+str(self.day)+': '+str(self.voter.mask)+d[self.action]+str(self.target.mask)+'.'
+        return 'День '+str(self.day)+': '+str(self.voter.mask)+d[str(self.action)]+str(self.target.mask)+'.'
+
+
+class Achievment(models.Model):
+    users = models.ManyToManyField(User, blank=True, null=True)
+    name = models.CharField(max_length=50, default='Введите название', verbose_name='Название')
+    short = models.CharField(max_length=20, default='', verbose_name='Short')
+    img = models.ImageField(upload_to=save_path_achievment)
+    grade = models.CharField(max_length=50, default='_ степени', verbose_name='Степень')
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name+' '+self.grade
