@@ -8,6 +8,7 @@
 wsgi/mafpub/media/*
 wsgi/mafpub/identicon/migrations/*
 wsgi/mafpub/mafiaapp/migrations/*
+fixtures/
 !__init__.py
 __pycache__/
 secret.txt

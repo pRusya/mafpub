@@ -390,7 +390,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
             context = self.get_context_data()
         elif action == 'Голосовать':
             simulate_vote(request.POST.dict())
-            vote_hang(request.POST.dict())
+            # vote_hang(request.POST.dict())
         elif action == 'Зарегистрировать':
             register_bots(request.POST.dict())
         elif action == 'Флудить':
@@ -449,10 +449,11 @@ def register_bots(d):
     for x in range(0, int(d['number'])):
         available = False
         while not available:
-            name = 'Бот ' + str(random.randint(1, 999999))
+            rand = str(random.randint(1, 999999))
+            name = 'Бот ' + rand
             available = False if User.objects.filter(nickname=name).first() else True
         user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123',
-                                        email=re.sub(r'[^\w.@+-]', '_', name)+'@maf.pub')
+                                        email=rand+'@maf.pub')
         temp = NamedTemporaryFile()
         temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
@@ -567,9 +568,11 @@ def barman_spoil(d):
     # barman's quarters
     post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
     bot = User.objects.get(nickname='Игровой Бот')
-    success_spoil = False
+    # success_spoil = False
     # barman's target is dead
     if spoil_vote.target.role == 'dead':
+        # spoil_vote always shown in night's summary
+        success_spoil = True
         spoil_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось напоить игрока ' + spoil_vote.target.mask.username + '.'
     else:
@@ -631,10 +634,16 @@ def killer_kill(d):
         success_shoot = True
     # killer's target is already dead
     if shoot_vote and shoot_vote.target.role == 'dead':
+        # shoot_vote always shown in night's summary
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден киллером уже мёртвым.'
+        success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # killer's target barman's target. no one dies
     elif spoil_vote and spoil_vote.target == shoot_vote.target:
+        # shoot_vote always shown in night's summary
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с киллером.'
+        success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # killer's shoot target is doctor's target. doctor heals target.
@@ -711,10 +720,16 @@ def mafia_kill(d):
         success_shot = True
     # head mafia's target is already dead
     if shoot_vote and shoot_vote.target.role == 'dead':
+        # shoot_vote always shown in night's summary
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден мафией уже мёртвым.'
+        success_shot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # head mafia's target barman's target. no one dies
     elif spoil_vote and spoil_vote.target == shoot_vote.target:
+        # shoot_vote always shown in night's summary
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с мафией.'
+        success_shot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # head mafia's target is doctor's target, so doctor heals target. Or, head mafia's target is already dead
@@ -842,15 +857,21 @@ def maniac_kill_check(d):
         success_shoot = True
     # maniac's target is already dead
     if shoot_vote and shoot_vote.target.role == 'dead':
+        # shoot_vote always shown in night's summary
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден маньяком уже мёртвым.'
+        success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # maniac's target is barman's target. no one dies
     elif shoot_vote and spoil_vote and spoil_vote.target == shoot_vote.target:
+        # shoot_vote always shown in night's summary
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с маньяком.'
+        success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # maniac's shoot target is doctor's target. doctor heals target.
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + heal_vote.target.mask.username + ' спасён доктором.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором.'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result

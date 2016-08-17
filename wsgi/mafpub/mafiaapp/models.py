@@ -63,7 +63,7 @@ class User(U):
     # number of likes user received
     like_number = models.IntegerField(default=0)
     # list of comment id's user liked
-    liked = ArrayField(models.IntegerField(), default=[])
+    liked = ArrayField(models.IntegerField(), default=[], blank=True)
     # number of comments user left
     comments_number = models.IntegerField(default=0)
     # number of games user participated in
