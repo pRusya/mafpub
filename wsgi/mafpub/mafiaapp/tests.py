@@ -1,26 +1,185 @@
 from django.test import TestCase
-
+from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login, logout, get_user
+from django.contrib.admin.forms import AdminAuthenticationForm
+from .forms import *
+from .views import register_bots, DisplayGamePost
+import random
+import string
 
 """
 Test
 
--create game bot, create superuser
--create game
--register bots
--create departure
--assign roles
--new day
++create game bot, create superuser
++create game
++register bots
++create departure
++assign roles
++new day
 -generate possible votes
--create votes
--end day
--save results for analysis
+    create votes
+    new day
+    save results for analysis
 
 """
 
 
 class IndexViewTestCase(TestCase):
     def test_index(self):
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('mafiaapp:index'))
         self.assertEqual(resp.status_code, 200)
-        print('\nContext\n', resp.context)
-        print('\nTemplates\n', resp.templates)
+        print('     IndexViewTestCase       OK')
+
+
+def create_superuser(self):
+    email = 'admin@maf.pub'
+    code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
+    ev = EmailValidation(email=email, code=code)
+    ev.save()
+    self.assertEqual(ev.email, email)
+    print('         create email validation       OK')
+
+    form_data = {'nickname': 'admin', 'password1': '123', 'password2': '123', 'email': email}
+    form = UserCreateForm(data=form_data)
+    self.assertTrue(form.is_valid())
+    user = form.save()
+    user.is_staff = True
+    user.is_superuser = True
+    user.save()
+    self.assertTrue(user.is_superuser)
+    print('         register user    %s        OK' % user)
+
+
+def create_game_bot(self):
+    form_data = {'nickname': 'Игровой Бот', 'password1': '123', 'password2': '123', 'email': 'bot@maf.pub'}
+    form = UserCreateForm(data=form_data)
+    self.assertTrue(form.is_valid())
+    bot = form.save()
+    self.assertEqual(str(bot), 'Игровой Бот')
+    print('         register user    %s  OK' % bot)
+
+
+def create_game(self):
+    user = authenticate(username='admin', password='123')
+    if user is not None:
+        print('             auth user', user)
+        self.client.login(username=user.username, password='123')
+
+    create_game_url = reverse('mafiaapp:create_game')
+    resp = self.client.get(create_game_url, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    form = AdminAuthenticationForm(data={'username': 'admin', 'password': '123'})
+    self.assertTrue(form.is_valid())
+    resp = self.client.post(create_game_url, {'form': form}, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    data = {'status': ['registration'], 'slug': ['game6'], 'day': ['0'], 'anchor': ['Игровой Бот', 'Русич'],
+            'description': ['Тестовая Игрa I'], 'title': ['Тестовая Игрa I'], 'state': ['upcoming']}
+    resp = self.client.post(create_game_url, data, follow=True)
+    game = Game.objects.first()
+    self.assertEqual(resp.context['game_list'][0], game)
+    print('             game', game)
+    print('         create game                   OK')
+
+
+def wrap_register_bots(self):
+    game = Game.objects.first()
+    register_bots({'game': game.number, 'number': 15})
+    participants = GameParticipant.objects.filter(game=game)
+    self.assertEqual(len(participants), 16)
+    print('         register bots                 OK')
+
+
+def create_departure(self):
+    game = Game.objects.first()
+    create_game_post_url = reverse('mafiaapp:create_game_post')
+    resp = self.client.get(create_game_post_url, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    data = {'title': ['Зал Ожидания'], 'text': ['Зал Ожидания'], 'game': [game.number], 'short': ['departure'],
+            'tags': ['general_day', 'current'], 'slug': ['game1_departure'], 'allow_role': ['everyone']}
+    resp = self.client.post(create_game_post_url, data, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    game_posts = GamePost.objects.filter(game=game, tags__contains=['general_day'])
+    print('             general days', game_posts)
+    print('         create departure              OK')
+
+
+def assign_roles(self):
+    game = Game.objects.first()
+    edit_game_url = reverse('mafiaapp:edit_game', kwargs={'pk': game.number})
+    resp = self.client.get(edit_game_url, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    data = {'action': ['Назначить'], 'game': [game.number]}
+    resp = self.client.post(edit_game_url, data, follow=True)
+    self.assertEqual(resp.status_code, 200)
+    participants = GameParticipant.objects.filter(game=game)
+    for p in participants:
+        print('             %s  %s' % (p, p.role))
+    print('         assign roles                  OK')
+
+
+def new_day(self):
+    game = Game.objects.first()
+    day = game.day
+    game_posts_number = len(GamePost.objects.filter(game=game, tags__contains=['general_day']))
+    edit_game_url = reverse('mafiaapp:edit_game', kwargs={'pk': game.number})
+    resp = self.client.get(edit_game_url, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    data = {'action': ['Новый день'], 'game': [game.number]}
+    resp = self.client.post(edit_game_url, data, follow=True)
+    self.assertEqual(resp.status_code, 200)
+
+    game = Game.objects.first()
+    print('             game day', game.day)
+    self.assertEqual(game.day, day + 1)
+    game_posts = GamePost.objects.filter(game=game, tags__contains=['general_day'])
+    print('             general days', game_posts)
+    self.assertEqual(len(game_posts), game_posts_number + 1)
+    print('         end day, night, new day       OK')
+
+
+def generate_possible_votes(self):
+    game = Game.objects.first()
+    participants = GameParticipant.objects.filter(game=game).exclude(user__nickname='Игровой Бот')
+    for p in participants:
+        private_q_url = reverse('mafiaapp:display_game_post', kwargs={'game_slug': game.slug,
+                                                                      'post_slug': game.slug + '_private_' +
+                                                                                   p.user.username})
+        print('             %s  %s' % (p, p.role))
+        print('                 url', private_q_url)
+        resp = self.client.get(private_q_url)
+        self.assertEqual(resp.status_code, 404)
+
+        user = authenticate(username=p.user.username, password='123')
+        if user is not None:
+            print('                 auth user', user)
+            self.client.login(username=p.user.username, password='123')
+        resp = self.client.get(private_q_url)
+        print('                 GET url status code', resp.status_code)
+        print('                 can_hang', resp.context['can_hang'])
+        self.assertTrue(resp.context['can_hang'])
+        self.game = game
+        allowed_action = DisplayGamePost.allowed_actions(self, p.user)
+        print('                 allowed actions\n', allowed_action)
+        print('---------------------------------------------------')
+        self.client.logout()
+    print('         generate possible votes       OK')
+
+
+class GameTestCase(TestCase):
+    def test_game(self):
+        print('\n     GameTestCase        start')
+        create_superuser(self)
+        create_game_bot(self)
+        create_game(self)
+        wrap_register_bots(self)
+        create_departure(self)
+        assign_roles(self)
+        new_day(self)
+        generate_possible_votes(self)
+        print('     GameTestCase        OK\n')

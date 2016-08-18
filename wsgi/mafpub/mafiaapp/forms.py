@@ -50,7 +50,7 @@ class UserCreateForm(UserCreationForm):
             temp = NamedTemporaryFile()
             temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
             temp.flush()
-            user.avatar.save(os.path.basename(save_path(user, 'avatar.png')), File(temp))
+            user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         if commit:
             user.save()
         return user

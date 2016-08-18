@@ -38,13 +38,13 @@ INSTALLED_APPS = (
     'mafiaapp.apps.MafiaAppConfig',
     'identicon.apps.IdenticonConfig',
     # third party
-    'silk',
+    # 'silk',
     'widget_tweaks',
     'pagedown',
     'rest_framework',
     'corsheaders',
-    #'djangosecure',
-    #'sslserver',
+    # 'djangosecure',
+    # 'sslserver',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,7 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # third party
-    'silk.middleware.SilkyMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True

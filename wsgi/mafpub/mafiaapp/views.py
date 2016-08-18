@@ -311,6 +311,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        logger.info(request.POST)
         self.object_list = self.get_queryset()
         self.object = self.get_object()
         context = self.get_context_data()
@@ -370,6 +371,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                 context['description'] = description
             else:
                 context['form'] = form
+                return render(request, self.template_name, context)
         elif action == 'Изменить':
             participant = GameParticipant.objects.get(id=int(request.POST['id']))
             participant.role = request.POST['role']
@@ -382,12 +384,10 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
             elif participant.role == 'neutral killer':
                 participant.can_ask_killer = False
             participant.save()
-            context = self.get_context_data()
         elif action == 'Новый день':
             # t = Timer(1.0, night, args=(request.POST.dict(),))
             # t.start()
             night(request.POST.dict())
-            context = self.get_context_data()
         elif action == 'Голосовать':
             simulate_vote(request.POST.dict())
             # vote_hang(request.POST.dict())
@@ -397,6 +397,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
             simulate_flood(request.POST.dict())
         elif action == 'Создать':
             create_random_masks(request.POST.dict())
+        context = self.get_context_data()
         return render(request, self.template_name, context)
 
 
@@ -455,7 +456,8 @@ def register_bots(d):
         user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123',
                                         email=rand+'@maf.pub')
         temp = NamedTemporaryFile()
-        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+        #temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+        temp.write(urllib.request.urlopen('http://localhost/identicon/').read())
         temp.flush()
         user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         user.save()
@@ -973,7 +975,6 @@ def militia_check(d):
         check_vote.target.save()
         if check_vote.target.role in militia_roles:
             check_vote.target.sees_mil_q = True
-            spoil_vote.target.checked_by_mil = True
             check_vote.target.save()
             check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask + '.'
             check_vote_target_post = GamePost.objects.get(game=game, tags__contains=['private',
@@ -1159,7 +1160,8 @@ def night(d):
     has_mafia_post = False
     has_militia_post = False
     quicks = GameParticipant.objects.filter(game=game).exclude(Q(role='dead') | Q(user=author))
-    logger.info('ЖИВЫЕ ', quicks)
+    logger.info('ЖИВЫЕ ')
+    logger.info(quicks)
     # quicks for general_day
     quicks_info = '\nЖивые:'
     # quicks for militia_day
@@ -1167,10 +1169,10 @@ def night(d):
     for x in range(0, len(quicks), 3):
         line = islice(quicks, x, x+3)
         quicks_info += '\n    ' + ', '.join(quick.mask.username for quick in line)
-        checked_quicks_info += '\n    ' + ', '.join(
+        checked_quicks_info += '\n    ' + ', '.join([
             quick.mask.username+"("+quick.role+")" if quick.checked_by_mil
             else quick.mask.username
-            for quick in line)
+            for quick in line])
     for post in posts:
         post.allow_comment = False
         post.tags.remove('current')
