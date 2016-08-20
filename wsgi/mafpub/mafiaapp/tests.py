@@ -6,6 +6,9 @@ from .forms import *
 from .views import register_bots, DisplayGamePost
 import random
 import string
+import itertools
+import functools
+import operator
 
 """
 Test
@@ -85,9 +88,9 @@ def create_game(self):
 
 def wrap_register_bots(self):
     game = Game.objects.first()
-    register_bots({'game': game.number, 'number': 15})
+    register_bots({'game': game.number, 'number': 9})
     participants = GameParticipant.objects.filter(game=game)
-    self.assertEqual(len(participants), 16)
+    self.assertEqual(len(participants), 10)
     print('         register bots                 OK')
 
 
@@ -113,12 +116,31 @@ def assign_roles(self):
     resp = self.client.get(edit_game_url, follow=True)
     self.assertEqual(resp.status_code, 200)
 
+    """
     data = {'action': ['Назначить'], 'game': [game.number]}
     resp = self.client.post(edit_game_url, data, follow=True)
     self.assertEqual(resp.status_code, 200)
-    participants = GameParticipant.objects.filter(game=game)
+
     for p in participants:
         print('             %s  %s' % (p, p.role))
+    """
+    participants = GameParticipant.objects.filter(game=game).exclude(user__nickname='Игровой Бот')
+    roles = ['head militia', 'militia',
+             'neutral doctor', 'neutral barman', 'neutral killer',
+             'maniac',
+             'head mafia', 'mafia',
+             'peaceful']
+    for i, p in enumerate(participants):
+        p.role = roles[i]
+        if p.role in ['neutral barman', 'neutral killer', 'neutral doctor']:
+            p.can_choose_side = True
+        if p.role in ['militia', 'head militia']:
+            p.sees_mil_q = True
+        if p.role in ['mafia', 'head mafia']:
+            p.sees_maf_q = True
+        if p.role == 'neutral killer':
+            p.can_ask_killer = False
+        p.save()
     print('         assign roles                  OK')
 
 
@@ -146,6 +168,23 @@ def new_day(self):
 def generate_possible_votes(self):
     game = Game.objects.first()
     participants = GameParticipant.objects.filter(game=game).exclude(user__nickname='Игровой Бот')
+    heal_targets = list(participants)  # []
+    spoil_targets = list(participants)  # []
+    head_militia_check_targets = list(participants)  # []
+    head_mafia_shoot_targets = list(participants)  # []
+    killer_targets = list(participants)  # []
+    maniac_targets = list(participants)  # []
+    peaceful_hang_targets = list(participants)  # []
+
+    iters = [heal_targets, spoil_targets, head_militia_check_targets,
+        head_mafia_shoot_targets, killer_targets, maniac_targets, peaceful_hang_targets]
+    f = functools.reduce(operator.mul, map(len, iters), 1)
+    print('             map reduce targets', f)
+
+    combinations = itertools.islice(itertools.product(heal_targets, spoil_targets, head_militia_check_targets,
+        head_mafia_shoot_targets, killer_targets, maniac_targets, peaceful_hang_targets), 4782965, 4782969)
+    print('     len comb\n', '\n'.join(str(x) for x in list(combinations)))
+    """
     for p in participants:
         private_q_url = reverse('mafiaapp:display_game_post', kwargs={'game_slug': game.slug,
                                                                       'post_slug': game.slug + '_private_' +
@@ -165,9 +204,36 @@ def generate_possible_votes(self):
         self.assertTrue(resp.context['can_hang'])
         self.game = game
         allowed_action = DisplayGamePost.allowed_actions(self, p.user)
-        print('                 allowed actions\n', allowed_action)
+        #print('                 allowed actions\n', allowed_action)
+        if p.role == 'neutral doctor':
+            heal_targets = allowed_action['heal_targets']
+            print('                 heal_targets\n', heal_targets)
+        elif p.role == 'neutral barman':
+            spoil_targets = allowed_action['spoil_targets']
+            print('                 spoil_targets\n', spoil_targets)
+        elif p.role == 'neutral killer':
+            killer_targets = allowed_action['participants']
+            print('                 killer_targets\n', killer_targets)
+        elif p.role == 'head militia':
+            head_militia_check_targets = allowed_action['check_targets']
+            print('                 head_militia_check_targets\n', head_militia_check_targets)
+        elif p.role == 'head mafia':
+            head_mafia_shoot_targets = allowed_action['shoot_targets']
+            print('                 head_mafia_shoot_targets\n', head_mafia_shoot_targets)
+        elif p.role == 'maniac':
+            maniac_targets = allowed_action['shoot_targets']
+            print('                 maniac_targets\n', maniac_targets)
+        elif p.role == 'peaceful':
+            peaceful_hang_targets = allowed_action['participants']
+            print('                 peaceful_hang_targets\n', peaceful_hang_targets)
         print('---------------------------------------------------')
         self.client.logout()
+    comb = list(itertools.product(heal_targets, spoil_targets))
+    print('                 combinations', len(comb))
+    for c in comb:
+       print('                 ', c)
+    """
+
     print('         generate possible votes       OK')
 
 

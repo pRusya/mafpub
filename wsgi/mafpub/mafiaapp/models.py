@@ -65,6 +65,7 @@ class User(U):
     # list of comment id's user liked
     liked = ArrayField(models.IntegerField(), default=[], blank=True)
     # number of comments user left
+    # not implemented
     comments_number = models.IntegerField(default=0)
     # number of games user participated in
     game_number = models.IntegerField(default=0)
@@ -187,7 +188,7 @@ class GameParticipant(models.Model):
         return Vote.objects.filter(voter=self)
 
     def get_literary_role(self):
-        return roles_dict(self.role)
+        return roles_dict[self.role]
 
 
 class Post(models.Model):

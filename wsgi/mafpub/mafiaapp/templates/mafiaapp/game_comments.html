@@ -102,6 +102,28 @@
         $(this).data("prevType", e.type);
     })
 
+    function like_comment(id) {
+        $.ajax({
+            method: "GET",
+            url: "/dashboard/like_gc/"+id
+        }).done(function(data) {
+            console.log(data);
+            if (data['number'] != $('.like_number'+id).text()) {
+                if (data['number'] == 0) {
+                    $('.like_number'+id).text('');
+                } else {
+                    $('.like_number'+id).text(data['number']);
+                }
+                var src = ($('.like-button'+id).attr('src') === "{% static 'mafiaapp/Thumb-up.svg' %}")
+                    ? "{% static 'mafiaapp/Thumb-up-fill.svg' %}"
+                    : "{% static 'mafiaapp/Thumb-up.svg' %}";
+                $('.like-button'+id).attr('src', src);
+            }
+        }).fail(function(data) {
+            console.log(data);
+        })
+    }
+
     $(document).ready(function(){
         $(".content-markdown").each(function(){
             $(this).html( marked($(this).text()) )
@@ -168,7 +190,12 @@
 
       <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
 
-      <img src="{% static 'mafiaapp/Thumb-up.svg' %}" class="img-thumb-up"> {% if comment.like > 0 %}{{ comment.like }}{% endif %}
+      {% if comment.id in user.user.liked %}
+      <img src="{% static 'mafiaapp/Thumb-up-fill.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
+      {% else %}
+      <img src="{% static 'mafiaapp/Thumb-up.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
+      {% endif %}
+       <h3><span class="like_number{{comment.id}}" style="vertical-align:bottom;">{% if comment.like > 0 %}{{ comment.like }}{% endif %}<span></h3>
         {% if user.user.nickname in game.anchor %}
         <span></span>
         <form action="{% url 'mafiaapp:delete_game_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">

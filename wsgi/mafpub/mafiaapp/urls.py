@@ -44,7 +44,8 @@ urlpatterns = [
 
     url(r'^dashboard/gameparticipant/(?P<pk>[0-9]+)/$', staff_member_required(views.GameParticipantUpdate.as_view()),
         name='participant_update'),
-
+    url(r'^dashboard/like_gc/(?P<pk>[0-9]+)/$', views.LikeGameComment.as_view(), name='like_game_comment'),
+    url(r'^dashboard/like_c/(?P<pk>[0-9]+)/$', views.LikeComment.as_view(), name='like_comment'),
 ]
 
 """

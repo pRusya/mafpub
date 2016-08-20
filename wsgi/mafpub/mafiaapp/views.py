@@ -17,7 +17,7 @@ from django.contrib.auth.views import (
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
@@ -140,6 +140,9 @@ class RegisterView(generic.CreateView):
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, 'Registration successful. You may now login using your '
                                                           'credentials')
+        email = get_object_or_404(EmailValidation, code=self.kwargs['code'])
+        email.code = ''
+        email.save()
         return super(RegisterView, self).form_valid(form)
 
 
@@ -456,8 +459,8 @@ def register_bots(d):
         user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123',
                                         email=rand+'@maf.pub')
         temp = NamedTemporaryFile()
-        #temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
-        temp.write(urllib.request.urlopen('http://localhost/identicon/').read())
+        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+        #temp.write(urllib.request.urlopen('http://localhost/identicon/').read())
         temp.flush()
         user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         user.save()
@@ -565,7 +568,7 @@ def barman_spoil(d):
     if not spoil_vote:
         return ''
     # save barman's target to exclude it from next day
-    barman.prevTraget = spoil_vote.target
+    barman.prevTarget = spoil_vote.target
     barman.save()
     # barman's quarters
     post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
@@ -642,7 +645,7 @@ def killer_kill(d):
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # killer's target barman's target. no one dies
-    elif spoil_vote and spoil_vote.target == shoot_vote.target:
+    elif shoot_vote and spoil_vote and spoil_vote.target == shoot_vote.target:
         # shoot_vote always shown in night's summary
         success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с киллером.'
         success_shoot = True
@@ -728,7 +731,7 @@ def mafia_kill(d):
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # head mafia's target barman's target. no one dies
-    elif spoil_vote and spoil_vote.target == shoot_vote.target:
+    elif shoot_vote and spoil_vote and spoil_vote.target == shoot_vote.target:
         # shoot_vote always shown in night's summary
         success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с мафией.'
         success_shot = True
@@ -948,7 +951,7 @@ def militia_check(d):
             spoil_vote.target.sees_mil_q = True
             spoil_vote.target.checked_by_mil = True
             spoil_vote.target.save()
-            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + spoil_vote.target.mask + '.'
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + spoil_vote.target.mask.username + '.'
             spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                                 spoil_vote.target.user.nickname])
             spoil_target_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
@@ -958,7 +961,7 @@ def militia_check(d):
             barman.sees_mil_q = True
             barman.checked_by_mil = True
             barman.save()
-            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + barman.mask + '.'
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + barman.mask.username + '.'
             # barman's quarters
             barman_post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
             barman_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
@@ -976,7 +979,7 @@ def militia_check(d):
         if check_vote.target.role in militia_roles:
             check_vote.target.sees_mil_q = True
             check_vote.target.save()
-            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask + '.'
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask.username + '.'
             check_vote_target_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                                      check_vote.target.user.nickname])
             check_vote_target_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
@@ -1055,7 +1058,7 @@ def head_militia_arrest(d):
             spoil_vote.target.sees_mil_q = True
             spoil_vote.target.checked_by_mil = True
             spoil_vote.target.save()
-            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + spoil_vote.target.mask + '.'
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + spoil_vote.target.mask.username + '.'
             # barman's target quarters
             spoil_target_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                                 spoil_vote.target.user.nickname])
@@ -1066,7 +1069,7 @@ def head_militia_arrest(d):
             barman.sees_mil_q = True
             barman.checked_by_mil = True
             barman.save()
-            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + barman.mask + '.'
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + barman.mask.username + '.'
             # barman's quarters
             barman_post = GamePost.objects.get(game=game, tags__contains=['private', barman.user.nickname])
             barman_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
@@ -1098,7 +1101,7 @@ def head_militia_arrest(d):
         if check_vote.target.role in militia_roles:
             check_vote.target.sees_mil_q = True
             check_vote.target.save()
-            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask + '.'
+            check_result += '\nВы дали доступ в явочную каюту милиции игроку ' + check_vote.target.mask.username + '.'
             check_vote_target_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                                      check_vote.target.user.nickname])
             check_vote_target_result = 'Ночь ' + str(game.day) + ': Милиция дала вам доступом в их явочную каюту.'
@@ -1169,10 +1172,10 @@ def night(d):
     for x in range(0, len(quicks), 3):
         line = islice(quicks, x, x+3)
         quicks_info += '\n    ' + ', '.join(quick.mask.username for quick in line)
-        checked_quicks_info += '\n    ' + ', '.join([
-            quick.mask.username+"("+quick.role+")" if quick.checked_by_mil
-            else quick.mask.username
-            for quick in line])
+        line = islice(quicks, x, x + 3)
+        checked_quicks_info += '\n    ' + ', '.join(
+            quick.mask.username+"("+quick.get_literary_role()+")" if quick.checked_by_mil else quick.mask.username
+            for quick in line)
     for post in posts:
         post.allow_comment = False
         post.tags.remove('current')
@@ -1229,6 +1232,12 @@ def night(d):
             post.allow_role = ['everyone']
             post.allow_comment = False
             post.save()
+        participants = GameParticipant.objects.filter(game=game)
+        for participant in participants:
+            for comment in participant.user.gamecomment_set.exclude(post__tags__contains=['description']):
+                participant.user.like_number += comment.like
+            participant.user.game_number += 1
+            participant.user.save()
 
 
 # not used. kept for debugging purpose
@@ -1869,6 +1878,56 @@ def invite(request, kwargs):
     target_inform.save()
     # though action is success, return False to not scroll to last comment
     return False
+
+
+class LikeGameComment(generic.View):
+    def get(self, request, *args, **kwargs):
+        user = get_user(request)
+        comment = get_object_or_404(GameComment, id=kwargs['pk'])
+        if user.is_authenticated():
+            if comment.id not in request.user.user.liked:
+                comment.like += 1
+                comment.save()
+                user.user.liked += [comment.id]
+                user.user.save()
+                if comment.post.game.state == 'past' \
+                        or 'description' in comment.post.tags \
+                        or comment.author.nickname in comment.post.game.anchor:
+                    comment.author.like_number += 1
+                    comment.author.save()
+            else:
+                comment.like -= 1
+                comment.save()
+                request.user.user.liked.remove(comment.id)
+                request.user.user.save()
+                if comment.post.game.state == 'past' \
+                        or 'description' in comment.post.tags \
+                        or comment.author.nickname in comment.post.game.anchor:
+                    comment.author.like_number -= 1
+                    comment.author.save()
+        return JsonResponse({'number': comment.like})
+
+
+class LikeComment(generic.View):
+    def get(self, request, *args, **kwargs):
+        user = get_user(request)
+        comment = get_object_or_404(Comment, id=kwargs['pk'])
+        if user.is_authenticated():
+            if comment.id not in request.user.user.liked:
+                comment.like += 1
+                comment.save()
+                user.user.liked += [comment.id]
+                user.user.save()
+                comment.author.like_number += 1
+                comment.author.save()
+            else:
+                comment.like -= 1
+                comment.save()
+                request.user.user.liked.remove(comment.id)
+                request.user.user.save()
+                comment.author.like_number -= 1
+                comment.author.save()
+        return JsonResponse({'number': comment.like})
 
 
 def preserve_error_messages(request):

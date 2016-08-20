@@ -74,12 +74,12 @@ class CreateGameForm(ModelForm):
 
     class Meta:
         model = Game
+        fields = ['number', 'title', 'description', 'status', 'state', 'day', 'hasHeadMafia', 'hasRecruit', 'anchor',
+                  'slug', 'black_list']  # '__all__'
         anchor = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
                                            label='Ведущие')
         black_list = forms.MultipleChoiceField(choices=[(user.nickname, user.nickname) for user in User.objects.all()],
                                                label='Бан', required=False)
-        fields = ['number', 'title', 'description', 'status', 'state', 'day', 'hasHeadMafia', 'hasRecruit', 'anchor',
-                  'slug', 'black_list']  # '__all__'
         widgets = {
             'anchor': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'black_list': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -96,15 +96,13 @@ class CreateGamePostForm(ModelForm):
 
     class Meta:
         model = GamePost
-        #allow_role = forms.MultipleChoiceField(choices=GamePost.ALLOW_ROLE_CHOICES)
-        #tags = forms.MultipleChoiceField(choices=GamePost.TAGS_CHOICES)
+        allow_role = forms.MultipleChoiceField(choices=GamePost.ALLOW_ROLE_CHOICES)
+        tags = forms.MultipleChoiceField(choices=GamePost.TAGS_CHOICES)
+        widgets = {
+            'allow_role': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-control'})
+        }
         fields = ['title', 'text', 'game', 'tags', 'short', 'slug', 'allow_role']  # '__all__'
-        #widgets = {
-        #    'allow_role': forms.SelectMultiple(attrs={'class': 'form-control'}),
-        #    'tags': forms.SelectMultiple(attrs={'class': 'form-control'})
-        #}
-
-
 
 
 class CreateGameMaskForm(ModelForm):

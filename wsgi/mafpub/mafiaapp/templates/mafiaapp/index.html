@@ -1,6 +1,8 @@
 {% extends 'mafiaapp/base.html' %}
+{% load staticfiles %}
 {% block content %}
 
+<!--
 {% if messages %}
 <div class="row">
 	<div class="col-md-3 col-centered">
@@ -51,6 +53,42 @@
 		</form>
 		<a href="{% url 'mafiaapp:password_reset' %}">Восстановить пароль</a>
 	</div>
+</div>
+-->
+<script type="text/javascript">
+	var cites = [
+		'Умрём весело!',
+		'Одно действие. Много жертв.',
+		'Семь раз отмерь. Один притворись.',
+		'Томми выбыл. Твоя очередь.',
+		'Больше нас - меньше вас.',
+		'Хороший маф - мирный маф.',
+		'Если врешь, будь краток.',
+		'Случайных совпадений не бывает.',
+		'Ничего личного, только бизнес.',
+		'Темнее всего под фонарём.',
+		'Мафия передаёт привет.',
+		'Рыбу убивает открытый рот.',
+		'Думай много, говори мало, пиши еще меньше.',
+		'Зачем умрёт первым, ты - вторым.',
+		'Мёртвые не выбирают.',
+	]
+	var images = [
+		"{% static 'mafiaapp/Benny_Siegel.png' %}",
+		"{% static 'mafiaapp/Carlo_Gambino2.png' %}",
+		"{% static 'mafiaapp/Albert_Anastasia.png' %}",
+		"{% static 'mafiaapp/Frank_Costello.png' %}",
+		"{% static 'mafiaapp/Machine_Gun_Kelly.png' %}",
+	]
+	$(document).ready(function() {
+		$("#cite").text(cites[Math.floor(Math.random()*cites.length)]);
+		//$("#cite").text(cites[12]);
+		$('body').attr('background', images[Math.floor(Math.random()*images.length)]);
+	})
+</script>
+
+<div class="row" style="position: absolute;left: 45%;top: 40%;overflow-x: hidden;width:55%">
+<span style="font-size: 60px;font-family: 'Forum';font-style:italic;word-wrap: break-word;overflow-x: hidden;overflow: hidden;white-space: pre-wrap;white-space: -moz-pre-wrap !important;" id="cite">Мёртвые не выбирают.</span>
 </div>
 
 {% endblock content %}

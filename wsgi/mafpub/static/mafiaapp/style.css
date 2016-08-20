@@ -9,7 +9,7 @@ body {
 	color: #747784;
 	font-weight: 300;
   margin-bottom: 50px;
-  background: #e6e6e6;
+  /*background: #e6e6e6;*/
 }
 option:not(:checked) { 
   background-color: #FFF;
@@ -222,6 +222,10 @@ a {
   border-right: 1px #008BBA solid;
   margin-bottom:-99999px;
   padding-bottom:99999px;
+}
+.wmd-panel {
+  margin: 0 auto !important;
+  width: 100% !important;
 }
 @media (max-width: 325px) {
   h1 {
