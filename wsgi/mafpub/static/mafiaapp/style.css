@@ -9,7 +9,8 @@ body {
 	color: #747784;
 	font-weight: 300;
   margin-bottom: 50px;
-  /*background: #e6e6e6;*/
+  background: #e6e6e6;
+  background-repeat: no-repeat;
 }
 option:not(:checked) { 
   background-color: #FFF;

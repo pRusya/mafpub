@@ -81,8 +81,8 @@
 		"{% static 'mafiaapp/Machine_Gun_Kelly.png' %}",
 	]
 	$(document).ready(function() {
+		$('body').attr('background-color', '#202020');
 		$("#cite").text(cites[Math.floor(Math.random()*cites.length)]);
-		//$("#cite").text(cites[12]);
 		$('body').attr('background', images[Math.floor(Math.random()*images.length)]);
 	})
 </script>
