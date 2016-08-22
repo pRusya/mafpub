@@ -160,5 +160,5 @@ LOGIN_URL = '/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(OPENSHIFT_DATA_DIR, 'static')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "mafpub", "static"),
+    os.path.join(BASE_DIR, "static"),
 )
