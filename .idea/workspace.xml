@@ -2,7 +2,113 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e740304-2ce7-4d32-bca7-0dd211887a69" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/base.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/changelists.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/dashboard.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/forms.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/ie.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/login.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/pagedown.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/rtl.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/css/widgets.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/changelist-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/changelist-bg_rtl.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/default-bg-reverse.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/default-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/deleted-overlay.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/gis/move_vertex_off.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/gis/move_vertex_on.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon-no.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon-unknown.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon-yes.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_addlink.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_alert.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_calendar.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_changelink.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_clock.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_deletelink.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_error.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_searchbox.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/icon_success.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/inline-delete-8bit.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/inline-delete.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/inline-restore-8bit.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/inline-restore.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/inline-splitter-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/nav-bg-grabber.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/nav-bg-reverse.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/nav-bg-selected.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/nav-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/selector-icons.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/selector-search.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/sorting-icons.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/tooltag-add.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/img/tooltag-arrowright.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/LICENSE-JQUERY.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/SelectBox.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/SelectFilter2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/actions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/actions.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/admin/DateTimeShortcuts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/admin/RelatedObjectLookups.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/calendar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/collapse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/collapse.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/core.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/inlines.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/inlines.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/jquery.init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/jquery.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/pagedown.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/prepopulate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/prepopulate.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/related-widget-wrapper.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/timeparse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/admin/js/urlify.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Albert_Anastasia.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Benny_Siegel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Carlo_Gambino2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Frank_Costello.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Lock.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Machine_Gun_Kelly.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Thumb-up-fill.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/Thumb-up.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/favicon.ico" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/mafiaapp/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown-extra/Markdown.Extra.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown-extra/pagedown/Markdown.Converter.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/Markdown.Converter.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/Markdown.Editor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/Markdown.Sanitizer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/demo/browser/demo.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/demo/browser/demo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/demo/node/demo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/local/Markdown.local.fr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/node-pagedown.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown/wmd-buttons.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/pagedown_init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/css/bootstrap-tweaks.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/css/bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/css/default.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/css/prettify.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/fonts/glyphicons-halflings-regular.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/fonts/glyphicons-halflings-regular.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/fonts/glyphicons-halflings-regular.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/fonts/glyphicons-halflings-regular.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/fonts/glyphicons-halflings-regular.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/img/glyphicons-halflings-white.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/img/glyphicons-halflings.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/img/grid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/js/ajax-form.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/js/bootstrap.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/js/csrf.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/js/default.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/js/jquery-1.12.4.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wsgi/static/rest_framework/js/prettify-min.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py" />
     </list>
     <ignored path="mafpub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +154,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
+            <state relative-caret-position="842">
+              <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -130,7 +236,6 @@
         <option value="D:/Program Files/Python332/Lib/site-packages/django/core/paginator.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/middleware.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/admin.py" />
-        <option value="$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafpub/urls.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/setup.py" />
@@ -141,6 +246,7 @@
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/urls.py" />
         <option value="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py" />
+        <option value="$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py" />
       </list>
     </option>
   </component>
@@ -863,8 +969,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
+        <state relative-caret-position="842">
+          <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
           <folding />
         </state>
       </provider>
