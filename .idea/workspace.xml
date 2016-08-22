@@ -49,7 +49,7 @@
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="722">
-              <caret line="159" column="57" selection-start-line="159" selection-start-column="57" selection-end-line="159" selection-end-column="57" />
+              <caret line="159" column="54" selection-start-line="159" selection-start-column="54" selection-end-line="159" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -864,7 +864,7 @@
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafpub/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="722">
-          <caret line="159" column="57" selection-start-line="159" selection-start-column="57" selection-end-line="159" selection-end-column="57" />
+          <caret line="159" column="54" selection-start-line="159" selection-start-column="54" selection-end-line="159" selection-end-column="54" />
           <folding />
         </state>
       </provider>

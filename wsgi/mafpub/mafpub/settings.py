@@ -157,7 +157,7 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/'
 
-STATIC_URL = os.path.join(OPENSHIFT_DATA_DIR, 'static')  # '/static/'
+STATIC_URL = os.path.join(OPENSHIFT_DATA_DIR, 'static/')  # '/static/'
 STATIC_ROOT = os.path.join(OPENSHIFT_DATA_DIR, 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
