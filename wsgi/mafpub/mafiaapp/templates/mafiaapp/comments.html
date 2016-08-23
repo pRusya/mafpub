@@ -30,7 +30,7 @@
         }
     });
 
-	function show_quote(c){
+	function show_quote(c, page){
         quote = $("#"+c).clone();
         quote.find("blockquote").remove();
         marked_quote =  quote.text().split("\n");
@@ -38,22 +38,26 @@
             marked_quote[i] = '> '+marked_quote[i]
         }
 
-        quote_author = document.getElementById('author'+c).innerHTML;
+        quote_author = document.getElementById('author'+c).innerHTML.trim();
 
-        inp = document.getElementById('ihatejs');
-        inp.value = marked_quote.join("\n");
+        inp = document.getElementById('ihatejs'+c);
+        inp.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{post.title}}</a>)\n\n';
         inp.select();
         document.execCommand('copy');
 
-        ta = document.getElementById('id_comment');
-        if (ta.value == ''){
-            ta.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite>\n\n'
-        }
-        else {
-            ta.value = ta.value+'\n'+marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite>\n\n'
+        if(document.getElementById('id_comment')) {
+            ta = document.getElementById('id_comment');
+            if (ta.value == ''){
+                ta.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{post.title}}</a>)\n\n';
+            }
+            else {
+                ta.value = ta.value+'\n'+marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{post.title}}</a>)\n\n';
+            }
+
+            document.getElementById('id_comment').focus();
         }
 
-        document.getElementById('id_comment').focus();
+        $.notify("Цитата скопирована в буфер обмена.",  { position:"bottom right", className: 'info', style: 'copy-comment'});
     }
 
     function GetURLParameter(sParam) {
@@ -122,6 +126,10 @@
     }
 
     $(document).ready(function(){
+        console.log(Markdown);
+        console.log(DjangoPagedown);
+        console.log(Login);
+        console.log(marked);
         $(".content-markdown").each(function(){
             $(this).html( marked($(this).text()) )
         })
@@ -179,13 +187,13 @@
       <img src="{% static 'mafiaapp/Thumb-up.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
       {% endif %}
        <h3><span class="like_number{{comment.id}}" style="vertical-align:bottom;">{% if comment.like > 0 %}{{ comment.like }}{% endif %}<span></h3>
-        {% if user.user.nickname in game.anchor %}
+        {% if user.is_superuser %}
         <span></span>
-        <form action="{% url 'mafiaapp:delete_game_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">
+        <form action="{% url 'mafiaapp:delete_comment' post_slug=post.slug pk=comment.id %}" method="post" class="inline">
             {% csrf_token %}
             <input type="submit" value="Удалить" class="btn btn-primary" >
         </form>
-        <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
+        <a href="/admin/mafiaapp/comment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
         {% endif %}
       <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h4>Цитировать</h4></span>
     </div>

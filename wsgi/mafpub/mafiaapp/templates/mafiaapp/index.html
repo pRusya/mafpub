@@ -1,18 +1,30 @@
 {% extends 'mafiaapp/base.html' %}
 {% load staticfiles %}
-{% block content %}
 
+{% block header %}
+<nav class="navbar navbar-static-top">
+	<div class="container-fluid">
+		<div class="navbar-header col-centered">
+			<div class="navbar-brand col-centered text-center title-super40-div">
+				<a href="/"><span class="title-super40">Галактическая мафия 2.0</span></a>
+			</div>
+		</div>
+	</div>
+</nav>
+{% endblock %}
+
+{% block content %}
 <!--
 {% if messages %}
 <div class="row">
 	<div class="col-md-3 col-centered">
 		{% for message in messages %}
 			{% if message.tags == 'info' %}
-				<div class="alert alert-info">
+				<div class="alert alert-info" id="alert-info">
     				<strong>{{ message }}</strong>
 				</div>
 			{% else %}
-				<div class="alert alert-danger">
+				<div class="alert alert-danger" id="alert-danger">
     				<strong>{{ message }}</strong>
 				</div>
 			{% endif %}
@@ -81,14 +93,37 @@
 		"{% static 'mafiaapp/Machine_Gun_Kelly.png' %}",
 	]
 	$(document).ready(function() {
-		$('body').css('background-color', '#202020');
+		$('body').css('background-image', 'none');
+		$('body').addClass('index-body');
 		$("#cite").text(cites[Math.floor(Math.random()*cites.length)]);
-		$('body').css('background-image', "url("+images[Math.floor(Math.random()*images.length)])+")";
+		$('#portrait').attr('src', images[Math.floor(Math.random()*images.length)]);
 	})
 </script>
 
-<div class="row" style="position: absolute;left: 45%;top: 40%;overflow-x: hidden;width:55%">
-<span style="font-size: 60px;font-family: 'Forum';font-style:italic;word-wrap: break-word;overflow-x: hidden;overflow: hidden;white-space: pre-wrap;white-space: -moz-pre-wrap !important;" id="cite">Мёртвые не выбирают.</span>
+<div class="row">
+	<div class="col-md-5 index-top10">
+		<img src="" id="portrait">
+	</div>
+	<div class="col-md-7 index-top30 text-center">
+		<span class="index-cite" id="cite"></span>
+	</div>
 </div>
-
+<div class="row">
+	<div class="col-md-5 "></div>
+	<div class="col-md-7 text-center">
+		<h1 style="margin: 0;">
+			<a href="#" class="text-btn" data-toggle="modal" data-target="#modal-login">Логин</a>
+			 / 
+			<a href="#" class="text-btn" data-toggle="modal" data-target="#modal-register">Регистрация</a>
+		</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-5 "></div>
+	<div class="col-md-7 text-center">
+		<h1>
+			<a href="dashboard/p/where_am_i/">Куда я попал?</a>
+		</h1>
+	</div>
+</div>
 {% endblock content %}

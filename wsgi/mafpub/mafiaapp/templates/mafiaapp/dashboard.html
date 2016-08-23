@@ -80,11 +80,20 @@
     </div>
 </div>
 
+{% for post in post_list %}
+<div class="row">
+    <div class="col-md-6 col-centered">
+        <a href="{% url 'mafiaapp:display_post' post_slug=post.slug %}"><h3>{{ post.title|safe }}</h3></a>
+        <p>Дата: <b>{{ post.date|date:"Y-m-d" }}</b>. Автор: <b><a href="{% url 'mafiaapp:profile' user=post.author.nickname %}">{{ post.author }}</a></b></p>
+    </div>
+</div>
+{% empty %}
 <div class="row">
     <div class="col-md-6 col-centered">
         <h4>Нет тем</h4>
         <p>&#160;</p>
     </div>
 </div>
+{% endfor %}
 
 {% endblock content %}

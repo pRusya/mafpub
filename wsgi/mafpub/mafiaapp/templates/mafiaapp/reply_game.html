@@ -1,13 +1,15 @@
 {% load filters %}
 {% load widget_tweaks %}
 
-{{ comment_form.media }}
-{% if post.allow_comment and user.is_authenticated %}
+{{ game_comment_form.media }}
+{% if not dead and participant or 'private' in post.tags and participant or user.user.nickname in game.anchor or 'description' in post.tags %}
+    {% if post.allow_comment and user.is_authenticated %}
 <div class="row">
     <div class="col-md-8 col-centered">
         <form action="" method="post" name="Reply">
             {% csrf_token %}
-            {{ comment_form.comment|add_class:'form-control' }}
+            {{ game_comment_form.number }}
+            {{ game_comment_form.comment|add_class:'form-control' }}
 
             <div class="col-md-4 col-centered submit-div" class="submit-div">
                 <input type="submit" name="action" value="Опубликовать" class="btn btn-default btn-primary btn-block">
@@ -15,4 +17,5 @@
         </form>
     </div>
 </div>
+    {% endif %}
 {% endif %}

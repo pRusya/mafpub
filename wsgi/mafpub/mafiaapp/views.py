@@ -120,11 +120,80 @@ class IndexView(generic.ListView):
                 messages.add_message(request, messages.INFO, 'Check your email box to finish registration')
                 return redirect('mafiaapp:index')
             else:
-                messages.add_message(request, messages.ERROR, 'Provide valid e-mail!111')
+                messages.add_message(request, messages.ERROR, 'Provide valid e-mail!')
                 return redirect('mafiaapp:index')
         else:
             messages.add_message(request, messages.ERROR, 'Something went really bad!')
             return redirect('mafiaapp:index')
+
+
+class AjaxRegister(generic.View):
+    def post(self, request, *args, **kwargs):
+        form = EmailValidationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            registered_emails = EmailValidation.objects.all().values('email')
+            for record in registered_emails:
+                if email == record['email']:
+                    message = 'Данный адрес уже зарегистророван. Укажите другой.'
+                    status = 'FAIL'
+                    return JsonResponse({'status': status, 'message': message})
+            code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
+            ev = EmailValidation(email=email, code=code)
+            ev.save()
+            email_body = 'На форуме Галамафия 2.0 (http://www.maf.pub/) появилась регистрационная ' \
+                         'запись,\r' \
+                         'в которой был указал ваш электронный адрес (e-mail).\r' \
+                         '\r' \
+                         'Если вы не понимаете, о чем идет речь — просто проигнорируйте это сообщение!\r' \
+                         '\r' \
+                         'Если же именно вы решили зарегистрироваться на форуме Галамафия 2.0,\r' \
+                         'то вам следует завершить свою регистрацию и тем самым активировать вашу ' \
+                         'учетную запись.\r' \
+                         'Регистрация производится один раз и необходима для повышения безопасности форума и ' \
+                         'защиты его от злоумышленников.\r' \
+                         'Чтобы завершить регистрацию и активировать вашу учетную запись, необходимо перейти ' \
+                         'по ссылке:\r' \
+                         'http://www.maf.pub/register/%s\r' \
+                         'После активации учетной записи вы сможете войти в форум, используя выбранные вами ' \
+                         'имя пользователя (login) и пароль.\r' \
+                         '\r' \
+                         'С этого момента вы сможете оставлять сообщения и принимать участие в играх.\r' \
+                         '\r' \
+                         'Благодарим за регистрацию!'
+            send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code,
+                      'Галамафия 2.0 <noreply@maf.pub>',
+                      [email], fail_silently=False)
+            message = 'Проверьте указанный почтовый ящик для завершения регистрации.'
+            status = 'OK'
+            return JsonResponse({'status': status, 'message': message})
+        else:
+            message = 'Укажите корректный электронный адрес.'
+            status = 'FAIL'
+            return JsonResponse({'status': status, 'message': message})
+
+
+class AjaxLogin(generic.View):
+    def post(self, request, *args, **kwargs):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = get_object_or_404(User, email__iexact=email)
+            password = form.cleaned_data['password']
+            user = authenticate(username=user.username, password=password)
+            if user is not None:
+                login(request, user)
+                message = 'Добро пожаловать, %s' % str(user)
+                status = 'OK'
+                return JsonResponse({'status': status, 'message': message})
+            else:
+                message = 'Проверьте правильность логина и пароля.'
+                status = 'FAIL'
+                return JsonResponse({'status': status, 'message': message})
+        else:
+            message = 'Проверьте правильность логина и пароля.'
+            status = 'FAIL'
+            return JsonResponse({'status': status, 'message': message})
 
 
 class RegisterView(generic.CreateView):
@@ -170,6 +239,14 @@ class DeleteUser(generic.DeleteView):
 class Dashboard(generic.ListView):
     template_name = 'mafiaapp/dashboard.html'
     model = Game
+
+    def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
+        post_list = Post.objects.all()
+        context['post_list'] = post_list
+        logger.info(post_list)
+        logger.info(post_list[0].slug)
+        return context
 
 
 class Logout(generic.View):
@@ -257,6 +334,13 @@ class DeleteGameComment(generic.DeleteView):
                                                                   'post_slug': self.kwargs.get('post_slug', '')})
 
 
+class DeleteComment(generic.DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        return reverse_lazy('mafiaapp:display_post', kwargs={'post_slug': self.kwargs.get('post_slug', '')})
+
+
 class GameParticipantUpdate(generic.UpdateView):
     model = GameParticipant
     fields = ['role', 'prevTarget', 'can_ask_killer', 'can_choose_side', 'sees_maf_q', 'sees_mil_q',
@@ -304,7 +388,6 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
         for participant in participants:
             participants_form.append(UpdateGameParticipantForm(instance=participant))
         context['participants_form'] = participants_form
-
         return context
 
     def get(self, request, *args, **kwargs):
@@ -1591,7 +1674,31 @@ def post_game_comment(request, kwargs):
 # TODO
 @login_required
 def post_comment(request, kwargs):
-    pass
+    post = get_post(kwargs)
+    user = get_user(request)
+    if not post.allow_comment:
+        messages.add_message(request, messages.ERROR,
+                             '#1 Вы не можете оставлять сообщения в данной теме.')
+        return False
+    text = request.POST['comment']
+    if request.session.get('last_comment_time', ''):
+        if int(time.time()) - request.session['last_comment_time'] < 15:
+            messages.add_message(request, messages.ERROR, 'Комментарии можно оставлять не чаще одного раза '
+                                                          'в 15 секунд. Подождите еще %s сек.' %
+                                 (15 - (int(time.time()) - request.session['last_comment_time'])))
+            return False
+    if text.count('\r') >= 25 or len(text) >= 2000:
+        messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
+        return False
+    malformed = ['javascript', 'script', 'onmouseover', 'onerror']
+    if any(el in text.lower() for el in malformed):
+        return False
+    comment = Comment(post=post, author=user.user, text=text)
+    comment.save()
+    user.user.comments_number += 1
+    user.user.save()
+    request.session['last_comment_time'] = int(time.time())
+    return True
 
 
 @login_required
@@ -2241,8 +2348,6 @@ class DisplayGamePost(generic.ListView):
         else:
             raise Http404
         self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        context['request'] = request.POST
         preserve_error_messages(request)
         request.session['comment'] = request.POST.get('comment', '')
         return HttpResponseRedirect(reverse('mafiaapp:display_game_post',
@@ -2272,23 +2377,30 @@ class DisplayPost(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(DisplayPost, self).get_context_data(**kwargs)
         context['post'] = self.post
+        msgs = messages.get_messages(self.request)
+        error_messages = [m for m in msgs if 'error' in m.tags]
+        if error_messages:
+            context['comment_form'] = CommentForm(initial={'comment': self.request.session.get('comment', '')})
+        else:
+            context['comment_form'] = CommentForm()
         return context
 
     dispatcher = {
-        'Участвовать': participate,
-        'Отменить участие': cancel_participation,
         'Опубликовать': post_comment,
     }
 
     def post(self, request, *args, **kwargs):
         self.post = get_post(kwargs)
         if request.POST.get('action', '') in self.dispatcher.keys():
-            self.dispatcher[request.POST['action']](request, self.kwargs)
+            result = self.dispatcher[request.POST['action']](request, self.kwargs)
         else:
             raise Http404
         self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        return render(request, self.template_name, context=context)
+        preserve_error_messages(request)
+        request.session['comment'] = request.POST.get('comment', '')
+        return HttpResponseRedirect(reverse('mafiaapp:display_post',
+                                            kwargs={'post_slug': kwargs['post_slug']}) +
+                                    "?page=last" if result else "")
 
     def get(self, request, *args, **kwargs):
         self.post = get_post(kwargs)

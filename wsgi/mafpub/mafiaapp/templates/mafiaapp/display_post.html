@@ -6,22 +6,12 @@
 {% block link %}
 <div class="row">
     <div class="col-md-6 col-centered text-center">
-        {% if 'description' in post.tags %}
-            <h1><a href="{% url 'mafiaapp:display_game' game.slug %}">{{ game.title|safe }}</a> / {{ post.title }}</h1>
-        {% else %}
-            <h1><a href="{% url 'mafiaapp:dashboard' %}">Главная страница</a> / {{ post.title }}</h1>
-        {% endif %}
+        <h1><a href="{% url 'mafiaapp:dashboard' %}">Главная страница</a> / {{ post.title }}</h1>
     </div>
 </div>
 {% endblock link %}
 
 {% include 'mafiaapp/post.html' %}
-
-{% if 'description' in post.tags %}
-{% block register %}
-	{% include 'mafiaapp/participate.html' %}
-{% endblock register %}
-{% endif %}
 
 {% block comments %}
 {% include 'mafiaapp/comments.html' %}

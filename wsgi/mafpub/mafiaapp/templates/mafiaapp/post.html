@@ -17,12 +17,22 @@
 {% endif %}
 
 <div class="row section post">
-    <div class="col-md-2">
-        <h4 style="">{{ post.author }}</h4><br>
-        <img src="{{ post.author.avatar.url }}"/>
+    <div class="col-md-2 text-right">
+        <a href="{% url 'mafiaapp:profile' user=post.author.user.nickname %}">
+        <h3 id='author{{post.id}}' class="font-600">{{ post.author.user.nickname }}</h3><br>
+        <img src="{{ post.author.user.avatar.url }}" class="comment-avatar"/>
+        </a>
+        <span>Сообщений: {{ post.author.comments_number }}</span>
     </div>
     <div class="col-md-8 col-centered">
-        <h4>{# placeholder #}&#160;</h4>
-        <h4><pre>{{ post.text|safe }}</pre></h4> 
+        <h3>{# placeholder to match height with nickname on the left #}</h3>
+        <span>{{ post.date|date:"Y-m-d H:i" }}</span>
+        <div id="{{post.id}}" class="content-markdown comment-item">{{ post.text }}</div>
+        <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{post.id}}" value="" style="margin-top:2px;"></textarea></div>
+        {% if user.is_superuser %}
+        <span></span>
+        <a href="/admin/mafiaapp/post/{{post.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
+        {% endif %}
+      <span class="cite" onClick='show_quote({{post.id}},1);'><h4>Цитировать</h4></span>
     </div>
 </div>

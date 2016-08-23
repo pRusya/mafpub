@@ -53,6 +53,8 @@ class GameAdmin(admin.ModelAdmin):
 admin.site.register(GameParticipant)
 admin.site.register(GamePost)
 admin.site.register(GameComment)
+admin.site.register(Post)
+admin.site.register(Comment)
 admin.site.register(Mask)
 admin.site.register(Vote)
 admin.site.register(User)
