@@ -1671,7 +1671,6 @@ def post_game_comment(request, kwargs):
     return True
 
 
-# TODO
 @login_required
 def post_comment(request, kwargs):
     post = get_post(kwargs)
@@ -1690,7 +1689,7 @@ def post_comment(request, kwargs):
     if text.count('\r') >= 25 or len(text) >= 2000:
         messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
         return False
-    malformed = ['javascript', 'script', 'onmouseover', 'onerror']
+    malformed = ['script', 'onmouseover', 'onerror']
     if any(el in text.lower() for el in malformed):
         return False
     comment = Comment(post=post, author=user.user, text=text)
@@ -2372,7 +2371,7 @@ class DisplayPost(generic.ListView):
     context_object_name = 'comments'
 
     def get_queryset(self):
-        return Comment.objects.filter(post=self.post)
+        return Comment.objects.filter(post=self.post).order_by('date')
 
     def get_context_data(self, **kwargs):
         context = super(DisplayPost, self).get_context_data(**kwargs)

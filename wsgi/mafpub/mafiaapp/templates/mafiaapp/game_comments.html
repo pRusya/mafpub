@@ -10,6 +10,7 @@
                 "width": "200px",
                 "text-align": "center",
                 "font-weight": "bold",
+                "font-size": "1.2em",
                 "padding": "8px 15px 8px 14px",
                 "margin-bottom": "20px",
                 "text-shadow": "0 1px 0 rgba(255, 255, 255, 0.5)",
@@ -17,6 +18,7 @@
                 "border": "1px solid #fbeed5",
                 "border-radius": "4px",
                 "white-space": "pre-wrap",
+                "font-family": "Forum",
                 "padding-left": "25px",
                 "background-repeat": "no-repeat",
                 "background-position": "3px 7px"
@@ -77,9 +79,9 @@
         var div = url.split('#');
         pattern = /^div\d+$/;
         if (div.length > 1 && pattern.test(div[1])) {
-            $('#'+div[1]).addClass('section');
+            $('#'+div[1]).addClass('cite-section');
             setTimeout(function(){
-                $('#'+div[1]).removeClass('section');
+                $('#'+div[1]).removeClass('cite-section');
             }, 5000);
         }
     }
@@ -107,7 +109,6 @@
             method: "GET",
             url: "/dashboard/like_gc/"+id
         }).done(function(data) {
-            console.log(data);
             if (data['number'] != $('.like_number'+id).text()) {
                 if (data['number'] == 0) {
                     $('.like_number'+id).text('');
@@ -161,32 +162,33 @@
 {% for comment in page_obj %}
 <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
-    <div class="col-md-2 text-right">
+    <div class="col-md-2 col-xs-2 col-sm-2 text-right">
         {% if comment.author.user.nickname in game.anchor or game.day == 0 %}
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
-        <h3 id='author{{comment.id}}' class="font-600">{{ comment.author.user.nickname }}</h3><br>
-        <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
+            <h2 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h2><br>
+            <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         {% else %}
-        <h3 id='author{{comment.id}}' class="font-600">
+        <h2 id='author{{comment.id}}'>
         {% if game.state == 'past' %}{{comment.mask.username}}<br>
             <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">{{ comment.author.user.nickname }}</a>
-        {% else %}{{comment.mask.username}}
+        {% else %}
+            {{comment.mask.username}}
         {% endif %}
-        </h3><br>
+        </h2><br>
         <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
         {% endif %}
     </div>
     <div class="col-md-8 col-centered comment-text">
       {# placeholder to match height with nickname on the left #}
       {% if game.state == 'past' %}
-        {% if comment.author.user.nickname in game.anchor %}<h3></h3>
-        {% else %}<h3></h3><br><h3></h3>
+        {% if comment.author.user.nickname in game.anchor %}<h2></h2>
+        {% else %}<h2></h2><br><h2></h2>
         {% endif %}
-      {% else %}<h3></h3>
+      {% else %}<h2></h2>
       {% endif %}
-      <span>{{ comment.date|date:"Y-m-d H:i" }}</span>
-      <a href="?page={{ page_obj.number }}#div{{comment.id}}"><span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span></a>
+      <h3>{{ comment.date|date:"Y-m-d H:i" }}</h3>
+      <a href="?page={{ page_obj.number }}#div{{comment.id}}"><h3 style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</h3></a>
 
       <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
 
@@ -204,7 +206,7 @@
         </form>
         <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
         {% endif %}
-      <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h4>Цитировать</h4></span>
+      <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h3>Цитировать</h3></span>
     </div>
 </div>
 {% endfor %}
