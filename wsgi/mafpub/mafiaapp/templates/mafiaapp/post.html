@@ -19,13 +19,13 @@
 <div class="row post-section post">
     <div class="col-md-2 col-xs-2 col-sm-2 text-right">
         <a href="{% url 'mafiaapp:profile' user=post.author.user.nickname %}">
-        <h2 id='author{{post.id}}'>{{ post.author.user.nickname }}</h2><br>
+        <h3 id='author{{post.id}}'>{{ post.author.user.nickname }}</h3><br>
         <img src="{{ post.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         <span>Сообщений: {{ post.author.comments_number }}</span>
     </div>
     <div class="col-md-8 col-xs-8 col-sm-8 col-centered">
-        <h2>{# placeholder to match height with nickname on the left #}</h2>
+        <h3>{# placeholder to match height with nickname on the left #}</h3>
         <h3>{{ post.date|date:"Y-m-d H:i" }}</h3>
         <div id="{{post.id}}" class="content-markdown comment-item">{{ post.text }}</div>
         <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{post.id}}" value="" style="margin-top:2px;"></textarea></div>

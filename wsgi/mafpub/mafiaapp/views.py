@@ -176,6 +176,7 @@ class AjaxRegister(generic.View):
 class AjaxLogin(generic.View):
     def post(self, request, *args, **kwargs):
         form = LoginForm(request.POST)
+        next = request.GET.get('next', reverse_lazy('mafiaapp:index'))
         if form.is_valid():
             email = form.cleaned_data['email']
             user = get_object_or_404(User, email__iexact=email)
@@ -185,15 +186,15 @@ class AjaxLogin(generic.View):
                 login(request, user)
                 message = 'Добро пожаловать, %s' % str(user)
                 status = 'OK'
-                return JsonResponse({'status': status, 'message': message})
+                return JsonResponse({'status': status, 'message': message, 'next': next})
             else:
                 message = 'Проверьте правильность логина и пароля.'
                 status = 'FAIL'
-                return JsonResponse({'status': status, 'message': message})
+                return JsonResponse({'status': status, 'message': message, 'next': next})
         else:
             message = 'Проверьте правильность логина и пароля.'
             status = 'FAIL'
-            return JsonResponse({'status': status, 'message': message})
+            return JsonResponse({'status': status, 'message': message, 'next': next})
 
 
 class RegisterView(generic.CreateView):

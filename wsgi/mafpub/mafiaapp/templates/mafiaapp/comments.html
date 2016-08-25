@@ -165,15 +165,15 @@
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 col-xs-2 col-sm-2 text-right">
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
-        <h2 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h2><br>
+        <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
         <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         <span>Сообщений: {{ comment.author.comments_number }}</span>
     </div>
-    <div class="col-md-8 col-centered comment-text">
-        <h2>{# placeholder to match height with nickname on the left #}</h2>
-        <h3>{{ comment.date|date:"Y-m-d H:i" }}</h3>
-        <h3 style="float:right"><a href="?page={{ page_obj.number }}#div{{comment.id}}">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</a></h3>
+    <div class="col-md-8 col-xs-8 col-sm-8 col-centered comment-text">
+        <h3>{# placeholder to match height with nickname on the left #}</h3>
+        <span>{{ comment.date|date:"Y-m-d H:i" }}</span>
+        <span style="float:right"><a href="?page={{ page_obj.number }}#div{{comment.id}}">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</a></span>
 
         <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
         

@@ -129,7 +129,7 @@ nav class="navbar navbar-static-top">
   	$("#modal-login-alert-info strong").text('');
   	$.ajax({
   		method: 'POST',
-  		url: '{% url "mafiaapp:ajax_login"%}',
+  		url: '{% url "mafiaapp:ajax_login"%}'+'/?next='+document.location,
   		data: {
   			email: $('#login-email').val(),
   			password: $('#login-password').val(),
@@ -143,7 +143,7 @@ nav class="navbar navbar-static-top">
   		if (data['status'] === 'OK') {
   			$("#modal-login-alert-info").removeAttr('hidden');
   			$("#modal-login-alert-info strong").text(data['message']);
-  			location.href = "{% url 'mafiaapp:index' %}"
+  			location.href = data['next']
   		}
   	}).fail(function(data) {
   		if (data['status'] === 'FAIL') {

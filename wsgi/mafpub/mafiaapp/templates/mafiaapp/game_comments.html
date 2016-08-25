@@ -165,30 +165,30 @@
     <div class="col-md-2 col-xs-2 col-sm-2 text-right">
         {% if comment.author.user.nickname in game.anchor or game.day == 0 %}
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
-            <h2 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h2><br>
+            <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
             <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         {% else %}
-        <h2 id='author{{comment.id}}'>
+        <h3 id='author{{comment.id}}'>
         {% if game.state == 'past' %}{{comment.mask.username}}<br>
             <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">{{ comment.author.user.nickname }}</a>
         {% else %}
             {{comment.mask.username}}
         {% endif %}
-        </h2><br>
+        </h3><br>
         <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
         {% endif %}
     </div>
-    <div class="col-md-8 col-centered comment-text">
+    <div class="col-md-8 col-xs-8 col-sm-8 col-centered comment-text">
       {# placeholder to match height with nickname on the left #}
       {% if game.state == 'past' %}
-        {% if comment.author.user.nickname in game.anchor %}<h2></h2>
-        {% else %}<h2></h2><br><h2></h2>
+        {% if comment.author.user.nickname in game.anchor %}<h3></h3>
+        {% else %}<h3></h3><br><h3></h3>
         {% endif %}
-      {% else %}<h2></h2>
+      {% else %}<h3></h3>
       {% endif %}
-      <h3>{{ comment.date|date:"Y-m-d H:i" }}</h3>
-      <a href="?page={{ page_obj.number }}#div{{comment.id}}"><h3 style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</h3></a>
+      <span>{{ comment.date|date:"Y-m-d H:i" }}</span>
+      <a href="?page={{ page_obj.number }}#div{{comment.id}}"><span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span></a>
 
       <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
 
@@ -206,7 +206,7 @@
         </form>
         <a href="/admin/mafiaapp/gamecomment/{{comment.id}}" target="blank"><input type="submit" value="Редактировать" class="btn btn-primary" ></a>
         {% endif %}
-      <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h3>Цитировать</h3></span>
+      <h3 class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'>Цитировать</h3>
     </div>
 </div>
 {% endfor %}
