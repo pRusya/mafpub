@@ -26,7 +26,7 @@
     </div>
     <div class="col-md-8 col-xs-8 col-sm-8 col-centered">
         <h3>{# placeholder to match height with nickname on the left #}</h3>
-        <h3>{{ post.date|date:"Y-m-d H:i" }}</h3>
+        <span>{{ post.date|date:"Y-m-d H:i" }}</span>
         <div id="{{post.id}}" class="content-markdown comment-item">{{ post.text }}</div>
         <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{post.id}}" value="" style="margin-top:2px;"></textarea></div>
         {% if user.is_superuser %}

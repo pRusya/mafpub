@@ -128,12 +128,22 @@ pre {
 }
 .comment-item {
   white-space: pre-wrap;
-  word-break: keep-all;
+  /*word-break: keep-all;*/
   border: 0px;
   background: #f5f5f5;
   border-radius: 5px;
   font-size: 20px;
   padding: 10px 10px 00px 10px;
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 .comment-item p {
   margin-bottom: 0px;

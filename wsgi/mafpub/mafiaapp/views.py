@@ -245,8 +245,6 @@ class Dashboard(generic.ListView):
         context = super(Dashboard, self).get_context_data(**kwargs)
         post_list = Post.objects.all()
         context['post_list'] = post_list
-        logger.info(post_list)
-        logger.info(post_list[0].slug)
         return context
 
 
@@ -398,14 +396,15 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        logger.info(request.POST)
         self.object_list = self.get_queryset()
         self.object = self.get_object()
         context = self.get_context_data()
         action = request.POST.get('action', '')
         if action == 'Назначить':
             participants = random.sample(list(context['participants']), len(context['participants']))
-            masks = random.sample(list(context['masks']), len(context['masks']))
+            # masks = random.sample(list(context['masks']), len(context['masks']))
+            masks = Mask.objects.filter(game=context['game'], taken=False)
+            masks = random.sample(list(masks), len(masks))
             roles = ['head militia', 'neutral doctor', 'neutral barman', 'maniac']
             mafia = ['mafia']
             killer = ['neutral killer']
@@ -440,6 +439,25 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                 post = GamePost.objects.get(game=context['game'], tags__contains=['private', participant.user.nickname])
                 inform = GameComment(post=post, author=bot, text=roles_description[participant.role])
                 inform.save()
+        elif action == 'Раздать':
+            masks = Mask.objects.filter(game=context['game'], taken=False)
+            masks = random.sample(list(masks), len(masks))
+            participants = random.sample(list(context['participants']), len(context['participants']))
+            for participant in participants:
+                if not participant.mask:
+                    if len(masks) > 0:
+                        mask = masks.pop()
+                    else:
+                        temp = NamedTemporaryFile()
+                        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+                        temp.flush()
+                        mask = Mask(game=context['game'], username='Маска ' + participant.user.nickname)
+                        mask.avatar.save(os.path.basename(save_path_avatar(mask, 'avatar.png')), File(temp))
+                        mask.save()
+                    participant.mask = mask
+                    participant.save()
+                    mask.taken = True
+                    mask.save()
         elif action == 'Сохранить':
             form = self.get_form()
             if form.is_valid():
@@ -497,7 +515,7 @@ def create_random_masks(d):
         temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
 
-        mask = Mask(game=game, username='Маска ' + participant.user.nickname)
+        mask = Mask(game=game, username='Маска ' + participant.user.nickname, taken=True)
         mask.avatar.save(os.path.basename(save_path_avatar(mask, 'avatar.png')), File(temp))
         mask.save()
 
@@ -549,7 +567,7 @@ def register_bots(d):
         user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         user.save()
 
-        mask = Mask(game=game, username=user.nickname)
+        mask = Mask(game=game, username=user.nickname, taken=True)
         mask.avatar.save(os.path.basename(save_path_avatar(mask, 'avatar.png')), File(temp))
         mask.save()
 
@@ -1247,8 +1265,6 @@ def night(d):
     has_mafia_post = False
     has_militia_post = False
     quicks = GameParticipant.objects.filter(game=game).exclude(Q(role='dead') | Q(user=author))
-    logger.info('ЖИВЫЕ ')
-    logger.info(quicks)
     # quicks for general_day
     quicks_info = '\nЖивые:'
     # quicks for militia_day
@@ -1286,11 +1302,12 @@ def night(d):
                                               ' завершен', author=author)
         comment.save()
     mafia_roles = ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer']
-    militia_roles = ['militia', 'head militia']  # , 'militia doctor', 'militia barman', 'militia killer']
+    militia_roles = ['militia', 'head militia', 'militia doctor', 'militia barman', 'militia killer']
     if not has_mafia_post:
         new_recruit_post = GamePost(title='Явочная', text='Явочная мафии', short='day' + day,
                                     tags=['mafia_day', 'mafia_secret'], game=game, author=author,
-                                    allow_role=mafia_roles + ['mafia_recruit'], slug=game.slug + '_mafia_secret')
+                                    allow_role=['mafia', 'head mafia', 'mafia recruit', 'militia recruit'],
+                                    slug=game.slug + '_mafia_secret')
         new_recruit_post.save()
         new_post = GamePost(title='День ' + day, text='Мафия. День ' + day + quicks_info, short='day' + day,
                             tags=['mafia_day', 'current'],
@@ -1299,10 +1316,11 @@ def night(d):
     if not has_militia_post:
         new_recruit_post = GamePost(title='Явочная', text='Явочная милиции', short='day' + day,
                                     tags=['militia_day', 'militia_secret'], game=game, author=author,
-                                    allow_role=mafia_roles + ['militia_recruit'], slug=game.slug + '_militia_secret')
+                                    allow_role=['militia', 'head militia', 'militia recruit'],
+                                    slug=game.slug + '_militia_secret')
         new_recruit_post.save()
         new_post = GamePost(title='День ' + day, text='Милиция. День ' + day + quicks_info, short='day' + day,
-                            tags=['militia_day', 'current', 'militia_secret'],
+                            tags=['militia_day', 'current'],
                             game=game, author=author, allow_role=militia_roles, slug=game.slug + '_militia_day' + day)
         new_post.save()
     if not game_ended:
@@ -1664,6 +1682,7 @@ def post_game_comment(request, kwargs):
     else:
         comment = GameComment(post=post, author=user.user, text=text,
                               mask=comment_participant.mask if user.user.nickname not in game.anchor else None)
+        logger.info(comment.mask)
         comment.save()
         participant = get_object_or_404(GameParticipant, game=game, user=user)
         participant.comments_number += 1
@@ -1957,7 +1976,7 @@ def contract(request, kwargs):
 @login_required
 def invite(request, kwargs):
     game = get_game(kwargs)
-    post = get_post(kwargs)
+    post = get_game_post(kwargs)
     user = get_user(request)
     voter = GameParticipant.objects.get(user=user, game=game)
     if voter.role == 'dead':
@@ -2067,22 +2086,33 @@ class DisplayGame(generic.ListView):
             context['registered'] = registered
             context['participant'] = participant
             if participant.role:
-                if participant.role in ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer']:
+                if participant.role in ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer']\
+                        and participant.sees_maf_q:
                     context['mafia'] = True
                     context['mafia_core'] = True
-                elif participant.role in ['mafia recruit']:
+                elif participant.role in ['mafia recruit', 'militia recruit']:
                     context['mafia'] = True
                     context['mafia_recruit'] = True
                 elif participant.role in ['militia', 'head militia', 'militia doctor', 'militia barman',
-                                          'militia killer']:
+                                          'militia killer']\
+                        and participant.sees_mil_q:
                     context['militia'] = True
                     context['militia_core'] = True
                 elif participant.role in ['militia recruit']:
                     context['militia'] = True
                     context['militia_recruit'] = True
                 context['dead'] = True if participant.role == 'dead' else False
-
-        gamepost_list = GamePost.objects.filter(game=game).order_by('-date')
+        if participant:
+            if participant.role in ['mafia doctor', 'mafia barman', 'mafia killer']:
+                gamepost_list = GamePost.objects.filter(game=game).exclude(tags__contains=['mafia_secret'])\
+                    .order_by('-date')
+            elif participant.role in ['militia doctor', 'militia barman', 'militia killer']:
+                gamepost_list = GamePost.objects.filter(game=game).exclude(tags__contains=['militia_secret']) \
+                    .order_by('-date')
+            else:
+                gamepost_list = GamePost.objects.filter(game=game).order_by('-date')
+        else:
+            gamepost_list = GamePost.objects.filter(game=game).order_by('-date')
         context['gamepost_list'] = gamepost_list
 
         if not anonymous and self.request.user.user.nickname in game.anchor:
@@ -2287,7 +2317,7 @@ class DisplayGamePost(generic.ListView):
         context['game'] = self.game
         context['post'] = self.game_post
         if 'description' in self.game_post.tags:
-            self.template_name = 'mafiaapp/display_post.html'
+            #self.template_name = 'mafiaapp/display_post.html'
             participants = GameParticipant.objects.filter(game=self.game).exclude(user__nickname='Игровой Бот')
             context['participants'] = participants
         if self.game.state != 'past':
@@ -2321,6 +2351,7 @@ class DisplayGamePost(generic.ListView):
         'Присоедениться': choose_side,
         'Завербовать': recruit,
         'Заказать': contract,
+        'Пригласить': invite,
     }
 
     def allow_access(self, request):
@@ -2334,6 +2365,36 @@ class DisplayGamePost(generic.ListView):
             if participant:
                 if 'private' in self.game_post.allow_role and user.user.nickname in self.game_post.tags:
                     return True
+                mafia_core = ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer']
+                militia_core = ['militia', 'head militia', 'militia doctor', 'militia barman', 'militia killer']
+                if participant.role == 'militia recruit':
+                    if 'mafia_secret' in self.game_post.tags \
+                            or 'militia_secret ' in self.game_post.tags and participant.sees_mil_q:
+                        return True
+                if participant.role == 'mafia recruit' and 'mafia_secret' in self.game_post.tags:
+                    return True
+                if participant.role in mafia_core:
+                    if 'mafia_secret' in self.game_post.tags:
+                        logger.info('mafia secret')
+                        if participant.role in ['mafia', 'head mafia', 'mafia recruit', 'militia recruit']:
+                            logger.info(participant.role)
+                            return True
+                        else:
+                            return False
+                    if participant.sees_maf_q:
+                        return True
+                    else:
+                        return False
+                if participant.role in militia_core:
+                    if 'militia_secret' in self.game_post.tags:
+                        if participant.role in ['militia', 'head militia', 'militia recruit']:
+                            return True
+                        else:
+                            return False
+                    if participant.sees_mil_q:
+                        return True
+                    else:
+                        return False
                 if participant.role in self.game_post.allow_role:
                     return True
         return False

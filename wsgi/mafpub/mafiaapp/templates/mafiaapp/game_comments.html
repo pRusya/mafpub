@@ -163,20 +163,29 @@
 <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 col-xs-2 col-sm-2 text-right">
-        {% if comment.author.user.nickname in game.anchor or game.day == 0 %}
+        {% if comment.author.user.nickname in game.anchor %}
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
             <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
             <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
         </a>
         {% else %}
-        <h3 id='author{{comment.id}}'>
-        {% if game.state == 'past' %}{{comment.mask.username}}<br>
-            <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">{{ comment.author.user.nickname }}</a>
-        {% else %}
-            {{comment.mask.username}}
-        {% endif %}
-        </h3><br>
-        <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
+            {% if game.state == 'past' %}
+                <h3>{{comment.mask.username}}</h3><br>
+                <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
+                    <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
+                    <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
+                </a>
+            {% else %}
+                {% if comment.mask %}
+                    <h3 id='author{{comment.id}}'>{{comment.mask.username}}</h3><br>
+                    <img src="{{ comment.mask.avatar.url }}" class="comment-avatar"/>
+                {% else %}
+                    <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
+                        <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
+                        <img src="{{ comment.author.user.avatar.url }}" class="comment-avatar"/>
+                    </a>
+                {% endif %}
+            {% endif %}
         {% endif %}
     </div>
     <div class="col-md-8 col-xs-8 col-sm-8 col-centered comment-text">

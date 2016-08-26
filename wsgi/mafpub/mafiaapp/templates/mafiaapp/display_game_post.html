@@ -27,7 +27,11 @@
 {% endif %}
 
 {% block comments %}
-{% include 'mafiaapp/game_comments.html' %}
+{% if 'description' in post.tags %}
+	{% include 'mafiaapp/comments.html' %}
+{% else %}
+	{% include 'mafiaapp/game_comments.html' %}
+{% endif %}
 {% endblock comments %}
 
 {% block reply %}
