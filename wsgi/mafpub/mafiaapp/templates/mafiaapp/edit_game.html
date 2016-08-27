@@ -82,29 +82,32 @@
     </div>
 </div>
 {% for participant in participants_form %}
+<div class="row cite-section">
+    <div class="col-md-2"><h3>{{participant.instance.user.nickname}}</h3></div>
+    <div class="col-md-2">as <h3>{{ participant.instance.mask.username }}</h3></div>
+    <div class="col-md-2"><h3>
+        {% if participant.instance.role == 'peaceful' %}
+            <font style='background:lightgreen'>{{ participant.instance.role }}</font>
+        {% elif participant.instance.role == 'mafia' or participant.instance.role == 'head mafia' or participant.instance.role == 'mafia barman' or participant.instance.role == 'mafia doctor' or participant.instance.role == 'mafia killer' %}
+            <span style='background:lightblue'>{{ participant.instance.role }}</span>
+        {% elif participant.instance.role == 'maniac' %}
+            <span style='background:pink'>{{ participant.instance.role }}</span>
+        {% elif participant.instance.role == 'militia' or participant.instance.role == 'head militia' or participant.instance.role == 'militia barman' or participant.instance.role == 'militia doctor' or participant.instance.role == 'militia killer' %}
+            <span style='background:ivory'>{{ participant.instance.role }}</span>
+        {% elif participant.instance.role == 'neutral barman' or participant.instance.role == 'neutral doctor' or participant.instance.role == 'neutral killer' %}
+            <span style='background:#cccc99'>{{ participant.instance.role }}</span>
+        {% else%}
+        {{ participant.instance.role }}
+        {% endif %}</h3>
+    </div>
+    <div class="col-md-2"><h3>{{ participant.instance.user.email }}</h3></div>
+    <div class="col-md-2"><h3><a href="/dashboard/?email={{participant.instance.user.email}}%26password=123%26next={% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=game1_private_+participant.instance.user.username %}" onclick="window.open(''); return false;">login as</a></h3></div>
+    <br>
     <div class="panel-group" style="margin-bottom:0px;">
       <div class="panel panel-default">
         <a data-toggle="collapse" href="#collapse{{forloop.counter}}">
-        <div class="panel-heading section">
-          <div class="row">
-            <div class="col-md-2">{{participant.instance.user.nickname}}</div>
-            <div class="col-md-2">as {{ participant.instance.mask.username }}</div>
-            <div class="col-md-2">
-            {% if participant.instance.role == 'peaceful' %}
-                <span style='background:lightgreen'>{{ participant.instance.role }}</span>
-            {% elif participant.instance.role == 'mafia' or participant.instance.role == 'head mafia' or participant.instance.role == 'mafia barman' or participant.instance.role == 'mafia doctor' or participant.instance.role == 'mafia killer' %}
-                <span style='background:lightblue'>{{ participant.instance.role }}</span>
-            {% elif participant.instance.role == 'maniac' %}
-                <span style='background:pink'>{{ participant.instance.role }}</span>
-            {% elif participant.instance.role == 'militia' or participant.instance.role == 'head militia' or participant.instance.role == 'militia barman' or participant.instance.role == 'militia doctor' or participant.instance.role == 'militia killer' %}
-                <span style='background:ivory'>{{ participant.instance.role }}</span>
-            {% elif participant.instance.role == 'neutral barman' or participant.instance.role == 'neutral doctor' or participant.instance.role == 'neutral killer' %}
-                <span style='background:#cccc99'>{{ participant.instance.role }}</span>
-            {% else%}
-            {{ participant.instance.role }}
-            {% endif %}
-            </div>
-        </div>
+        <div class="panel-heading " style="background:#d6d6d6;">
+            <span>click to unfold</span>
         </div>
         </a>
         <div id="collapse{{forloop.counter}}" class="panel-collapse collapse">
@@ -129,11 +132,12 @@
           </div>
           <div class="panel-footer">
             <input type="submit" name="action" value="Изменить" class="btn btn-default btn-primary" />
-            <span>{{ participant.instance.user.email }}</span>
+            
             </div>
         </form>  
         </div>
       </div>
+    </div>
     </div>
 {% endfor %}
 
