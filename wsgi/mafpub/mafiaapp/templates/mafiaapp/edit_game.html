@@ -101,7 +101,9 @@
         {% endif %}</h3>
     </div>
     <div class="col-md-2"><h3>{{ participant.instance.user.email }}</h3></div>
+    <!--
     <div class="col-md-2"><h3><a href="/dashboard/?email={{participant.instance.user.email}}%26password=123%26next={% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=game1_private_+participant.instance.user.username %}" onclick="window.open(''); return false;">login as</a></h3></div>
+    -->
     <br>
     <div class="panel-group" style="margin-bottom:0px;">
       <div class="panel panel-default">

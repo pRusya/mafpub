@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e740304-2ce7-4d32-bca7-0dd211887a69" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/urls.py" afterPath="$PROJECT_DIR$/wsgi/mafpub/mafiaapp/urls.py" />
     </list>
     <ignored path="mafpub.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,8 +25,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="2412" column="37" selection-start-line="2412" selection-start-column="37" selection-end-line="2412" selection-end-column="37" />
+            <state relative-caret-position="814">
+              <caret line="1748" column="20" selection-start-line="1748" selection-start-column="20" selection-end-line="1748" selection-end-column="20" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <marker date="1472296151613" expanded="true" signature="2026:2035" ph="..." />
@@ -59,9 +59,11 @@
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="720">
-              <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+              <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
+                <marker date="1472503846088" expanded="true" signature="200:3307" ph="..." />
+                <marker date="1472503846088" expanded="true" signature="3310:3494" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
               </folding>
             </state>
           </provider>
@@ -92,7 +94,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2402">
+            <state relative-caret-position="3840">
               <caret line="195" column="28" selection-start-line="195" selection-start-column="28" selection-end-line="195" selection-end-column="28" />
               <folding>
                 <element signature="e#24#72#0" expanded="true" />
@@ -700,16 +702,18 @@
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
-          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+          <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+            <marker date="1472503846088" expanded="true" signature="200:3307" ph="..." />
+            <marker date="1472503846088" expanded="true" signature="3310:3494" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2402">
+        <state relative-caret-position="3840">
           <caret line="195" column="28" selection-start-line="195" selection-start-column="28" selection-end-line="195" selection-end-column="28" />
           <folding>
             <element signature="e#24#72#0" expanded="true" />
@@ -721,14 +725,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
           <caret line="653" column="8" selection-start-line="653" selection-start-column="8" selection-end-line="653" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wsgi/mafpub/mafiaapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="2412" column="37" selection-start-line="2412" selection-start-column="37" selection-end-line="2412" selection-end-column="37" />
+        <state relative-caret-position="814">
+          <caret line="1748" column="20" selection-start-line="1748" selection-start-column="20" selection-end-line="1748" selection-end-column="20" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <marker date="1472296151613" expanded="true" signature="2026:2035" ph="..." />

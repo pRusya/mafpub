@@ -17,7 +17,6 @@ urlpatterns = [
     url(r'^p/complete/$', views.wrap_password_reset_complete, name='password_reset_complete'),
     url(r'^p/done/$', views.wrap_password_reset_done, name='password_reset_done'),
 
-    # TODO
     url(r'^u/(?P<user>.*?)/$', views.Profile.as_view(), name='profile'),
     url(r'^logout/$', views.Logout.as_view(), name='logout'),
 
