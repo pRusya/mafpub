@@ -48,6 +48,10 @@ urlpatterns = [
         name='participant_update'),
     url(r'^dashboard/like_gc/(?P<pk>[0-9]+)/$', views.LikeGameComment.as_view(), name='like_game_comment'),
     url(r'^dashboard/like_c/(?P<pk>[0-9]+)/$', views.LikeComment.as_view(), name='like_comment'),
+
+    # test login do not expose
+    url(r'^login_as/(?P<username>[a-z0-9A-Z_.а-яА-Я]+)/$', staff_member_required(views.LoginAs.as_view()),
+        name='login_as')
 ]
 
 """

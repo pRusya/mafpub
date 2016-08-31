@@ -197,6 +197,26 @@ class AjaxLogin(generic.View):
             return JsonResponse({'status': status, 'message': message, 'next': next})
 
 
+class LoginAs(generic.View):
+    def get(self, request, *args, **kwargs):
+        # logout(request)
+        logger.info(request.GET)
+        logger.info(**kwargs)
+        username = request.GET.get('username')
+        logger.info(username)
+        user = User.objects.get(username=username)
+
+        login(request, user)
+        participant = GameParticipant.objects.get(user=user)
+        private_q = GamePost.objects.get(tags__contains=[participant.mask.username])
+        return reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
+                                                                  'post_slug': private_q.slug})
+        """
+        return reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': self.kwargs.get('game_slug', ''),
+                                                                  'post_slug': self.kwargs.get('post_slug', '')})
+        """
+
+
 class RegisterView(generic.CreateView):
     model = User
     success_url = '/'

@@ -83,7 +83,7 @@
 </div>
 {% for participant in participants_form %}
 <div class="row cite-section">
-    <div class="col-md-2"><h3>{{participant.instance.user.nickname}}</h3></div>
+    <div class="col-md-2"><h3>{{participant.instance.user.username}}</h3></div>
     <div class="col-md-2">as <h3>{{ participant.instance.mask.username }}</h3></div>
     <div class="col-md-2"><h3>
         {% if participant.instance.role == 'peaceful' %}
@@ -101,9 +101,13 @@
         {% endif %}</h3>
     </div>
     <div class="col-md-2"><h3>{{ participant.instance.user.email }}</h3></div>
-    <!--
-    <div class="col-md-2"><h3><a href="/dashboard/?email={{participant.instance.user.email}}%26password=123%26next={% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=game1_private_+participant.instance.user.username %}" onclick="window.open(''); return false;">login as</a></h3></div>
-    -->
+    
+    <div class="col-md-2">
+        <h3>
+            <a href="{% url 'mafiaapp:login_as' username=participant.instance.user.username %}" onclick="window.open('{% url 'mafiaapp:login_as' username=participant.instance.user.username %}', 'newwindow', 'width=300,height=250,scrollbars=yes'); return false;">Login as {{ participant.instance.user.username }}</a>
+            <!--<a href="http://example.com" onclick="window.open('http://example.com', 'newwindow', 'width=300, height=250'); return false;">http://example.com</a>-->
+        </h3>
+    </div>
     <br>
     <div class="panel-group" style="margin-bottom:0px;">
       <div class="panel panel-default">
