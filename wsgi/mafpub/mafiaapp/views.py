@@ -18,9 +18,12 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
 from django.http import Http404, JsonResponse
+from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
+from django.conf import settings
+from django.utils.importlib import import_module
 
 from .forms import *
 from .models import User as mafpub_user
@@ -199,22 +202,17 @@ class AjaxLogin(generic.View):
 
 class LoginAs(generic.View):
     def get(self, request, *args, **kwargs):
-        # logout(request)
-        logger.info(request.GET)
-        logger.info(**kwargs)
-        username = request.GET.get('username')
-        logger.info(username)
-        user = User.objects.get(username=username)
-
-        login(request, user)
+        user = User.objects.get(username=kwargs['username'])
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        r = HttpRequest()
+        engine = import_module(settings.SESSION_ENGINE)
+        session_key = None
+        r.session = engine.SessionStore(session_key)
+        login(r, user)
         participant = GameParticipant.objects.get(user=user)
-        private_q = GamePost.objects.get(tags__contains=[participant.mask.username])
-        return reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
-                                                                  'post_slug': private_q.slug})
-        """
-        return reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': self.kwargs.get('game_slug', ''),
-                                                                  'post_slug': self.kwargs.get('post_slug', '')})
-        """
+        private_q = GamePost.objects.get(tags__contains=[participant.user.nickname])
+        return redirect(reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
+                                                                           'post_slug': private_q.slug}))
 
 
 class RegisterView(generic.CreateView):
