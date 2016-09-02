@@ -178,9 +178,9 @@
         <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
         
         {% if comment.id in user.user.liked %}
-      <img src="{% static 'mafiaapp/Thumb-up-fill.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
+      <img src="{% static 'mafiaapp/img/Thumb-up-fill.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
       {% else %}
-      <img src="{% static 'mafiaapp/Thumb-up.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
+      <img src="{% static 'mafiaapp/img/Thumb-up.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
       {% endif %}
        <h3><span class="like_number{{comment.id}}" style="vertical-align:bottom;">{% if comment.like > 0 %}{{ comment.like }}{% endif %}<span></h3>
         {% if user.is_superuser %}

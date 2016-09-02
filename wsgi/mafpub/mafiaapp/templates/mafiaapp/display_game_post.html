@@ -7,7 +7,7 @@
 {% block link %}
 <div class="row">
     <div class="col-md-6 col-xs-6 col-sm-6 col-centered text-center">
-        <h2 class="font-forum"><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a> {% if game.day > 0 %}(День {{game.day}}){% endif %} / {{ post.title }}</h2>
+        <h2 class="font-forum"><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a> {% if game.day > 0 and game.state == 'current' %}(День {{game.day}}){% endif %} / {{ post.title }}</h2>
     </div>
 </div>
 {% endblock link %}

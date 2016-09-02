@@ -19,6 +19,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q, Count
 from django.http import Http404, JsonResponse
 from django.http.request import HttpRequest
+from django.test import RequestFactory, Client
 from django.shortcuts import get_object_or_404, redirect, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
@@ -204,11 +205,10 @@ class LoginAs(generic.View):
     def get(self, request, *args, **kwargs):
         user = User.objects.get(username=kwargs['username'])
         user.backend = 'django.contrib.auth.backends.ModelBackend'
-        r = HttpRequest()
-        engine = import_module(settings.SESSION_ENGINE)
-        session_key = None
-        r.session = engine.SessionStore(session_key)
-        login(r, user)
+        original_username = request.user.username
+        login(request, user)
+        request.session['restore_user'] = True
+        request.session['username'] = original_username
         participant = GameParticipant.objects.get(user=user)
         private_q = GamePost.objects.get(tags__contains=[participant.user.nickname])
         return redirect(reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
@@ -268,7 +268,13 @@ class Dashboard(generic.ListView):
 
 class Logout(generic.View):
     def get(self, request):
-        logout(request)
+        if request.session.get('restore_user', ''):
+            user = User.objects.get(username=request.session['username'])
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            request.session['restore_user'] = None
+            login(request, user)
+        else:
+            logout(request)
         messages.add_message(request, messages.INFO, 'Logout performed')
         return redirect('mafiaapp:index')
 

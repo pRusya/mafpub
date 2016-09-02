@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="col-md-8 col-xs-8 col-sm-8 col-centered text-center">
 		<h2>
-			<a href="{% url 'mafiaapp:dashboard' %}">Главная страница</a> / {{ game.title|safe }} {% if game.day > 0 %}(День {{game.day}}){% endif %}
+			<a href="{% url 'mafiaapp:dashboard' %}">Главная страница</a> / {{ game.title|safe }} {% if game.day > 0 and game.state == 'current' %}(День {{game.day}}){% endif %}
 		</h2>
 	</div>
 </div>
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-md-2 col-xs-2 col-sm-2 text-right">
                     {% if not private.allow_comment %}
-                    <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+                    <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
                     {% endif %}
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4">
@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-md-2 col-xs-2 col-sm-2 text-right">
                     {% if not morgue.allow_comment %}
-                    <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+                    <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
                     {% endif %}
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4">
@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
                             {% if not private.allow_comment %}
-                            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+                            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
                             {% endif %}
                         </div>
                         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -122,7 +122,7 @@
                     <div class="row">
                         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
                             {% if not morgue.allow_comment %}
-                            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+                            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
                             {% endif %}
                         </div>
                         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -151,7 +151,7 @@
     				<div class="row">
                         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
                             {% if not p.allow_comment %}
-                            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+                            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
                             {% endif %}
                         </div>
         				<div class="col-md-4 col-xs-4 col-sm-4">
@@ -180,7 +180,7 @@
     				    <div class="row">
                             <div class="col-md-2 col-xs-2 col-sm-2 text-right">
                                 {% if not morgue.allow_comment %}
-                                <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+                                <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
                                 {% endif %}
                             </div>
         				    <div class="col-md-4 col-xs-4 col-sm-4">
@@ -239,7 +239,7 @@
     <div class="row">
         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -286,7 +286,7 @@
     <div class="row">
         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -327,7 +327,7 @@
     <div class="row">
         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -378,7 +378,7 @@
     <div class="row">
         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -419,7 +419,7 @@
     <div class="row">
         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
             {% if not day.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4 col-xs-4 col-sm-4">
@@ -466,7 +466,7 @@
     <div class="row">
         <div class="col-md-2 col-xs-2 col-sm-2 text-right">
             {% if not info.allow_comment %}
-            <img src="{% static 'mafiaapp/Lock.svg' %}" class="img-post-locked">
+            <img src="{% static 'mafiaapp/img/Lock.svg' %}" class="img-post-locked">
             {% endif %}
         </div>
         <div class="col-md-4 col-xs-4 col-sm-4">
