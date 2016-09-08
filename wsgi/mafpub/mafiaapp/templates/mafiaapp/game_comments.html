@@ -115,9 +115,9 @@
                 } else {
                     $('.like_number'+id).text(data['number']);
                 }
-                var src = ($('.like-button'+id).attr('src') === "{% static 'mafiaapp/Thumb-up.svg' %}")
-                    ? "{% static 'mafiaapp/Thumb-up-fill.svg' %}"
-                    : "{% static 'mafiaapp/Thumb-up.svg' %}";
+                var src = ($('.like-button'+id).attr('src') === "{% static 'mafiaapp/img/Thumb-up.svg' %}")
+                    ? "{% static 'mafiaapp/img/Thumb-up-fill.svg' %}"
+                    : "{% static 'mafiaapp/img/Thumb-up.svg' %}";
                 $('.like-button'+id).attr('src', src);
             }
         }).fail(function(data) {
@@ -160,9 +160,8 @@
 </div>
 
 {% for comment in page_obj %}
-<div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
-    <div class="col-md-2 col-xs-2 col-sm-2 text-right">
+    <div class="col-md-2 col-sm-2 col-xs-2 text-right padding-0">
         {% if comment.author.user.nickname in game.anchor %}
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
             <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
@@ -188,16 +187,16 @@
             {% endif %}
         {% endif %}
     </div>
-    <div class="col-md-8 col-xs-8 col-sm-8 col-centered comment-text">
+    <div class="col-md-8 col-sm-10 col-xs-10 comment-text">
       {# placeholder to match height with nickname on the left #}
-      {% if game.state == 'past' %}
-        {% if comment.author.user.nickname in game.anchor %}<h3></h3>
-        {% else %}<h3></h3><br><h3></h3>
-        {% endif %}
-      {% else %}<h3></h3>
+      {% if game.state == 'past' and comment.author.user.nickname not in game.anchor %}
+        <h3></h3>
       {% endif %}
-      <span>{{ comment.date|date:"Y-m-d H:i" }}</span>
-      <a href="?page={{ page_obj.number }}#div{{comment.id}}"><span style="float:right">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</span></a>
+      <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-6"><h3></h3><h6>{{ comment.date|date:"Y-m-d H:i" }}</h6></div>
+      <div class="col-md-6 col-sm-6 col-xs-6 text-right"><h3></h3><h6><a href="?page={{ page_obj.number }}#div{{comment.id}}">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</a></h6></div>
+      </div>
+      
 
       <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
 
@@ -206,7 +205,7 @@
       {% else %}
       <img src="{% static 'mafiaapp/img/Thumb-up.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
       {% endif %}
-       <h3><span class="like_number{{comment.id}}" style="vertical-align:bottom;">{% if comment.like > 0 %}{{ comment.like }}{% endif %}<span></h3>
+       <h4 class="like_number{{comment.id}}" style="vertical-align:bottom;">{% if comment.like > 0 %}{{ comment.like }}{% endif %}</h4>
         {% if user.user.nickname in game.anchor %}
         <span></span>
         <form action="{% url 'mafiaapp:delete_game_comment' game_slug=game.slug post_slug=post.slug pk=comment.id %}" method="post" class="inline">
@@ -217,7 +216,9 @@
         {% endif %}
       <h3 class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'>Цитировать</h3>
     </div>
+    <div class="col-md-2"></div>
 </div>
+<div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 {% endfor %}
 
 <div style="height:1px;overflow:hidden"><textarea id="ihatejs" value="" style="margin-top:2px;"></textarea></div>

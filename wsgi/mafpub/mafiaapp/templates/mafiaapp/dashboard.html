@@ -1,98 +1,96 @@
 {% extends 'mafiaapp/base.html' %}
 {% load filters %}
 {% block content %}
-<div class="wrap">
+<div class="wrap col-centered">
 
 <div class="row">
-    <div class="col-md-7 col-xs-7 col-sm-7 text-center">
-        <h1>{# palceholder #}&#160;</h1>
+    <div class="col-md-12 text-center">
+        <h2>{# palceholder #}&#160;</h2>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-7 col-xs-7 col-sm-7 col-centered section">
-        <h1 class="font-forum">Текущая игра</h1>
+    <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
+        <h2 >Текущая игра</h2>
     </div>
 </div>
 
 {% for game in game_list|filter_state:'current' %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
-        <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</h3></a>
-        <p>{{ game.status }}</p>
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
+        <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
+        <br>
+        <h6>{{ game.status }}</h6>
     </div>
 </div>
 {% empty %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3>Сейчас не проводится игра</h3>
-        <p>&#160;</p>
     </div>
 </div>
 {% endfor %}
 
 <div class="row">
-    <div class="col-md-7 col-xs-7 col-sm-7 col-centered section">
-        <h1>Предстоящая игра</h1>
+    <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
+        <h2>Предстоящая игра</h2>
     </div>
 </div>
 
 {% for game in game_list|filter_state:'upcoming' %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
-        <p>{{ game.status }}</p>
+        <h6>{{ game.status }}</h6>
     </div>
 </div>
 {% empty %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3>Нет будущих игр</h3>
-        <p>&#160;</p>
     </div>
 </div>
 {% endfor %}
 
 <div class="row">
-    <div class="col-md-7 col-xs-7 col-sm-7 col-centered section">
-        <h1>Прошедшие игры</h1>
+    <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
+        <h2>Прошедшие игры</h2>
     </div>
 </div>
 
 {% for game in game_list|filter_state:'past' %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</h3></a>
-        <p>{{ game.status }}</p>
+        <h6>{{ game.status }}</h6>
     </div>
 </div>
 {% empty %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3>Нет завершенных игр</h3>
-        <p>&#160;</p>
     </div>
 </div>
 {% endfor %}
 
 <div class="row">
-    <div class="col-md-7 col-xs-7 col-sm-7 col-centered section">
-        <h1>Новости, объявления, обсуждения</h1>
+    <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
+        <h2>Новости, объявления, обсуждения</h2>
     </div>
 </div>
 
 {% for post in post_list %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
-        <a href="{% url 'mafiaapp:display_post' post_slug=post.slug %}"><h3>{{ post.title|safe }}</h3></a>
-        <p>Дата: <b>{{ post.date|date:"Y-m-d" }}</b>. Автор: <b><a href="{% url 'mafiaapp:profile' user=post.author.nickname %}">{{ post.author }}</a></b></p>
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
+        <h3><a href="{% url 'mafiaapp:display_post' post_slug=post.slug %}">{{ post.title|safe }}</a></h3>
+        <br>
+        <h5>Дата:</h5> <h4>{{ post.date|date:"Y-m-d" }}</h4><h5>. Автор:</h5> <h4><a href="{% url 'mafiaapp:profile' user=post.author.nickname %}">{{ post.author }}</a></h4>
     </div>
 </div>
 {% empty %}
 <div class="row">
-    <div class="col-md-6 col-xs-6 col-sm-6 col-centered">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3>Нет тем</h3>
-        <p>&#160;</p>
     </div>
 </div>
 {% endfor %}

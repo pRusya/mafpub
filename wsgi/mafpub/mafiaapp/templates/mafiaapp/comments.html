@@ -116,9 +116,9 @@
                 } else {
                     $('.like_number'+id).text(data['number']);
                 }
-                var src = ($('.like-button'+id).attr('src') === "{% static 'mafiaapp/Thumb-up.svg' %}")
-                    ? "{% static 'mafiaapp/Thumb-up-fill.svg' %}"
-                    : "{% static 'mafiaapp/Thumb-up.svg' %}";
+                var src = ($('.like-button'+id).attr('src') === "{% static 'mafiaapp/img/Thumb-up.svg' %}")
+                    ? "{% static 'mafiaapp/img/Thumb-up-fill.svg' %}"
+                    : "{% static 'mafiaapp/img/Thumb-up.svg' %}";
                 $('.like-button'+id).attr('src', src);
             }
         }).fail(function(data) {
@@ -161,7 +161,6 @@
 </div>
 
 {% for comment in page_obj %}
-<div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 <div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
     <div class="col-md-2 col-xs-2 col-sm-2 text-right">
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
@@ -194,6 +193,7 @@
       <span class="cite" onClick='show_quote({{comment.id}},{{ page_obj.number }});'><h3>Цитировать</h3></span>
     </div>
 </div>
+<div style="height:1px;overflow:hidden"><textarea id="ihatejs{{comment.id}}" value="" style="margin-top:2px;"></textarea></div>
 {% endfor %}
 
 <div class="row">

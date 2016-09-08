@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # internal apps
     'mafiaapp.apps.MafiaAppConfig',
     'identicon.apps.IdenticonConfig',
     # third party

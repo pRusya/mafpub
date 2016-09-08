@@ -67,69 +67,6 @@ class IndexView(generic.ListView):
         else:
             return render(request, 'mafiaapp/index.html')
 
-    def post(self, request):
-        action = request.POST.get('submit', '')
-        if action == 'Логин':
-            form = LoginForm(request.POST)
-            if form.is_valid():
-                email = form.cleaned_data['email']
-                user = get_object_or_404(User, email__iexact=email)
-                password = form.cleaned_data['password']
-                user = authenticate(username=user.username, password=password)
-                if user is not None:
-                    login(request, user)
-                    return redirect('mafiaapp:dashboard')
-                else:
-                    messages.add_message(request, messages.ERROR, 'Check your login credentials!')
-                    return render(request, 'mafiaapp/index.html', {'form': form})
-            else:
-                    messages.add_message(request, messages.ERROR, 'Check your login credentials!')
-                    return render(request, 'mafiaapp/index.html', {'form': form})
-        elif action == 'Регистрация':
-            form = EmailValidationForm(request.POST)
-            if form.is_valid():
-                email = request.POST['email']
-                registered_emails = EmailValidation.objects.all().values('email')
-                for record in registered_emails:
-                    if email == record['email']:
-                        messages.add_message(request, messages.ERROR, 'Данный адрес уже зарегистророван. '
-                                                                      'Укажите другой.')
-                        return redirect('mafiaapp:index')
-                code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
-                ev = EmailValidation(email=email, code=code)
-                ev.save()
-                email_body = 'На форуме Галамафия 2.0 (http://www.maf.pub/) появилась регистрационная ' \
-                             'запись,\r' \
-                             'в которой был указал ваш электронный адрес (e-mail).\r' \
-                             '\r' \
-                             'Если вы не понимаете, о чем идет речь — просто проигнорируйте это сообщение!\r' \
-                             '\r' \
-                             'Если же именно вы решили зарегистрироваться на форуме Галамафия 2.0,\r' \
-                             'то вам следует завершить свою регистрацию и тем самым активировать вашу ' \
-                             'учетную запись.\r' \
-                             'Регистрация производится один раз и необходима для повышения безопасности форума и ' \
-                             'защиты его от злоумышленников.\r' \
-                             'Чтобы завершить регистрацию и активировать вашу учетную запись, необходимо перейти ' \
-                             'по ссылке:\r' \
-                             'http://www.maf.pub/register/%s\r' \
-                             'После активации учетной записи вы сможете войти в форум, используя выбранные вами ' \
-                             'имя пользователя (login) и пароль.\r' \
-                             '\r' \
-                             'С этого момента вы сможете оставлять сообщения и принимать участие в играх.\r' \
-                             '\r' \
-                             'Благодарим за регистрацию!'
-                send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code,
-                          'Галамафия 2.0 <noreply@maf.pub>',
-                          [email], fail_silently=False)
-                messages.add_message(request, messages.INFO, 'Check your email box to finish registration')
-                return redirect('mafiaapp:index')
-            else:
-                messages.add_message(request, messages.ERROR, 'Provide valid e-mail!')
-                return redirect('mafiaapp:index')
-        else:
-            messages.add_message(request, messages.ERROR, 'Something went really bad!')
-            return redirect('mafiaapp:index')
-
 
 class AjaxRegister(generic.View):
     def post(self, request, *args, **kwargs):
@@ -275,7 +212,6 @@ class Logout(generic.View):
             login(request, user)
         else:
             logout(request)
-        messages.add_message(request, messages.INFO, 'Logout performed')
         return redirect('mafiaapp:index')
 
 
@@ -1861,7 +1797,7 @@ def choose_leader(request, kwargs):
                                    ' был выбран главой мафии.')
         comment.save()
         comment = GameComment(post=head_mafia_post, author=author,
-                              text='День ' + str(game.day) + ':Вы были выбраны главой мафии. '
+                              text='День ' + str(game.day) + ': Вы были выбраны главой мафии. '
                                    'Выберите цель для выстрела и цель для вербовки.')
         comment.save()
         # delete 'leader' votes so they wont appear in new voting when head mafia dies

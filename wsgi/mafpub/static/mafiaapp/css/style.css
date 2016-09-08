@@ -2,28 +2,57 @@
 	/*border: 1px solid red !important;*/
 }
 html {
-  position: relative;
-  min-height: 100%;
-  font-family: "-apple-system","BlinkMacSystemFont","Open Sans",Roboto,"Helvetica Neue",Forum,"sans-serif";
-  font-weight: 300;
+  height: 100%;
+  margin:0;
+  padding:0;
 }
 body {
-	color: #747784;
-  font-family: "-apple-system","BlinkMacSystemFont","Open Sans",Roboto,"Helvetica Neue",Forum,"sans-serif";
+  font-family: "-apple-system", "BlinkMacSystemFont", "Open Sans", "Segoe UI", "Oxygen", 
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif";
 	font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6em;
+  color: #747784;
   background: #e6e6e6;
   height: 100%;
   margin:0;
-  margin-top: 70px;
-  margin-bottom: 50px;
   padding:0;
+}
+.wrapper {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  -ms-flex-direction: column;
+}
+header {
+  word-wrap: break-word;
+  word-break: break-all;
+  background-color: #f5f5f5;
+  font-size: 16px;
+}
+header a {
+  text-decoration: none;
+}
+header img {
+  height: 70px;
+}
+.header-title {
+  font-size: 2.5em;
+  line-height: 1.6em;
+}
+main {
+  flex: 1;
+}
+footer {
+  text-align: center;
+  background-color: #f5f5f5;
 }
 .index-body {
   background-color: #202020;
 }
 .index-cite {
-  font-size: 60px;
-  font-family: 'Forum';
+  font-size: 4em;
+  line-height: 1.4em;
   font-style:italic;
   word-wrap: break-word;
   overflow-x: hidden;
@@ -35,68 +64,33 @@ body {
   margin-top: 10%;
 }
 .index-top30 {
-  margin-top: 30%;
+  margin-top: 25%;
 }
 option:not(:checked) { 
   background-color: #FFF;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 20px;
-  text-align: center;
-  background-color: #f5f5f5;
+h1 {
+    font-size: 2.5em;
 }
-.footer img {
-  position: absolute;
-  max-height:100%;
-  display:inline;
+h2 {
+    font-size: 2.25em;
 }
-.header {
-  overflow: auto;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  min-height: 70px;
-  max-height: 100%;
-  background-color: #f5f5f5;
+h3 {
+    font-size: 2em;
 }
-.header img {
-  height: 70px;
-  display:inline;
+h4 {
+    font-size: 1.75em;
 }
-.title-super40 {
-  font-size: 40px;
-  line-height: 70px;
-  height: 70px;
-  text-decoration: none !important;
-  display: inline-block;
-  vertical-align: middle;
+h5 {
+    font-size: 1.5em;
 }
-.title-super20 {
-  font-size: 20px;
-  line-height: 70px;
-  height: 70px;
-  text-decoration: none !important;
-  display: inline-block;
-  margin-right:7px;
-  margin-left:7px;
-  vertical-align: middle;
+h6 {
+    font-size: 1.25em;
 }
-.title-super30 {
-  font-size: 30px;
-  line-height: 70px;
-  height: 70px;
-  text-decoration: none !important;
-  display: inline-block;
-  margin-right:7px;
-  margin-left:7px;
-  vertical-align: middle;
-}
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   padding: 0;
   margin: 0;
+  line-height: 1.6em;
 }
 .inline {
   display: inline;
@@ -104,20 +98,11 @@ h1, h2, h3, h4 {
 .inline-block {
   display: inline-block;
 }
-.font-forum {
-  font-family: 'Forum';
-}
 .font-600 {
   font-weight:600;
 }
-pre {
-  white-space: pre-wrap;
-  font-weight: 100;
-  font-family: 'Andika';
-  font-size:20px;
-  white-space:pre-wrap;
-  word-break:keep-all;
-  border: 0px;
+.padding-0 {
+  padding: 0;
 }
 .notifyjs-copy-comment-base {
   opacity: 0.85;
@@ -125,28 +110,6 @@ pre {
   background: #F5F5F5;
   padding: 5px;
   border-radius: 10px;
-}
-.comment-item {
-  white-space: pre-wrap;
-  /*word-break: keep-all;*/
-  border: 0px;
-  background: #f5f5f5;
-  border-radius: 5px;
-  font-size: 20px;
-  padding: 10px 10px 00px 10px;
-  /* These are technically the same, but use both */
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-
-  /* Adds a hyphen where the word breaks, if supported (No Blink) */
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-.comment-item p {
-  margin-bottom: 0px;
 }
 .monospace {
   font-family: 'Consolas', "Courier New", 'monospace';
@@ -202,29 +165,22 @@ a {
   border-radius:8px;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-family: 'Forum';
 }
 .post-section {
   background:#d6d6d6;
   border-radius:8px;
   margin-top: 20px;
 }
-.cite-section {
-  background:#d6d6d6;
-  border-radius:8px;
-}
 .wrap {
   margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 1200px;
 }
-.wrap h1, h2, h3, h4, span, img {
-  font-family: 'Forum';
+.wrap h1, h2, h3, h4, h5, h6, span, img {
   display: inline;
-}
-.wrap  h4 {
-  font-weight: 600;
+  font-weight: 300;
 }
 .post {
-  /*background:#BCBBBB;*/
   min-height:200px;
   padding-bottom: 20px;
 }
@@ -237,19 +193,38 @@ a {
   min-height:180px;
   padding-bottom: 30px;
 }
+.comment-item {
+  white-space: pre-wrap;
+  /*word-break: keep-all;*/
+  border: 0px;
+  background: #f5f5f5;
+  border-radius: 5px;
+  padding: 10px 10px 00px 10px;
+  font-size: 1.5em;
+  line-height: 1.4em;
+
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.comment-item p {
+  margin-bottom: 0px;
+}
 .comment-avatar {
   max-height:120px;
   max-width:100%;
   display: inline-block;
 }
-.img-post-locked {
-  max-height: 22px;
-}
-.img-thumb-up {
-  max-height:30px;
-  cursor:pointer;
-  display:inline;
-  float:none;
+.comment-text {
+  border-left: 1px #008BBA solid;
+  border-right: 1px #008BBA solid;
+  margin-bottom:-99999px;
+  padding-bottom:99999px;
 }
 .comment-quote {
   background: #FFE3D1;
@@ -258,6 +233,19 @@ a {
   float:right;
   text-decoration:underline;
   cursor:pointer;
+}
+.cite-section {
+  background:#d6d6d6;
+  border-radius:8px;
+}
+.img-post-locked {
+  max-height: 30px;
+}
+.img-thumb-up {
+  max-height:30px;
+  cursor:pointer;
+  display:inline;
+  float:none;
 }
 .submit-div {
   padding-left:0px;
@@ -282,39 +270,9 @@ a {
 .vote-option {
   background-color:#fff;
 }
-.botton-link {
-  background: none !important;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  text-decoration: underline;
-}
-.comment-text {
-  border-left: 1px #008BBA solid;
-  border-right: 1px #008BBA solid;
-  margin-bottom:-99999px;
-  padding-bottom:99999px;
-}
 .wmd-panel {
   margin: 0 auto !important;
   width: 100% !important;
-}
-@media (max-width: 325px) {
-  h1 {
-    font-size: 32px;
-  }
-  h2 {
-    font-size: 26px;
-  }
-  h3 {
-    font-size: 20px;
-  }
-  h4 {
-    font-size: 15px;
-  }
-  h5 {
-    font-size: 10px;
-  }
 }
 @media (max-width: 991px) {
   .index-top10 {
@@ -323,17 +281,14 @@ a {
   .index-top30 {
     margin-top: 0;
   }
-  body {
-    margin-top: 140px;
-  }
 }
-@media (max-width: 695px) {
+@media (min-width: 992px) {
   body {
-    margin-top: 210px;
+    font-size: 12px;
+    line-height: 1.2em;
   }
 }
 .form-signin {
-  /*max-width: 330px;*/
   padding: 0px;
   padding-bottom: 0px;
   margin: 0 auto;
@@ -363,7 +318,7 @@ a {
   z-index: 2;
 }
 .form-signin input {
-  max-width: 330px;
+  /*max-width: 330px;*/
   display: inline-block;
 }
 .form-signin input[type="email"] {
@@ -382,9 +337,6 @@ a {
 }
 .form-signin input[type="submit"] {
   margin-bottom: 20px;
-}
-.inline {
-  display: inline;
 }
 .errorlist {
   padding: 15px;
