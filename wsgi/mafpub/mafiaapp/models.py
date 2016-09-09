@@ -253,7 +253,7 @@ class GamePost(models.Model):
     )
     tags = ArrayField(models.CharField(max_length=20), verbose_name='Тэги(без пробелов, через запятую)')
 
-    short = models.CharField(max_length=50, verbose_name='Short')
+    short = models.CharField(max_length=50, verbose_name='Short', blank=True, null=True)
     slug = models.SlugField(verbose_name='Slug', default='game', unique=True)
     allow_comment = models.BooleanField(default=True)
     ALLOW_ROLE_CHOICES = (
