@@ -26,9 +26,9 @@ urlpatterns = [
 
     url(r'^dashboard/$', views.Dashboard.as_view(), name='dashboard'),
     # game urls
-    url(r'^dashboard/g/$', staff_member_required(views.DisplayGamesView.as_view()), name='display_games'),
-    url(r'^dashboard/g/delete/(?P<pk>[0-9]+)/$', staff_member_required(views.DeleteGameView.as_view()), name='delete_game'),
-    url(r'^dashboard/g/edit/(?P<pk>[0-9]+)/$', staff_member_required(views.EditGameView.as_view()), name='edit_game'),
+    url(r'^dashboard/g/games$', staff_member_required(views.DisplayGamesView.as_view()), name='display_games'),
+    url(r'^dashboard/g/games/delete/(?P<pk>[0-9]+)/$', staff_member_required(views.DeleteGameView.as_view()), name='delete_game'),
+    url(r'^dashboard/g/games/edit/(?P<pk>[0-9]+)/$', staff_member_required(views.EditGameView.as_view()), name='edit_game'),
 
     url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/$', views.DisplayGame.as_view(), name='display_game'),
     url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/$',

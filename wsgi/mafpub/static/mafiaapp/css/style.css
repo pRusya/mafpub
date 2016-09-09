@@ -42,6 +42,8 @@ header img {
 }
 main {
   flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
 }
 footer {
   text-align: center;
@@ -176,7 +178,7 @@ a {
   margin-bottom: 20px;
   max-width: 1200px;
 }
-.wrap h1, h2, h3, h4, h5, h6, span, img {
+.wrap h1, h2, h3, h4, h5, h6, span, img, label {
   display: inline;
   font-weight: 300;
 }
@@ -190,8 +192,8 @@ a {
 }
 .comment {
   overflow:hidden;
-  min-height:180px;
-  padding-bottom: 30px;
+  min-height:150px;
+  padding-bottom: 20px;
 }
 .comment-item {
   white-space: pre-wrap;
@@ -216,7 +218,8 @@ a {
   margin-bottom: 0px;
 }
 .comment-avatar {
-  max-height:120px;
+  height:90px;
+  max-height:90px;
   max-width:100%;
   display: inline-block;
 }

@@ -29,7 +29,7 @@ class UserCreateForm(UserCreationForm):
         'unique': "Пользователь с таким именем уже существует",
     }
     #email = forms.EmailField(required=True, disabled=True, label='Электропочта')
-    email = forms.EmailField(required=True, label='Электропочта')
+    #email = forms.EmailField(required=True, label='Электропочта')
     avatar = forms.ImageField(label='Аватар(не обязательно)', required=False)
     nickname = forms.CharField(label="Форумное имя", error_messages=custom_error_messages)
     password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput, required=True,
@@ -40,6 +40,9 @@ class UserCreateForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('nickname', 'password1', 'password2', 'avatar', 'email')
+        widgets = {
+            'email': forms.HiddenInput()
+        }
 
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)

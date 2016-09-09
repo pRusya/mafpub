@@ -1,6 +1,7 @@
 {% extends 'mafiaapp/base.html' %}
 {% load filters %}
 {% block content %}
+<div class="wrap col-centered">
 
 {% if error_message %}
 <div class="row">
@@ -20,7 +21,7 @@
 
 <div class="row">
 	<div class="col-md-6 col-centered text-center">
-			<form action="" method="post" class="form-signin">
+			<form action="" method="post" class="form-signin h5">
 			{% csrf_token %}
 			{{ form.as_p|add_class2:'form-control'|safe }}
 			<div class="col-md-4 col-centered">
@@ -30,4 +31,5 @@
 	</div>
 </div>
 
+</div>
 {% endblock content %}

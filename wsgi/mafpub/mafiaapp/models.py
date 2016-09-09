@@ -78,6 +78,9 @@ class EmailValidation(models.Model):
     email = models.EmailField(max_length=50)
     code = models.CharField(max_length=30)
 
+    def __str__(self):
+        return str(self.email)
+
 
 class Game(models.Model):
     # this is id
@@ -202,6 +205,9 @@ class Post(models.Model):
     slug = models.SlugField(verbose_name='slug URL', default='', unique=True)
     allow_comment = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -209,6 +215,9 @@ class Comment(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:50]
 
 
 class GamePost(models.Model):
@@ -284,7 +293,7 @@ class GameComment(models.Model):
     mask = models.ForeignKey(Mask, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.text
+        return self.text[:50]
 
 
 class Vote(models.Model):

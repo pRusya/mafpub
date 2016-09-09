@@ -147,10 +147,10 @@
 			<div class="modal-body">
 				<div class="col-md-12 col-sm-12 col-xs-12 col-centered">
 					<div class="alert alert-danger" id="modal-login-alert-danger" hidden="">
-    					<strong></strong>
+    					<h5><strong></strong></h5>
 					</div>
 					<div class="alert alert-info" id="modal-login-alert-info" hidden="">
-    					<strong></strong>
+    					<h5><strong></strong></h5>
 					</div>
 					<form action="" method="post" class="form-signin">
 						{% csrf_token %}
@@ -165,7 +165,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-			<a href="{% url 'mafiaapp:password_reset' %}" style="text-align: left;" class="text-left">Восстановить пароль</a>
+			<a href="{% url 'mafiaapp:password_reset' %}" style="text-align: left;" class="text-left"><h4>Восстановить пароль</h4></a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">
 					Закрыть
 				</button>
@@ -183,10 +183,10 @@
 			<div class="modal-body">
 				<div class="col-md-12 col-sm-12 col-xs-12 col-centered">
 					<div class="alert alert-danger" id="modal-register-alert-danger" hidden="">
-    					<strong></strong>
+    					<h5><strong></strong></h5>
 					</div>
 					<div class="alert alert-info" id="modal-register-alert-info" hidden="">
-    					<strong></strong>
+    					<h5><strong></strong></h5>
 					</div>
 					<form action="{% url 'mafiaapp:index' %}" method="post" class="form-signin">
 						{% csrf_token %}

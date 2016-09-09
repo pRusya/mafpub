@@ -20,7 +20,7 @@
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
         <br>
-        <h6>{{ game.status }}</h6>
+        <h5>{{ game.status }}</h5>
     </div>
 </div>
 {% empty %}
@@ -41,7 +41,8 @@
 <div class="row">
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
-        <h6>{{ game.status }}</h6>
+        <br>
+        <h5>{{ game.status }}</h5>
     </div>
 </div>
 {% empty %}
@@ -62,7 +63,8 @@
 <div class="row">
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</h3></a>
-        <h6>{{ game.status }}</h6>
+        <br>
+        <h5>{{ game.status }}</h5>
     </div>
 </div>
 {% empty %}

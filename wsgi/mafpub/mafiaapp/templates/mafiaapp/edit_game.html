@@ -1,6 +1,7 @@
 {% extends 'mafiaapp/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+<div class="wrap col-centered">
 
 {% if form.errors %}
 <div class="row">
@@ -82,10 +83,10 @@
     </div>
 </div>
 {% for participant in participants_form %}
-<div class="row cite-section">
-    <div class="col-md-2"><h3>{{participant.instance.user.username}}</h3></div>
-    <div class="col-md-2">as <h3>{{ participant.instance.mask.username }}</h3></div>
-    <div class="col-md-2"><h3>
+<div class="row cite-section"><h4></h4>
+    <div class="col-md-2 col-sm-2 col-xs-2"><h4>{{participant.instance.user.username}}</h4></div>
+    <div class="col-md-2 col-sm-2 col-xs-2">as <h4>{{ participant.instance.mask.username }}</h4></div>
+    <div class="col-md-2 col-sm-2 col-xs-2"><h4>
         {% if participant.instance.role == 'peaceful' %}
             <font style='background:lightgreen'>{{ participant.instance.role }}</font>
         {% elif participant.instance.role == 'mafia' or participant.instance.role == 'head mafia' or participant.instance.role == 'mafia barman' or participant.instance.role == 'mafia doctor' or participant.instance.role == 'mafia killer' %}
@@ -98,15 +99,15 @@
             <span style='background:#cccc99'>{{ participant.instance.role }}</span>
         {% else%}
         {{ participant.instance.role }}
-        {% endif %}</h3>
+        {% endif %}</h4>
     </div>
-    <div class="col-md-2"><h3>{{ participant.instance.user.email }}</h3></div>
+    <div class="col-md-2 col-sm-2 col-xs-2"><h4>{{ participant.instance.user.email }}</h4></div>
     
-    <div class="col-md-2">
-        <h3>
+    <div class="col-md-3 col-sm-2 col-xs-3">
+        <h4>
             <a href="{% url 'mafiaapp:login_as' username=participant.instance.user.username %}" onclick="window.open('{% url 'mafiaapp:login_as' username=participant.instance.user.username %}', 'newwindow', 'fullscreen=yes,resizable=yes,scrollbars=yes'); return false;">Login as {{ participant.instance.user.username }}</a>
             <!--<a href="http://example.com" onclick="window.open('http://example.com', 'newwindow', 'width=300, height=250'); return false;">http://example.com</a>-->
-        </h3>
+        </h4>
     </div>
     <br>
     <div class="panel-group" style="margin-bottom:0px;">
@@ -155,7 +156,7 @@
 
 <div class="row">
     <div class="col-md-4 col-centered text-center">
-        Маски
+        <h4>Маски</h4>
     </div>
 </div>
 <div class="row">
@@ -163,7 +164,7 @@
 {% if masks %}
     {% for mask in masks %}
     <div class="col-md-2 text-center">
-        {{ mask.username }}{% if not mask.taken %} (free){% endif %}
+        <h5>{{ mask.username }}{% if not mask.taken %} (free){% endif %}<h5>
     </div>
         {% if forloop.counter|divisibleby:"3" %}
 </div>
@@ -182,7 +183,7 @@
 
 <div class="row">
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Зарегистрировать ботов</label><br>
             <label>Количество:</label>
@@ -198,7 +199,7 @@
     </div>
 
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Создать случайные маски</label><br>
             <label>&#160;</label><br>
@@ -210,7 +211,7 @@
     </div>
 
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Назначить роли участникам</label><br>
             <label>&#160;</label><br>
@@ -232,7 +233,7 @@
     
 
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Заставить ботов флудить</label><br>
             <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
@@ -243,7 +244,7 @@
     </div>
 
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Симулировать голосование</label>
             <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
@@ -254,7 +255,7 @@
     </div>
 
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Конец дня, ночь, новый день</label>
             <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
@@ -267,7 +268,7 @@
 
 <div class="row">
     <div class="col-md-4" style="text-align:center">
-        <form action="" method="post" class="form-signin">
+        <form action="" method="post" class="form-signin h4">
             {% csrf_token %}
             <label>Раздать маски из пула</label><br>
             <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
@@ -279,5 +280,5 @@
 </div>
 
 {#% debug %#}
-
+</div>
 {% endblock content %}

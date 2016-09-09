@@ -26,13 +26,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Hang">
             {% csrf_token %}
-            <label for="id_hang">Я вешаю:</label>
+            <h5><label for="id_hang">Я вешаю:</label></h5>
             <select id="id_hang" name="target" class="form-control vote-select{% if vote_hang %} vote-target{% endif %}">
             {% for participant in participants %}
                 <option value="{{participant.id}}" class="{% if vote_hang and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Повешать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -50,13 +50,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Heal">
             {% csrf_token %}
-            <label for="id_heal">Я лечу:</label>
+            <h5><label for="id_heal">Я лечу:</label></h5>
             <select id="id_heal" name="target" class="form-control vote-select{% if vote_heal %} vote-target{% endif %}">
             {% for participant in heal_targets %}
                 <option value="{{participant.id}}" class="{% if vote_heal and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Вылечить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -74,13 +74,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Spoil">
             {% csrf_token %}
-            <label for="id_spoil">Я спаиваю:</label>
+            <h5><label for="id_spoil">Я спаиваю:</label></h5>
             <select id="id_spoil" name="target" class="form-control vote-select{% if vote_spoil %} vote-target{% endif %}">
             {% for participant in spoil_targets %}
                 <option value="{{participant.id}}" class="{% if vote_spoil and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Напоить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -99,13 +99,13 @@
         {% if shoot_targets %}
         <form action="" method="post" name="Shoot">
             {% csrf_token %}
-            <label for="id_shoot">Я стреляю в:</label>
+            <h5><label for="id_shoot">Я стреляю в:</label></h5>
             <select id="id_shoot" name="target" class="form-control vote-select{% if vote_shoot %} vote-target{% endif %}">
             {% for participant in shoot_targets %}
                 <option value="{{participant.id}}" class="{% if vote_shoot and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Выстрелить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -126,13 +126,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Leader">
             {% csrf_token %}
-            <label for="id_leader">Я выбираю:</label>
+            <h5><label for="id_leader">Я выбираю:</label></h5>
             <select id="id_leader" name="target" class="form-control vote-select{% if vote_leader %} vote-target{% endif %}">
             {% for participant in leader_targets %}
                 <option value="{{participant.id}}" class="{% if vote_leader and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Выбрать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -150,13 +150,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Recruit">
             {% csrf_token %}
-            <label for="id_recruit">Я вербую:</label>
+            <h5><label for="id_recruit">Я вербую:</label></h5>
             <select id="id_recruit" name="target"  class="form-control vote-select">
             {% for participant in recruit_targets %}
                 <option value="{{participant.id}}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Завербовать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -174,13 +174,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Check">
             {% csrf_token %}
-            <label for="id_check">Я проверяю:</label>
+            <h5><label for="id_check">Я проверяю:</label></h5>
             <select id="id_check" name="target" class="form-control vote-select{% if vote_check %} vote-target{% endif %}">
             {% for participant in check_targets %}
                 <option value="{{participant.id}}" class="{% if vote_check and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Проверить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -198,13 +198,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Contract">
             {% csrf_token %}
-            <label for="id_contract">Я заказываю:</label>
+            <h5><label for="id_contract">Я заказываю:</label></h5>
             <select id="id_contract" name="target"  class="form-control vote-select">
             {% for participant in participants %}
                 <option value="{{participant.id}}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Заказать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -222,13 +222,13 @@
     <div class="col-md-6 col-centered text-center">
         <form action="" method="post" name="Choose">
             {% csrf_token %}
-            <label for="id_choose">Я выбираю:</label>
+            <h5><label for="id_choose">Я выбираю:</label></h5>
             <select id="id_choose" name="target" class="form-control vote-select">
                 <option value="mafia_side">Мафию</option>
                 <option value="militia_side">Милицию</option>
                 <!--<option value="peaceful">Мирную жизнь</option>-->
             </select>
-            <div class="col-md-4 col-centered submit-div">
+            <div class="col-md-4 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Присоедениться" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -247,13 +247,13 @@
         {% if invitees %}
         <form action="" method="post" name="Invite">
             {% csrf_token %}
-            <label for="id_invite">Я добавляю:</label>
+            <h5><label for="id_invite">Я добавляю:</label></h5>
             <select id="id_invite" name="target"  class="form-control vote-select">
             {% for invitee in invitees %}
                 <option value="{{invitee.id}}">{{invitee.get_literary_role}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-centered submit-div">
+            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
                 <input type="submit" name="action" value="Пригласить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>

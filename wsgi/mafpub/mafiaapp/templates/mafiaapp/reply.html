@@ -9,7 +9,7 @@
             {% csrf_token %}
             {{ comment_form.comment|add_class:'form-control' }}
 
-            <div class="col-md-4 col-centered submit-div" class="submit-div">
+            <div class="col-md-4 col-sm-5 col-xs-5 col-centered submit-div" class="submit-div">
                 <input type="submit" name="action" value="Опубликовать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>

@@ -7,7 +7,7 @@
 {% block link %}
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12 col-centered text-center">
-        <h2 >
+        <h2>
         	<a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a> {% if game.day > 0 and game.state == 'current' %}(День {{game.day}}){% endif %} / {{ post.title }}
         </h2>
     </div>
