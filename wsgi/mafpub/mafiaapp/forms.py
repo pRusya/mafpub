@@ -122,9 +122,10 @@ class UpdateGameParticipantForm(ModelForm):
 
 
 class GameCommentForm(Form):
-    number = forms.CharField(widget=forms.HiddenInput)
-    comment = forms.CharField(label='Сообщение', widget=PagedownWidget)
+    #number = forms.CharField(widget=forms.HiddenInput)
+    #comment = forms.CharField(label='Сообщение', widget=PagedownWidget)
+    comment = forms.CharField(widget=forms.Textarea, label='Сообщение')
 
 
 class CommentForm(Form):
-    comment = forms.CharField(label='Сообщение', widget=PagedownWidget)
+    comment = forms.CharField(widget=forms.Textarea, label='Сообщение')

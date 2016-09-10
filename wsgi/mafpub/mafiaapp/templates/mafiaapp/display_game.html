@@ -49,7 +49,8 @@
                     <div class="col-md-3 col-xs-5 col-sm-5">
                         <h3><!--placeholder to adjust height with the highest element in the row <h3>--></h3>
                         <h4>{% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                        </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+                        </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+                        <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked"></a>
                     </div>
                 {% endif %}
                 {% endwith %}
@@ -76,7 +77,8 @@
                     <div class="col-md-3 col-xs-5 col-sm-5">
                         <h3><!--placeholder to adjust height with the highest element in the row <h3>--></h3>
                         <h4>{% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                        </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+                        </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+                        <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked"></a>
                     </div>
                 {% endif %}
                 {% endwith %}
@@ -115,7 +117,8 @@
                         <div class="col-md-3 col-xs-5 col-sm-5">
                             <h3><!--placeholder to adjust height with the highest element in the row <h3>--></h3>
                             <h4>{% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+                            <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked"></a>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -140,7 +143,8 @@
                         </div>
                         <div class="col-md-3 col-xs-5 col-sm-5">
                             <h4>{% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+                            <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked"></a>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -171,7 +175,8 @@
                         <div class="col-md-3 col-xs-5 col-sm-5">
                             <h3><!--placeholder to adjust height with the highest element in the row <h3>--></h3>
                             <h4>{% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+                            <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=p.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked"></a>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -201,7 +206,8 @@
                         <div class="col-md-3 col-xs-5 col-sm-5">
                             <h3><!--placeholder to adjust height with the highest element in the row <h3>--></h3>
                             <h4>{% if comments.last.mask %}{{ comments.last.mask }}{% else %}{{ comments.last.author }}{% endif %}
-                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+                            </h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+                            <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=morgue.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked"></a>
                         </div>
                         {% endif %}
                         {% endwith %}
@@ -495,7 +501,8 @@
         </div>
         <div class="col-md-3 col-xs-5 col-sm-5">
             <h3><!--placeholder to adjust height with the highest element in the row <h3>--></h3>
-            <h4>{{ comments.last.author }}</h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4>
+            <h4>{{ comments.last.author }}</h4> <h5>в</h5> <h4>{{ comments.last.date|date:"H:i" }}</h4> 
+            <a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=info.slug %}?page=last" style="vertical-align:super"><img src="{% static 'mafiaapp/img/Arrow-big-right.svg' %}" class="img-post-locked" title="Перейти к последнему сообщению"></a>
         </div>
         {% endif %}
         {% endwith %}

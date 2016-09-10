@@ -32,7 +32,7 @@
         }
     });
 
-	function show_quote(c, page){
+	function show_quote2(c, page){
         quote = $("#"+c).clone();
         quote.find("blockquote").remove();
         marked_quote =  quote.text().split("\n"); //quote.innerHTML.split('\n');
@@ -61,6 +61,14 @@
 
         $.notify("Цитата скопирована в буфер обмена.",  { position:"bottom right", className: 'info', style: 'copy-comment'});
 	}
+
+    function show_quote(c, page) {
+        quote = $("#"+c).clone();
+        console.log(quote);
+        $('#id_comment').summernote('code','<blockquote>'+$("#"+c).html()+'</blockquote><p><br></p>' );
+        //$('.note-editable').html($("#"+c).html());
+        //$('.note-editable').html('<blockquote>'+$("#"+c).html()+'</blockquote><p><br></p><p><br></p>');
+    }
 
     function GetURLParameter(sParam) {
         var sPageURL = window.location.search.substring(1);
@@ -127,7 +135,7 @@
 
     $(document).ready(function(){
         $(".content-markdown").each(function(){
-            $(this).html( marked($(this).text()) )
+            //$(this).html( marked($(this).text()) )
         })
 
         var page = GetURLParameter('page');
@@ -197,7 +205,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6 text-right"><h3></h3><h6><a href="?page={{ page_obj.number }}#{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</a></h6></div>
       </div>
       
-      <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text }}</div>
+      <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text|safe }}</div>
 
       {% if comment.id in user.user.liked %}
       <img src="{% static 'mafiaapp/img/Thumb-up-fill.svg' %}" class="img-thumb-up like-button{{comment.id}}" onClick="like_comment({{comment.id}});">
