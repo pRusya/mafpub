@@ -432,6 +432,11 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                         gamepost.allow_comment = False
                         gamepost.allow_role = ['everyone']
                         gamepost.save()
+                if context['game'].state == 'current':
+                    private_gamepost_list = GamePost.objects.filter(game=context['game'], tags__contains=['private'])
+                    for gamepost in private_gamepost_list:
+                        gamepost.allow_comment = True
+                        gamepost.save()
                 description.save()
                 context['description'] = description
             else:
@@ -463,7 +468,8 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
         elif action == 'Создать':
             create_random_masks(request.POST.dict())
         context = self.get_context_data()
-        return render(request, self.template_name, context)
+        return HttpResponseRedirect(reverse('mafiaapp:edit_game', kwargs={'pk': context['game'].number}))
+        # return render(request, self.template_name, context)
 
 
 def create_random_masks(d):
@@ -472,7 +478,11 @@ def create_random_masks(d):
     participants = GameParticipant.objects.exclude(mask=bot).filter(game=game, mask=None)
     for participant in participants:
         temp = NamedTemporaryFile()
-        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+        identicon_url = os.environ.get('IDENTICON_URL', '')
+        if identicon_url:
+            temp.write(urllib.request.urlopen(identicon_url).read())
+        else:
+            temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         temp.flush()
 
         mask = Mask(game=game, username='Маска ' + participant.user.nickname, taken=True)
@@ -521,7 +531,11 @@ def register_bots(d):
         user = User.objects.create_user(nickname=name, username=re.sub(r'[^\w.@+-]', '_', name), password='123',
                                         email=rand+'@maf.pub')
         temp = NamedTemporaryFile()
-        temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+        identicon_url = os.environ.get('IDENTICON_URL', '')
+        if identicon_url:
+            temp.write(urllib.request.urlopen(identicon_url).read())
+        else:
+            temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
         #temp.write(urllib.request.urlopen('http://localhost/identicon/').read())
         temp.flush()
         user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
@@ -537,7 +551,7 @@ def register_bots(d):
         private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.nickname,
                                     game=game, tags=['private', user.nickname],
                                     short='private', author=user, slug=game.slug + '_private_' + user.username,
-                                    allow_role=['private'])
+                                    allow_role=['private'], allow_comment=False)
         private_quarters.save()
 
 
@@ -575,6 +589,7 @@ def vote_hang(d):
     # there are no votes for current day, so everybody dies of space plague
     if not all_votes:
         for participant in participants:
+            participant.prevRole = participant.role
             participant.role = 'dead'
             participant.save()
         return votes_result
@@ -596,6 +611,7 @@ def vote_hang(d):
         if participant.role == 'head mafia':
             game.hasHeadMafia = False
             game.save()
+        participant.prevRole = participant.role
         participant.role = 'dead'
         participant.sees_maf_q = False
         participant.sees_mil_q = False
@@ -690,10 +706,11 @@ def killer_kill(d):
         if heal_vote and heal_vote.target == barman:
             success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором.'
         else:
-            success_result += '\n    ' + spoil_vote.target.mask.username
+            success_result += '\n    ' + spoil_vote.target.mask.username + ' убит.'
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
+            spoil_vote.target.prevRole = spoil_vote.target.role
             spoil_vote.target.role = 'dead'
             spoil_vote.target.save()
             shoot_result = ' Вы убили игрока ' + str(spoil_vote.target.mask.username) + '.'
@@ -731,11 +748,12 @@ def killer_kill(d):
         shoot_target_inform = GameComment(post=shoot_target_post, text=shoot_target_result, author=bot)
         shoot_target_inform.save()
     elif shoot_vote:
-        success_result = '\n  ' + shoot_vote.target.mask.username
+        success_result = '\n  ' + shoot_vote.target.mask.username + ' убит.'
         success_shoot = True
         if shoot_vote.target.role == 'head mafia':
             game.hasHeadMafia = False
             game.save()
+        shoot_vote.target.prevRole = shoot_vote.target.role
         shoot_vote.target.role = 'dead'
         shoot_vote.target.save()
         shoot_result = 'Ночь ' + str(game.day) + ': Вы убили игрока ' + shoot_vote.target.mask.username + '.' \
@@ -782,10 +800,11 @@ def mafia_kill(d):
         if heal_vote and heal_vote.target == barman:
             success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором.'
         else:
-            success_result += '\n  ' + spoil_vote.target.mask.username
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' убит.'
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
+            spoil_vote.target.prevRole = spoil_vote.target.role
             spoil_vote.target.role = 'dead'
             spoil_vote.target.save()
             shoot_result = ' Вы убили игрока ' + str(spoil_vote.target.mask.username) + '.'
@@ -823,11 +842,12 @@ def mafia_kill(d):
         shoot_target_inform = GameComment(post=shoot_target_post, text=shoot_target_result, author=bot)
         shoot_target_inform.save()
     elif shoot_vote:
-        success_result += '\n  ' + shoot_vote.target.mask.username
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' убит.'
         success_shot = True
         if shoot_vote.target.role == 'head mafia':
             game.hasHeadMafia = False
             game.save()
+        shoot_vote.target.prevRole = shoot_vote.target.role
         shoot_vote.target.role = 'dead'
         shoot_vote.target.save()
         shoot_result = 'Ночь ' + str(game.day) + ': Вы убили игрока ' + shoot_vote.target.mask.username + '.' \
@@ -925,10 +945,11 @@ def maniac_kill_check(d):
         if heal_vote and heal_vote.target == barman:
             success_result += '\n  ' + spoil_vote.target.mask.username + 'спасён доктором.'
         else:
-            success_result += '\n  ' + spoil_vote.target.mask.username
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' убит.'
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
+            spoil_vote.target.prevRole = spoil_vote.target.role
             spoil_vote.target.role = 'dead'
             spoil_vote.target.save()
             shoot_result = ' Вы убили игрока ' + str(spoil_vote.target.mask.username) + '.'
@@ -966,11 +987,12 @@ def maniac_kill_check(d):
         shoot_target_inform = GameComment(post=shoot_target_post, text=shoot_target_result, author=bot)
         shoot_target_inform.save()
     elif shoot_vote:
-        success_result += '\n  ' + shoot_vote.target.mask.username
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' убит.'
         success_shoot = True
         if shoot_vote.target.role == 'head mafia':
             game.hasHeadMafia = False
             game.save()
+        shoot_vote.target.prevRole = shoot_vote.target.role
         shoot_vote.target.role = 'dead'
         shoot_vote.target.save()
         shoot_result = 'Ночь ' + str(game.day) + ': Вы убили игрока ' + shoot_vote.target.mask.username + '.' \
@@ -1115,6 +1137,7 @@ def head_militia_arrest(d):
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
+            spoil_vote.target.prevRole = spoil_vote.target.role
             spoil_vote.target.role = 'dead'
             spoil_vote.target.checked_by_mil = True
             spoil_vote.target.save()
@@ -1129,6 +1152,7 @@ def head_militia_arrest(d):
         if barman.role in mafia_roles:
             success_result += '\n  ' + barman.mask.username
             success_arrest = True
+            barman.prevRole = barman.role
             barman.role = 'dead'
             barman.checked_by_mil = True
             barman.save()
@@ -1178,6 +1202,7 @@ def head_militia_arrest(d):
             if check_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
+            check_vote.target.prevRole = check_vote.target.role
             check_vote.target.role = 'dead'
             check_vote.target.save()
             arrest_result = 'Ночь ' + str(game.day) + ': Вы арестовали игрока ' \
@@ -1441,6 +1466,9 @@ def create_missing_votes(d):
 
 def change_side(d):
     game = Game.objects.get(number=d['game'])
+    # side change only performed on the first day(night)
+    if game.day > 1:
+        return ''
     roles_map = {
         'mafia_side': {
             'neutral barman': 'mafia barman',
@@ -1469,6 +1497,10 @@ def change_side(d):
             if side_vote:
                 neutral.role = roles_map[side_vote.action][neutral.role]
                 neutral.save()
+                post = GamePost.objects.get(game=game, tags__contains=['private', neutral.user.nickname])
+                text = 'Ночь ' + str(game.day) + ': ' + roles_description[neutral.role]
+                inform = GameComment(post=post, author=bot, text=text)
+                inform.save()
             else:
                 random.seed(time.time())
                 # repeat mafia_side/militia_side to make it more random
@@ -1495,6 +1527,42 @@ def change_side(d):
                 neutral.sees_mil_q = True
                 neutral.save()
             """
+    if not neutral_barman:
+        voter = GameParticipant.objects.filter(game=game, prevRole='neutral barman')
+        side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
+                                        game=game, voter=voter).first()
+        if side_vote:
+            role = roles_map[side_vote.action]['neutral barman']
+        else:
+            random.seed(time.time())
+            # repeat mafia_side/militia_side to make it more random
+            role = random.choice(['mafia barman', 'militia barman', 'mafia barman', 'militia barman',
+                                  'mafia barman', 'militia barman', 'mafia barman', 'militia barman'])
+        side_result += '\n  ' + roles_dict['neutral barman'] + ' - ' + roles_dict[role] + '.'
+    if not neutral_doctor:
+        voter = GameParticipant.objects.filter(game=game, prevRole='neutral doctor')
+        side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
+                                        game=game, voter=voter).first()
+        if side_vote:
+            role = roles_map[side_vote.action]['neutral doctor']
+        else:
+            random.seed(time.time())
+            # repeat mafia_side/militia_side to make it more random
+            role = random.choice(['mafia doctor', 'militia doctor', 'mafia doctor', 'militia doctor',
+                                  'mafia doctor', 'militia doctor', 'mafia doctor', 'militia doctor'])
+        side_result += '\n  ' + roles_dict['neutral doctor'] + ' - ' + roles_dict[role] + '.'
+    if not neutral_killer:
+        voter = GameParticipant.objects.filter(game=game, prevRole='neutral killer')
+        side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
+                                        game=game, voter=voter).first()
+        if side_vote:
+            role = roles_map[side_vote.action]['neutral killer']
+        else:
+            random.seed(time.time())
+            # repeat mafia_side/militia_side to make it more random
+            role = random.choice(['mafia killer', 'militia killer', 'mafia killer', 'militia killer',
+                                  'mafia killer', 'militia killer', 'mafia killer', 'militia killer'])
+        side_result += '\n  ' + roles_dict['neutral killer'] + ' - ' + roles_dict[role] + '.'
     # recruitment by mafia is the last block of code anyway, so just return if game.hasRecruit
     if game.hasRecruit:
         return ('\n\nВыбор стороны:' + side_result) if len(side_result) > 0 else ''
@@ -1537,11 +1605,22 @@ def change_side(d):
 
 def refresh_participants_states(d):
     game = Game.objects.get(number=d['game'])
+    bot = User.objects.get(nickname='Игровой Бот')
     participants = GameParticipant.objects.filter(game=game).exclude(Q(mask__username='Игровой Бот') | Q(
         role__in=['dead', 'mafia killer', 'militia killer', 'neutral killer']))
     for participant in participants:
         participant.can_ask_killer = True
         participant.save()
+    head_militia = GameParticipant.objects.filter(game=game, role='head militia').first()
+    if not head_militia:
+        militia = GameParticipant.objects.filter(game=game, role='militia').first()
+        if militia:
+            militia.role = 'head militia'
+            militia.save()
+            post = GamePost.objects.get(game=game, tags__contains=['private', militia.user.nickname])
+            text = 'Ночь ' + str(game.day) + ': ' + roles_description[militia.role]
+            inform = GameComment(post=post, author=bot, text=text)
+            inform.save()
 
 
 def perform_actions(d):
@@ -1615,7 +1694,7 @@ def participate(request, kwargs):
     private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.user.nickname,
                                 game=game, tags=['private', user.user.nickname],
                                 short='private', author=user.user, slug=game.slug + '_private_' + user.username,
-                                allow_role=['private'])
+                                allow_role=['private'], allow_comment=False)
     private_quarters.save()
 
 
@@ -1635,24 +1714,25 @@ def post_game_comment(request, kwargs):
     post = get_game_post(kwargs)
     user = get_user(request)
 
-    if user.user.nickname not in game.anchor and 'description' not in post.tags:
-        comment_participant = get_object_or_404(GameParticipant, game=game, user=user)
-        if post.allow_comment:
-            if comment_participant.role == 'dead' and 'private' not in post.tags and 'morgue' not in post.tags:
-                messages.add_message(request, messages.ERROR, 'Мёртвых здесь не слышат.')
-                return False
-            if 'everyone' not in post.allow_role:
-                if 'private' in post.allow_role:
-                    if user.user.nickname not in post.tags:
-                        messages.add_message(request, messages.ERROR,
-                                             '#1 Вы не можете оставлять сообщения в данной теме.')
-                        return False
-                elif comment_participant.role not in post.allow_role:
-                    messages.add_message(request, messages.ERROR, '#2 Вы не можете оставлять сообщения в данной теме.')
+    if 'tales' not in post.tags:
+        if user.user.nickname not in game.anchor and 'description' not in post.tags:
+            comment_participant = get_object_or_404(GameParticipant, game=game, user=user)
+            if post.allow_comment:
+                if comment_participant.role == 'dead' and 'private' not in post.tags and 'morgue' not in post.tags:
+                    messages.add_message(request, messages.ERROR, '#1 Мёртвых здесь не слышат.')
                     return False
-        else:
-            messages.add_message(request, messages.ERROR, '#3 Вы не можете оставлять сообщения в данной теме.')
-            return False
+                if 'everyone' not in post.allow_role:
+                    if 'private' in post.allow_role:
+                        if user.user.nickname not in post.tags:
+                            messages.add_message(request, messages.ERROR,
+                                                 '#1 Вы не можете оставлять сообщения в данной теме.')
+                            return False
+                    elif comment_participant.role not in post.allow_role:
+                        messages.add_message(request, messages.ERROR, '#2 Вы не можете оставлять сообщения в данной теме.')
+                        return False
+            else:
+                messages.add_message(request, messages.ERROR, '#3 Вы не можете оставлять сообщения в данной теме.')
+                return False
 
     text = request.POST['comment']
     if request.session.get('last_comment_time', ''):
@@ -1665,7 +1745,7 @@ def post_game_comment(request, kwargs):
         messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
         return False
 
-    if 'description' in post.tags or user.user.nickname in game.anchor:
+    if 'description' in post.tags or 'tales' in post.tags or user.user.nickname in game.anchor:
         comment = GameComment(post=post, author=user.user, text=text, mask=None)
         comment.save()
         user.user.comments_number += 1
@@ -1735,6 +1815,43 @@ def hang(request, kwargs):
 
 
 @login_required
+def dismiss_vote(request, kwargs):
+    game = get_game(kwargs)
+    post = get_game_post(kwargs)
+    user = get_user(request)
+    voter = GameParticipant.objects.get(user=user, game=game)
+    if voter.role == 'dead':
+        messages.add_message(request, messages.ERROR, 'Мертвые не выбирают.')
+        return False
+    action = request.POST.get('vote_action', '')
+    if not action or action not in ['hang', 'shoot', 'spoil', 'check', 'heal',
+                                    'mafia_side', 'militia_side', 'contract']:
+        messages.add_message(request, messages.ERROR, 'Такой голос не найден.')
+        return False
+    vote = Vote.objects.filter(game=game, day=game.day, voter=voter, action=action).first()
+    if not vote:
+        messages.add_message(request, messages.ERROR, 'Такой голос не найден.')
+        return False
+    vote.delete()
+    d = {
+        'hang': ' отменяет повешение игрока ',
+        'shoot': ' отменяет выстрел в игрока ',
+        'spoil': ' отменяет спаивание игрока ',
+        'check': ' отменяет проверку игрока ',
+        'heal': ' отменяет лечение игрока ',
+        # 'mafia_side': ' отменяет выбор стороны мафии игроком ',
+        # 'militia_side': ' отменяет выбор стороны милиции игроком ',
+        # 'contract': ' отменяет заказ киллеру игрока ',
+    }
+    text = 'День ' + str(game.day) + ': ' + str(voter.mask) + d[str(action)] + str(vote.target.mask) + '.'
+    author = User.objects.get(nickname='Игровой Бот')
+    comment = GameComment(post=post, text=text, author=author)
+    comment.save()
+    # though action is success, return False to not scroll to last comment
+    return False
+
+
+@login_required
 def shoot(request, kwargs):
     game = get_game(kwargs)
     post = get_game_post(kwargs)
@@ -1786,6 +1903,7 @@ def choose_leader(request, kwargs):
         game.hasHeadMafia = True
         game.save()
         head_mafia = GameParticipant.objects.get(id=top_votes[0]['target'])
+        head_mafia.prevRole = head_mafia.role
         head_mafia.role = 'head mafia'
         head_mafia.can_recruit = True
         head_mafia.save()
@@ -2241,8 +2359,8 @@ class DisplayGamePost(generic.ListView):
             else:
                 contract_votes = Vote.objects.filter(game=self.game, day=self.game.day, action='contract') \
                     .exclude(Q(target__role__contains='killer') | Q(target__role__contains='dead'))
+            allowed_actions['vote_shoot'] = True if vote else None
             if len(contract_votes) > 0:
-                allowed_actions['vote_shoot'] = True if vote else None
                 shoot_targets = [vote.target] if vote else []
                 for contract_vote in contract_votes:
                     shoot_targets.append(contract_vote.target)
@@ -2345,6 +2463,7 @@ class DisplayGamePost(generic.ListView):
         'Завербовать': recruit,
         'Заказать': contract,
         'Пригласить': invite,
+        'Удалить голос': dismiss_vote,
     }
 
     def allow_access(self, request):

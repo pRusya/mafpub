@@ -32,10 +32,19 @@
                 <option value="{{participant.id}}" class="{% if vote_hang and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Повешать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
+        {% if vote_hang %}
+        <form action="" method="post" name="DismissHang">
+            {% csrf_token %}
+            <input type="text" name="vote_action" value="hang" hidden="" />
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
+                <input type="submit" name="action" value="Удалить голос" class="btn btn-default btn-danger btn-block">
+            </div>
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endif %}
@@ -56,10 +65,19 @@
                 <option value="{{participant.id}}" class="{% if vote_heal and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Вылечить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
+        {% if vote_heal %}
+        <form action="" method="post" name="DismissHeal">
+            {% csrf_token %}
+            <input type="text" name="vote_action" value="heal" hidden="" />
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
+                <input type="submit" name="action" value="Удалить голос" class="btn btn-default btn-danger btn-block">
+            </div>
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endif %}
@@ -80,10 +98,19 @@
                 <option value="{{participant.id}}" class="{% if vote_spoil and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Напоить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
+        {% if vote_spoil %}
+        <form action="" method="post" name="DismissSpoil">
+            {% csrf_token %}
+            <input type="text" name="vote_action" value="spoil" hidden="" />
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
+                <input type="submit" name="action" value="Удалить голос" class="btn btn-default btn-danger btn-block">
+            </div>
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endif %}
@@ -105,12 +132,30 @@
                 <option value="{{participant.id}}" class="{% if vote_shoot and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-sm-6 col-centered submit-div">
                 <input type="submit" name="action" value="Выстрелить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
+        {% if vote_shoot %}
+        <form action="" method="post" name="DismissShoot">
+            {% csrf_token %}
+            <input type="text" name="vote_action" value="shoot" hidden="" />
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
+                <input type="submit" name="action" value="Удалить голос" class="btn btn-default btn-danger btn-block">
+            </div>
+        </form>
+        {% endif %}
         {% else %}
         <h3>Нет доступных целей.</h3>
+            {% if vote_shoot %}
+            <form action="" method="post" name="DismissShoot">
+                {% csrf_token %}
+                <input type="text" name="vote_action" value="shoot" hidden="" />
+                <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
+                    <input type="submit" name="action" value="Удалить голос" class="btn btn-default btn-danger btn-block">
+                </div>
+            </form>
+            {% endif %}
         {% endif %}
     </div>
 </div>
@@ -132,7 +177,7 @@
                 <option value="{{participant.id}}" class="{% if vote_leader and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Выбрать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -156,7 +201,7 @@
                 <option value="{{participant.id}}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Завербовать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -180,10 +225,19 @@
                 <option value="{{participant.id}}" class="{% if vote_check and forloop.counter == 1 %}vote-target-selected{% else %}vote-option{% endif %}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Проверить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
+        {% if vote_check %}
+        <form action="" method="post" name="DismissCheck">
+            {% csrf_token %}
+            <input type="text" name="vote_action" value="check" hidden="" />
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
+                <input type="submit" name="action" value="Удалить голос" class="btn btn-default btn-danger btn-block">
+            </div>
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endif %}
@@ -204,10 +258,11 @@
                 <option value="{{participant.id}}">{{participant.mask.username}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Заказать" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
+
     </div>
 </div>
 {% endif %}
@@ -228,7 +283,7 @@
                 <option value="militia_side">Милицию</option>
                 <!--<option value="peaceful">Мирную жизнь</option>-->
             </select>
-            <div class="col-md-4 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Присоедениться" class="btn btn-default btn-primary btn-block">
             </div>
         </form>
@@ -253,7 +308,7 @@
                 <option value="{{invitee.id}}">{{invitee.get_literary_role}}</option>
             {% endfor %}
             </select>
-            <div class="col-md-3 col-sm-5 col-xs-5 col-centered submit-div">
+            <div class="col-md-4 col-sm-6 col-xs-6 col-centered submit-div">
                 <input type="submit" name="action" value="Пригласить" class="btn btn-default btn-primary btn-block">
             </div>
         </form>

@@ -1,5 +1,4 @@
 {% extends 'mafiaapp/base.html' %}
-{% load widget_tweaks %}
 {% block content %}
 <div class="wrap col-centered">
 
@@ -124,6 +123,7 @@
                 <input type="text" value="{{ game.number }}" name="game" style="display:none" />
                 <input type="text" value="{{ participant.id.value }}" name="id" style="display:none" />
                 {{ participant.role.label }} {{ participant.role }}
+                {{ participant.prevRole.label }} {{ participant.prevRole }}
                 {{ participant.prevTarget.label }} {{ participant.prevTarget }}
                 {{ participant.can_ask_killer.label }} {{ participant.can_ask_killer }}
                 {{ participant.can_choose_side.label }} {{ participant.can_choose_side }}
@@ -133,9 +133,10 @@
                 {{ participant.checked_by_mil.label }} {{ participant.checked_by_mil }}
                 <p>
                 {% for vote in participant.instance.get_votes %}
-                    {{ vote }}<br>
+                    <h5>{{ vote }}</h5><br>
                 {% endfor %}
                 </p>
+                <h4>Last login: {{ participant.instance.user.last_login|date:'Y-m-d H:i' }}</h4>
           </div>
           <div class="panel-footer">
             <input type="submit" name="action" value="Изменить" class="btn btn-default btn-primary" />

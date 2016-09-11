@@ -51,7 +51,11 @@ class UserCreateForm(UserCreationForm):
         #user.username = user.username.encode('utf-8')
         if self.cleaned_data['avatar'] is None:
             temp = NamedTemporaryFile()
-            temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
+            identicon_url = os.environ.get('IDENTICON_URL', '')
+            if identicon_url:
+                temp.write(urllib.request.urlopen(identicon_url).read())
+            else:
+                temp.write(urllib.request.urlopen('http://www.maf.pub/identicon/').read())
             temp.flush()
             user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         if commit:
@@ -118,7 +122,7 @@ class UpdateGameParticipantForm(ModelForm):
     class Meta:
         model = GameParticipant
         fields = ['user', 'mask', 'role', 'prevTarget', 'can_ask_killer', 'can_choose_side', 'sees_maf_q',
-                  'sees_mil_q', 'can_recruit', 'checked_by_mil']
+                  'sees_mil_q', 'can_recruit', 'checked_by_mil', 'prevRole']
 
 
 class GameCommentForm(Form):

@@ -32,42 +32,23 @@
         }
     });
 
-	function show_quote2(c, page){
-        quote = $("#"+c).clone();
-        quote.find("blockquote").remove();
-        marked_quote =  quote.text().split("\n"); //quote.innerHTML.split('\n');
-        for(var i = 0;i < marked_quote.length;i++){
-            marked_quote[i] = '> '+marked_quote[i]
-        }
+    function show_quote(c, page) {
+        var blockquote_start = '<p></p><blockquote>';
+        var quote = $("#"+c).clone();
+        quote.html().trim();
+        quote.find("blockquote").html('...');
+        var quote_author = $('#author'+c).clone().html().trim();
+        var cite = '<p> &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)</p>';
+        var blockquote_end = '</blockquote><p><br></p>';
 
-        quote_author = document.getElementById('author'+c).innerHTML.trim();
-
-        inp = document.getElementById('ihatejs'+c);
-        inp.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
+        inp = $('#ihatejs'+c);
+        inp.html(blockquote_start + quote.html() + cite + blockquote_end);
         inp.select();
         document.execCommand('copy');
 
-        if(document.getElementById('id_comment')) {
-            ta = document.getElementById('id_comment');
-            if (ta.value == ''){
-                ta.value = marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
-            }
-            else {
-                ta.value = ta.value+'\n'+marked_quote.join("\n")+' &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)\n\n';
-            }
-
-            document.getElementById('id_comment').focus();
-        }
-
+        window.intercom.emit('update', {message: blockquote_start + quote.html() + cite + blockquote_end});
+        $('.note-editable').focus();
         $.notify("Цитата скопирована в буфер обмена.",  { position:"bottom right", className: 'info', style: 'copy-comment'});
-	}
-
-    function show_quote(c, page) {
-        quote = $("#"+c).clone();
-        console.log(quote);
-        $('#id_comment').summernote('code','<blockquote>'+$("#"+c).html()+'</blockquote><p><br></p>' );
-        //$('.note-editable').html($("#"+c).html());
-        //$('.note-editable').html('<blockquote>'+$("#"+c).html()+'</blockquote><p><br></p><p><br></p>');
     }
 
     function GetURLParameter(sParam) {
@@ -134,9 +115,7 @@
     }
 
     $(document).ready(function(){
-        $(".content-markdown").each(function(){
-            //$(this).html( marked($(this).text()) )
-        })
+        window.intercom = Intercom.getInstance();
 
         var page = GetURLParameter('page');
         if (page == 'last') {

@@ -19,6 +19,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
+        {% if user.is_staff or user.is_superuser %}<h3 style="float: right;"><a href="{% url 'mafiaapp:edit_game' game.pk %}" target="blank">Редактировать</a></h3>{% endif %}
         <br>
         <h5>{{ game.status }}</h5>
     </div>
@@ -34,6 +35,7 @@
 <div class="row">
     <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
         <h2>Предстоящая игра</h2>
+        {% if user.is_staff or user.is_superuser %}<h2 style="float: right;"><a href="{% url 'mafiaapp:create_game' %}" target="blank">Создать игру</a></h2>{% endif %}
     </div>
 </div>
 
@@ -41,6 +43,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</a></h3>
+        {% if user.is_staff or user.is_superuser %}<h3 style="float: right;"><a href="{% url 'mafiaapp:edit_game' game.pk %}" target="blank">Редактировать</a></h3>{% endif %}
         <br>
         <h5>{{ game.status }}</h5>
     </div>
@@ -63,6 +66,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_game' game_slug=game.slug %}">{{ game.title|safe }}</h3></a>
+        {% if user.is_staff or user.is_superuser %}<h3 style="float: right;"><a href="{% url 'mafiaapp:edit_game' game.pk %}" target="blank">Редактировать</a></h3>{% endif %}
         <br>
         <h5>{{ game.status }}</h5>
     </div>
@@ -77,7 +81,7 @@
 
 <div class="row">
     <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
-        <h2>Новости, объявления, обсуждения</h2>
+        <h2>Новости, объявления, правила</h2>
     </div>
 </div>
 
@@ -86,7 +90,29 @@
     <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
         <h3><a href="{% url 'mafiaapp:display_post' post_slug=post.slug %}">{{ post.title|safe }}</a></h3>
         <br>
-        <h5>Дата:</h5> <h4>{{ post.date|date:"Y-m-d" }}</h4><h5>. Автор:</h5> <h4><a href="{% url 'mafiaapp:profile' user=post.author.nickname %}">{{ post.author }}</a></h4>
+        <h5>Дата: {{ post.date|date:"Y-m-d" }}. Автор:</h5> <h4><a href="{% url 'mafiaapp:profile' user=post.author.nickname %}">{{ post.author }}</a></h4>
+    </div>
+</div>
+{% empty %}
+<div class="row">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
+        <h3>Нет тем</h3>
+    </div>
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-7 col-sm-12 col-xs-12 col-centered section">
+        <h2>Общие обсуждения</h2>
+    </div>
+</div>
+
+{% for post in post_list2 %}
+<div class="row">
+    <div class="col-md-6 col-sm-9 col-xs-11 col-centered">
+        <h3><a href="{% url 'mafiaapp:display_post' post_slug=post.slug %}">{{ post.title|safe }}</a></h3>
+        <br>
+        <h5>Дата: {{ post.date|date:"Y-m-d" }}. Автор:</h5> <h4><a href="{% url 'mafiaapp:profile' user=post.author.nickname %}">{{ post.author }}</a></h4>
     </div>
 </div>
 {% empty %}

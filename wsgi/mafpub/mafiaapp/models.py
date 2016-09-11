@@ -165,6 +165,7 @@ class GameParticipant(models.Model):
         ('dead',            'dead'),
     )
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='', verbose_name='Роль')
+    prevRole = models.CharField(max_length=20, choices=ROLE_CHOICES, default='', verbose_name='Предидущая роль')
 
     # used to store the last doctor's or barman's target to filter it out from next day's available targets
     prevTarget = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
@@ -249,6 +250,7 @@ class GamePost(models.Model):
         # ('summary', 'summary'),
         # ('morgue', 'morgue'),
         ('current', 'current'),
+        ('tales', 'tales'),
         # ('departure', 'departure'),
     )
     tags = ArrayField(models.CharField(max_length=20), verbose_name='Тэги(без пробелов, через запятую)')

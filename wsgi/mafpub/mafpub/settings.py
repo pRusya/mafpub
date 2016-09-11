@@ -56,8 +56,6 @@ INSTALLED_APPS = (
     'identicon.apps.IdenticonConfig',
     # third party
     # 'silk',
-    'widget_tweaks',
-    'pagedown',
 )
 
 MIDDLEWARE_CLASSES = (

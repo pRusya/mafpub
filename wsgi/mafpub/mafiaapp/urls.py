@@ -26,7 +26,7 @@ urlpatterns = [
 
     url(r'^dashboard/$', views.Dashboard.as_view(), name='dashboard'),
     # game urls
-    url(r'^dashboard/g/games$', staff_member_required(views.DisplayGamesView.as_view()), name='display_games'),
+    url(r'^dashboard/g/games/$', staff_member_required(views.DisplayGamesView.as_view()), name='display_games'),
     url(r'^dashboard/g/games/delete/(?P<pk>[0-9]+)/$', staff_member_required(views.DeleteGameView.as_view()), name='delete_game'),
     url(r'^dashboard/g/games/edit/(?P<pk>[0-9]+)/$', staff_member_required(views.EditGameView.as_view()), name='edit_game'),
 

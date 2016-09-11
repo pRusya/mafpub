@@ -1,5 +1,4 @@
 {% load filters %}
-{% load widget_tweaks %}
 
 {{ comment_form.media }}
 {% if post.allow_comment and user.is_authenticated %}
@@ -7,7 +6,7 @@
     <div class="col-md-8 col-centered">
         <form action="" method="post" name="Reply">
             {% csrf_token %}
-            {{ comment_form.comment|add_class:'form-control' }}
+            {{ comment_form.comment }}
 
             <div class="col-md-4 col-sm-5 col-xs-5 col-centered submit-div" class="submit-div">
                 <input type="submit" name="action" value="Опубликовать" class="btn btn-default btn-primary btn-block">
@@ -15,4 +14,25 @@
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_comment').summernote({
+            callbacks: {
+                onPaste: function(e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    // Firefox fix
+                    setTimeout(function () {
+                        $('#id_comment').summernote('code', $('.note-editable').html() + bufferText);
+                    }, 10);
+                }
+            }
+        });
+
+        window.intercom.on('update', function(data) {
+            $('#id_comment').summernote('code', $('.note-editable').html() + data.message);
+        });
+    });
+</script>
 {% endif %}
