@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^p/done/$', views.wrap_password_reset_done, name='password_reset_done'),
 
     url(r'^u/(?P<user>.*?)/$', views.Profile.as_view(), name='profile'),
+    url(r'^life/$', staff_member_required(views.UsersActivity.as_view()), name='users_activity'),
     url(r'^logout/$', views.Logout.as_view(), name='logout'),
 
     #url(r'^users/$', views.DisplayUsersView.as_view(), name='display_users'),

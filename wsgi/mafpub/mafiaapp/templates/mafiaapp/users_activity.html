@@ -1,0 +1,13 @@
+{% extends 'mafiaapp/base.html' %}
+{% load filters %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="wrap col-centered">
+	<div class="row">
+		{% for user in users_list %}
+			{{user.avatar}}
+		{% endfor %}
+	</div>
+</div>
+{% endblock content %}

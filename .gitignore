@@ -12,6 +12,5 @@ fixtures/
 !__init__.py
 __pycache__/
 secret.txt
-debug.log
-print.log
+*.log
 .idea/

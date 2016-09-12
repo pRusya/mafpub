@@ -58,6 +58,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # third party
     # 'silk.middleware.SilkyMiddleware',
+    # internal middleware
+    'mafiaapp.middleware.CustomLogger',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -78,6 +80,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CUSTOM_LOGGER_FILENAME = os.path.join(BASE_DIR, 'user_activity.log')
 
 LOGGING = {
     'version': 1,

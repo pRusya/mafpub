@@ -10,8 +10,6 @@ from django.core.files.temp import NamedTemporaryFile
 from django.forms import ModelForm, Form
 from django.db import models
 
-from pagedown.widgets import PagedownWidget
-
 from .models import *
 
 

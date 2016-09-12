@@ -194,6 +194,9 @@ class GameParticipant(models.Model):
     def get_literary_role(self):
         return roles_dict[self.role]
 
+    def get_literary_prev_role(self):
+        return roles_dict[self.prevRole]
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)

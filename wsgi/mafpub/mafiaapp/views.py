@@ -1199,9 +1199,12 @@ def head_militia_arrest(d):
         if check_vote.target.role in mafia_roles:
             success_result += '\n  ' + check_vote.target.mask.username
             success_arrest = True
+            logger.info('check_vote')
             if check_vote.target.role == 'head mafia':
+                logger.info('check_vote.target.role == "head mafia"')
                 game.hasHeadMafia = False
                 game.save()
+                logger.info(game.hasHeadMafia)
             check_vote.target.prevRole = check_vote.target.role
             check_vote.target.role = 'dead'
             check_vote.target.save()
@@ -1281,10 +1284,15 @@ def night(d):
     has_mafia_post = False
     has_militia_post = False
     quicks = GameParticipant.objects.filter(game=game).exclude(Q(role='dead') | Q(user=author))
-    # quicks for general_day
+    departed = GameParticipant.objects.filter(game=game, role='dead')
+    # quicks for general_day and mafia_day
     quicks_info = '\nЖивые:'
     # quicks for militia_day
     checked_quicks_info = '\nЖивые:'
+    # departed for general_day and mafia_day
+    departed_info = '\nМертвые:'
+    # departed for militia_day
+    checked_departed_info = '\nМертвые:'
     for x in range(0, len(quicks), 3):
         line = islice(quicks, x, x+3)
         quicks_info += '\n    ' + ', '.join(quick.mask.username for quick in line)
@@ -1292,6 +1300,18 @@ def night(d):
         checked_quicks_info += '\n    ' + ', '.join(
             quick.mask.username+"("+quick.get_literary_role()+")" if quick.checked_by_mil else quick.mask.username
             for quick in line)
+    for x in range(0, len(departed), 3):
+        line = islice(departed, x, x+3)
+        departed_info += '\n    ' + ', '.join(dead.mask.username for dead in line)
+        line = islice(departed, x, x + 3)
+        checked_departed_info += '\n    ' + ', '.join(
+            dead.mask.username + "(" + dead.get_literary_prev_role() + ")" if dead.checked_by_mil else
+            dead.mask.username
+            for dead in line)
+    logger.info('quicks_info %s', quicks_info)
+    logger.info('checked_quicks_info %s', checked_quicks_info)
+    logger.info('departed_info %s', departed_info)
+    logger.info('checked_departed_info %s', checked_departed_info)
     for post in posts:
         post.allow_comment = False
         post.tags.remove('current')
@@ -1305,12 +1325,20 @@ def night(d):
             slug = game.slug + '_militia_day' + day
         if not game_ended:
             if 'militia_day' in post.tags:
-                new_post = GamePost(title='День ' + day, text='День ' + day + checked_quicks_info, short='day' + day,
+                new_post = GamePost(title='День ' + day, text='МИЛИЦИЯ. День ' + day + checked_quicks_info +
+                                                              checked_departed_info, short='day' + day,
+                                    tags=post.tags + ['current'],
+                                    game=game, author=author, allow_role=post.allow_role, slug=slug)
+                new_post.save()
+            elif 'mafia_day' in post.tags:
+                new_post = GamePost(title='День ' + day, text='МАФИЯ. День ' + day + quicks_info +
+                                                              departed_info, short='day' + day,
                                     tags=post.tags + ['current'],
                                     game=game, author=author, allow_role=post.allow_role, slug=slug)
                 new_post.save()
             else:
-                new_post = GamePost(title='День ' + day, text='День ' + day + quicks_info, short='day' + day,
+                new_post = GamePost(title='День ' + day, text='День ' + day + quicks_info +
+                                                              departed_info, short='day' + day,
                                     tags=post.tags + ['current'],
                                     game=game, author=author, allow_role=post.allow_role, slug=slug)
                 new_post.save()
@@ -1325,7 +1353,7 @@ def night(d):
                                     allow_role=['mafia', 'head mafia', 'mafia recruit', 'militia recruit'],
                                     slug=game.slug + '_mafia_secret')
         new_recruit_post.save()
-        new_post = GamePost(title='День ' + day, text='Мафия. День ' + day + quicks_info, short='day' + day,
+        new_post = GamePost(title='День ' + day, text='МАФИЯ. День ' + day + quicks_info, short='day' + day,
                             tags=['mafia_day', 'current'],
                             game=game, author=author, allow_role=mafia_roles, slug=game.slug + '_mafia_day' + day)
         new_post.save()
@@ -1335,10 +1363,12 @@ def night(d):
                                     allow_role=['militia', 'head militia', 'militia recruit'],
                                     slug=game.slug + '_militia_secret')
         new_recruit_post.save()
-        new_post = GamePost(title='День ' + day, text='Милиция. День ' + day + quicks_info, short='day' + day,
+        new_post = GamePost(title='День ' + day, text='МИЛИЦИЯ. День ' + day + quicks_info, short='day' + day,
                             tags=['militia_day', 'current'],
                             game=game, author=author, allow_role=militia_roles, slug=game.slug + '_militia_day' + day)
         new_post.save()
+    # game may have been updated by performing actions. get actual game
+    game = Game.objects.get(number=d['game'])
     if not game_ended:
         game.day += 1
         game.save()
@@ -1669,6 +1699,14 @@ class Profile(generic.DetailView):
         return get_object_or_404(User, nickname=self.kwargs['user'])
 
 
+class UsersActivity(generic.ListView):
+    template_name = 'mafiaapp/users_activity.html'
+    context_object_name = 'users_list'
+
+    def get_queryset(self):
+        return User.objects.all()
+
+
 def get_game(kwargs):
     return get_object_or_404(Game, slug=kwargs.get('game_slug', ''))
 
@@ -1938,6 +1976,22 @@ def check(request, kwargs):
                                    id=int(request.POST['target']))
     except KeyError:
         raise Http404()
+    # role with check not allowed to check self
+    if voter.id == target.id:
+        messages.add_message(request, messages.ERROR, 'Нельзя проверить самого себя.')
+        return False
+    # militia also can't check head militia
+    if voter.role == 'militia':
+        head_militia = GameParticipant.objects.filter(game=game, role='head militia').first()
+        if head_militia.id == target.id:
+            messages.add_message(request, messages.ERROR, 'Нельзя проверить своего напарника.')
+            return False
+    # head militia also can't check militia
+    if voter.role == 'head militia':
+        militia = GameParticipant.objects.filter(game=game, role='militia').first()
+        if militia.id == target.id:
+            messages.add_message(request, messages.ERROR, 'Нельзя проверить своего напарника.')
+            return False
     vote = Vote.objects.update_or_create(game=game, day=game.day, voter=voter,
                                          action='check', defaults={'target': target})
     author = User.objects.get(nickname='Игровой Бот')
@@ -2400,14 +2454,27 @@ class DisplayGamePost(generic.ListView):
         if allowed_actions['can_check']:
             # check if voted previously this day
             vote = Vote.objects.filter(game=self.game, day=self.game.day, voter=participant, action='check').first()
+            # role with check not allowed to check self, so exclude self from check_targets
+            exclude_id_list = [participant.id]
+            # militia also can't check head militia
+            if participant.role == 'militia':
+                head_militia = GameParticipant.objects.filter(game=self.game, role='head militia').first()
+                if head_militia:
+                    exclude_id_list.append(head_militia.id)
+            # head militia also can't check militia
+            if participant.role == 'head militia':
+                militia = GameParticipant.objects.filter(game=self.game, role='militia').first()
+                if militia:
+                    exclude_id_list.append(militia.id)
             if vote:
                 # make order: [target, queryset w/o target]
                 allowed_actions['vote_check'] = True
                 allowed_actions['check_targets'] = [vote.target] + list(GameParticipant.objects.filter(game=self.game)
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id))
+                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id=vote.target.id)
+                                                                        .exclude(id__in=exclude_id_list))
             else:
                 allowed_actions['check_targets'] = GameParticipant.objects.filter(game=self.game) \
-                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
+                    .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id__in=exclude_id_list)
 
         # targets to invite
         if allowed_actions['can_invite']:
