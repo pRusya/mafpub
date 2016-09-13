@@ -4,7 +4,7 @@
 {% if post.allow_comment and user.is_authenticated %}
 <div class="row">
     <div class="col-md-8 col-centered">
-        <form action="" method="post" name="Reply">
+        <form action="" method="post" name="Reply" onsubmit="history.pushState('',document.title,window.location.pathname+window.location.search);">
             {% csrf_token %}
             {{ comment_form.comment }}
 

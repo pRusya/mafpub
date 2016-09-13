@@ -416,8 +416,17 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                         mask.save()
                     participant.mask = mask
                     participant.save()
+                    private = GamePost.objects.filter(game=context['game'], tags__contains=[participant.user.nickname])
+                    private.title = participant.mask.username + '(' + participant.user.nickname + ')'
+                    private.save()
                     mask.taken = True
                     mask.save()
+        elif action == 'Зал Ожидания':
+            bot = User.objects.get(nickname='Игровой Бот')
+            departure_area = GamePost(title='Зал Ожидания', text='Зал Ожидания', game=context['game'],
+                                      slug=str(context['game'].slug)+'_departure', allow_role=['everyone'],
+                                      author=bot, tags=['general_day', 'current'])
+            departure_area.save()
         elif action == 'Сохранить':
             form = self.get_form()
             if form.is_valid():
@@ -541,14 +550,14 @@ def register_bots(d):
         user.avatar.save(os.path.basename(save_path_avatar(user, 'avatar.png')), File(temp))
         user.save()
 
-        mask = Mask(game=game, username=user.nickname, taken=True)
+        mask = Mask(game=game, username=user.nickname + 'm', taken=True)
         mask.avatar.save(os.path.basename(save_path_avatar(mask, 'avatar.png')), File(temp))
         mask.save()
 
         participant = GameParticipant(game=game, user=user, mask=mask)
         participant.save()
 
-        private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.nickname,
+        private_quarters = GamePost(title='Своя каюта', text='%s' % user.nickname,
                                     game=game, tags=['private', user.nickname],
                                     short='private', author=user, slug=game.slug + '_private_' + user.username,
                                     allow_role=['private'], allow_comment=False)
@@ -1494,7 +1503,7 @@ def create_missing_votes(d):
             shoot_vote.save()
 
 
-def change_side(d):
+def neutrals_change_side(d):
     game = Game.objects.get(number=d['game'])
     # side change only performed on the first day(night)
     if game.day > 1:
@@ -1593,15 +1602,37 @@ def change_side(d):
             role = random.choice(['mafia killer', 'militia killer', 'mafia killer', 'militia killer',
                                   'mafia killer', 'militia killer', 'mafia killer', 'militia killer'])
         side_result += '\n  ' + roles_dict['neutral killer'] + ' - ' + roles_dict[role] + '.'
-    # recruitment by mafia is the last block of code anyway, so just return if game.hasRecruit
+    return ('\n\nВыбор стороны:' + side_result) if len(side_result) > 0 else ''
+
+
+def recruit_change_side(d):
+    game = Game.objects.get(number=d['game'])
     if game.hasRecruit:
-        return ('\n\nВыбор стороны:' + side_result) if len(side_result) > 0 else ''
+        return ''
+    roles_map = {
+        'mafia_side': {
+            'neutral barman': 'mafia barman',
+            'neutral killer': 'mafia killer',
+            'neutral doctor': 'mafia doctor',
+            'peaceful': 'mafia recruit',
+        },
+        'militia_side': {
+            'neutral barman': 'militia barman',
+            'neutral killer': 'militia killer',
+            'neutral doctor': 'militia doctor',
+            'peaceful': 'militia recruit',
+        },
+    }
+    bot = User.objects.get(nickname='Игровой Бот')
     # check if head mafia tried to recruit somebody
     vote_recruit = Vote.objects.filter(game=game, action='recruit', day=game.day).first()
+    logger.info('======RECRUIT')
+    logger.info(vote_recruit)
     if vote_recruit:
         # mafia did try recruit. check if recruiter chose side
         side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
                                         game=game, voter=vote_recruit.target).first()
+        logger.info(side_vote)
         head_mafia = GameParticipant.objects.filter(game=game, role='head mafia').first()
         vote_recruit.target.can_choose_side = False
         vote_recruit.target.save()
@@ -1615,22 +1646,36 @@ def change_side(d):
             game.save()
             recruit_result = 'Ночь ' + str(game.day) + ': Вербовка: игрок ' + vote_recruit.target.mask.username + \
                              ' принимает вербовку. Завербованный теперь имеет доступ к явочной каюте мафии.'
+            logger.info('result %s', recruit_result)
         else:
+            logger.info('no side vote')
             # recruiter did not choose side. head mafia can recruit again
             if head_mafia:
                 head_mafia.can_recruit = True
                 head_mafia.save()
             recruit_result = 'Ночь ' + str(game.day) + ': Вербовка: игрок ' + vote_recruit.target.mask.username + \
                              ' отказывается от вербовки.'
-        recruited_post = GamePost.objects.get(game=game, tags__contains=['private', vote_recruit.target.user.nickname])
+            logger.info('recruit result %s', recruit_result)
+        recruited_post = GamePost.objects.get(game=game,
+                                              tags__contains=['private', vote_recruit.target.user.nickname])
+        logger.info('recruited post %s', recruited_post)
         inform = GameComment(post=recruited_post, text=recruit_result, author=bot)
         inform.save()
         if head_mafia:
+            logger.info('head mafia %s', head_mafia)
             head_mafia_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                               vote_recruit.voter.user.nickname])
+            logger.info('head mafia psot %s', head_mafia_post)
             inform = GameComment(post=head_mafia_post, text=recruit_result, author=bot)
             inform.save()
-    return ('\n\nВыбор стороны:' + side_result) if len(side_result) > 0 else ''
+    return ''
+
+
+def change_side(d):
+    change_side_result = ''
+    change_side_result += neutrals_change_side(d)
+    change_side_result += recruit_change_side(d)
+    return change_side_result
 
 
 def refresh_participants_states(d):
@@ -1729,7 +1774,7 @@ def participate(request, kwargs):
         return
     participant = GameParticipant(game=game, user=user.user, mask=None)
     participant.save()
-    private_quarters = GamePost(title='Своя каюта', text='Каюта игрока %s' % user.user.nickname,
+    private_quarters = GamePost(title='Своя каюта', text='%s' % user.user.nickname,
                                 game=game, tags=['private', user.user.nickname],
                                 short='private', author=user.user, slug=game.slug + '_private_' + user.username,
                                 allow_role=['private'], allow_comment=False)
@@ -2086,6 +2131,12 @@ def recruit(request, kwargs):
                                    id=int(request.POST['target']))
     except KeyError:
         raise Http404()
+    # head mafia not allowed recruit neither self nor allies, so exclude
+    exclude_participants = GameParticipant.objects.filter(game=game, sees_maf_q=True)
+    forbidden_ids = [ally.id for ally in exclude_participants]
+    if target.id in forbidden_ids:
+        messages.add_message(request, messages.ERROR, 'Нельзя проверить себя или союзника.')
+        return False
     vote = Vote.objects.update_or_create(game=game, day=game.day, voter=voter,
                                          action='recruit', defaults={'target': target})
     author = User.objects.get(nickname='Игровой Бот')
@@ -2447,8 +2498,13 @@ class DisplayGamePost(generic.ListView):
 
         # candidates for mafia recruit or militia recruit
         if allowed_actions['can_recruit']:
+            # head mafia not allowed recruit neither self nor allies, so exclude
+            exclude_participants = GameParticipant.objects.filter(game=self.game, sees_maf_q=True)
+            exclude_id_list = []
+            for ally in exclude_participants:
+                exclude_id_list.append(ally.id)
             allowed_actions['recruit_targets'] = GameParticipant.objects.filter(game=self.game) \
-                .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
+                .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')).exclude(id__in=exclude_id_list)
 
         # targets to check
         if allowed_actions['can_check']:

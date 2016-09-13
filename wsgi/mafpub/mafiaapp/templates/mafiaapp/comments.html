@@ -38,7 +38,8 @@
         quote.html().trim();
         quote.find("blockquote").html('...');
         var quote_author = $('#author'+c).clone().html().trim();
-        var cite = '<p> &mdash; <cite>'+quote_author+'</cite> (<a href="'+window.location.href+'#div'+c+'">{{game.title}} / {{post.title}}</a>)</p>';
+        var url = [location.protocol, '//', location.host, location.pathname].join('');
+        var cite = '<p> &mdash; <cite>'+quote_author+'</cite> (<a href="'+url+'?page='+page+'#div'+c+'">{{post.title}}</a>)</p>';
         var blockquote_end = '</blockquote><p><br></p>';
 
         inp = $('#ihatejs'+c);
@@ -148,7 +149,7 @@
 </div>
 
 {% for comment in page_obj %}
-<div class="row comment" id="{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">
+<div class="row comment" id="div{{comment.id}}">
     <div class="col-md-2 col-xs-2 col-sm-2 text-right padding-0">
         <a href="{% url 'mafiaapp:profile' user=comment.author.user.nickname %}">
         <h3 id='author{{comment.id}}'>{{ comment.author.user.nickname }}</h3><br>
@@ -157,10 +158,10 @@
         <br>
         <h6>Сообщений: {{ comment.author.comments_number }}</h6>
     </div>
-    <div class="col-md-8 col-sm-10 col-xs-10 comment-text">
+    <div class="col-md-8 col-sm-10 col-xs-10 comment-text" id="{% if forloop.last %}last{% else %}{{forloop.counter}}{% endif %}">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6"><h3></h3><h6>{{ comment.date|date:"Y-m-d H:i" }}</h6></div>
-            <div class="col-md-6 col-sm-6 col-xs-6 text-right"><h3></h3><h6><a href="?page={{ page_obj.number }}#{% if forloop.last %}last{% else %}div{{comment.id}}{% endif %}">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</a></h6></div>
+            <div class="col-md-6 col-sm-6 col-xs-6 text-right"><h3></h3><h6><a href="?page={{ page_obj.number }}#div{{comment.id}}">Сообщение #{{ page_obj.number }}/{{ forloop.counter }}</a></h6></div>
         </div>
 
         <div id="{{comment.id}}" class="content-markdown comment-item">{{ comment.text|safe }}</div>
