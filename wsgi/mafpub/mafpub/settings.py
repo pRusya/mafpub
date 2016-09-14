@@ -89,6 +89,8 @@ TEMPLATES = [
     },
 ]
 
+CUSTOM_LOGGER_FILENAME = os.path.join(DATA_DIR, 'user_activity.log')
+
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # SILKY_AUTHENTICATION = True  # User must login
