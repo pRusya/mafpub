@@ -198,7 +198,7 @@ class Dashboard(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(Dashboard, self).get_context_data(**kwargs)
-        post_list = Post.objects.all()
+        post_list = Post.objects.all().order_by('date')
         context['post_list'] = post_list
         return context
 
@@ -1824,9 +1824,10 @@ def post_game_comment(request, kwargs):
                                                           'в 15 секунд. Подождите еще %s сек.' %
                                  (15 - (int(time.time()) - request.session['last_comment_time'])))
             return False
-    if text.count('\r') >= 25 or len(text) >= 2000:
-        messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
-        return False
+    if not user.is_staff:
+        if text.count('\r') >= 25 or len(text) >= 2000:
+            messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
+            return False
 
     if 'description' in post.tags or 'tales' in post.tags or user.user.nickname in game.anchor:
         comment = GameComment(post=post, author=user.user, text=text, mask=None)
@@ -1860,9 +1861,10 @@ def post_comment(request, kwargs):
                                                           'в 15 секунд. Подождите еще %s сек.' %
                                  (15 - (int(time.time()) - request.session['last_comment_time'])))
             return False
-    if text.count('\r') >= 25 or len(text) >= 2000:
-        messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
-        return False
+    if not user.is_staff:
+        if text.count('\r') >= 25 or len(text) >= 2000:
+            messages.add_message(request, messages.ERROR, 'Комментарий должен быть в пределах 25 строк и 2000 знаков.')
+            return False
     malformed = ['script', 'onmouseover', 'onerror']
     if any(el in text.lower() for el in malformed):
         return False

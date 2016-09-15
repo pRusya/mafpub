@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'identicon.apps.IdenticonConfig',
     # third party
     # 'silk',
+    'django_summernote',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,7 +90,8 @@ TEMPLATES = [
     },
 ]
 
-CUSTOM_LOGGER_FILENAME = os.path.join(DATA_DIR, 'user_activity.log')
+LOG_DIR = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR', BASE_DIR)
+CUSTOM_LOGGER_FILENAME = os.path.join(LOG_DIR, 'user_activity.log')
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 

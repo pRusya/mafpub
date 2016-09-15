@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user
+from django_summernote.admin import SummernoteModelAdmin
 from .models import *
 from .forms import *
 
@@ -7,7 +8,7 @@ from .forms import *
 # Register your models here.
 
 @admin.register(Game)
-class GameAdmin(admin.ModelAdmin):
+class GameAdmin(SummernoteModelAdmin):
     def render_change_form(self, request, context, obj, *args, **kwargs):
         if obj:
             context['adminform'].form.fields['description'].initial = obj.get_description().text
@@ -50,11 +51,13 @@ class GameAdmin(admin.ModelAdmin):
     form = CreateGameForm
 
 
+
+       
 admin.site.register(GameParticipant)
-admin.site.register(GamePost)
-admin.site.register(GameComment)
-admin.site.register(Post)
-admin.site.register(Comment)
+admin.site.register(GamePost, SummernoteModelAdmin)
+admin.site.register(GameComment, SummernoteModelAdmin)
+admin.site.register(Post, SummernoteModelAdmin)
+admin.site.register(Comment, SummernoteModelAdmin)
 admin.site.register(Mask)
 admin.site.register(Vote)
 admin.site.register(User)

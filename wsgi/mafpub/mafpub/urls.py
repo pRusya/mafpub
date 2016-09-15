@@ -20,6 +20,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^identicon/', include('identicon.urls', namespace='identicon')),
+    url(r'^summernote/', include('django_summernote.urls')),
     url(r'^', include('mafiaapp.urls', namespace="mafiaapp")),
     # url(r'^api/', include('mafiaapp.api.urls', namespace="api_mafiaapp")),
     # url(r'^test/$', index)#

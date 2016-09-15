@@ -28,7 +28,7 @@
     <div class="col-md-8 col-sm-10 col-xs-10">
         <h3>{# placeholder to match height with nickname on the left #}</h3>
         <h6>{{ post.date|date:"Y-m-d H:i" }}</h6>
-        <div id="{{post.id}}" class="content-markdown comment-item">{{ post.text }}</div>
+        <div id="{{post.id}}" class="content-markdown comment-item">{{ post.text|safe }}</div>
         <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{post.id}}" value="" style="margin-top:2px;"></textarea></div>
         {% if user.is_superuser %}
         <a href="/admin/mafiaapp/post/{{post.id}}" target="blank"><h4><input type="submit" value="Редактировать" class="btn btn-primary" ></h4></a>

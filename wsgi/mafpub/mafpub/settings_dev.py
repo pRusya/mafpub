@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     # 'silk',
     'rest_framework',
     'corsheaders',
+    'django_summernote',
     # 'djangosecure',
     # 'sslserver',
 )
