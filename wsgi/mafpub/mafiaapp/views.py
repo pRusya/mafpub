@@ -147,7 +147,7 @@ class LoginAs(generic.View):
         login(request, user)
         request.session['restore_user'] = True
         request.session['username'] = original_username
-        participant = GameParticipant.objects.get(user=user)
+        participant = GameParticipant.objects.filter(user=user).first()
         private_q = GamePost.objects.get(tags__contains=[participant.user.nickname])
         return redirect(reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
                                                                            'post_slug': private_q.slug}))
@@ -239,7 +239,7 @@ class CreateGame(generic.CreateView):
                           author=bot, tags=['morgue'], short='morgue', slug=self.object.slug + '_morgue',
                           allow_role=['dead'])
         morgue.save()
-        bot_mask = Mask(game=self.object, avatar=bot.avatar, username=bot.nickname)
+        bot_mask = Mask(game=self.object, avatar=bot.avatar, username=bot.nickname, taken=True)
         bot_mask.save()
         bot_participant = GameParticipant(game=self.object, user=bot, mask=bot_mask)
         bot_participant.save()
@@ -498,7 +498,8 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                         mask.save()
                     participant.mask = mask
                     participant.save()
-                    private = GamePost.objects.filter(game=context['game'], tags__contains=[participant.user.nickname]).first()
+                    participant = GameParticipant.objects.get(id=participant.id)
+                    private = GamePost.objects.filter(game=context['game'], tags__contains=['private', participant.user.nickname]).first()
                     private.title = participant.mask.username + '(' + participant.user.nickname + ')'
                     private.save()
                     mask.taken = True
