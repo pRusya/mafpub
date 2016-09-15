@@ -2,6 +2,7 @@ import logging
 import random
 import string
 import time
+import json
 from itertools import islice
 
 from django.contrib import messages
@@ -399,6 +400,87 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                 post = GamePost.objects.get(game=context['game'], tags__contains=['private', participant.user.nickname])
                 inform = GameComment(post=post, author=bot, text=roles_description[participant.role])
                 inform.save()
+        elif action == 'Dump':
+            votes = Vote.objects.filter(game=context['game'])
+            game_posts = GamePost.objects.filter(game=context['game'])
+            game_comments = GameComment.objects.filter(post__game=context['game'])
+            game_participants = GameParticipant.objects.filter(game=context['game'])
+            dump = GameDump()
+            dump.game = context['game']
+            dump.day = context['game'].day
+            dump.state = context['game'].state
+            dump.status = context['game'].status
+            dump.hasHeadMafia = context['game'].hasHeadMafia
+            dump.hasRecruit = context['game'].hasRecruit
+            dump.votes = ','.join(str(vote.id) for vote in votes)
+            dump.game_posts = ','.join(str(post.id) for post in game_posts)
+            dump.game_comments = ','.join(str(comment.id) for comment in game_comments)
+            d = {}
+            for participant in game_participants:
+                d[str(participant.id)] = {'role': participant.role, 
+                    'prevRole': participant.prevRole, 
+                    'prevTarget': participant.prevTarget,
+                    'can_ask_killer': participant.can_ask_killer,
+                    'can_choose_side': participant.can_choose_side,
+                    'sees_maf_q': participant.sees_maf_q,
+                    'sees_mil_q': participant.sees_mil_q,
+                    'can_recruit': participant.can_recruit,
+                    'checked_by_mil': participant.checked_by_mil}
+            dump.game_participants = json.dumps(d)
+            dump.save()
+        elif action == 'Restore Dump':
+            dump = GameDump.objects.filter(game=context['game']).last()
+            context['game'].day = dump.day
+            context['game'].state = dump.state
+            context['game'].status = dump.status
+            context['game'].hasHeadMafia = dump.hasHeadMafia
+            context['game'].hasRecruit = dump.hasRecruit
+            context['game'].save()
+            context['game'] = Game.objects.filter(number=context['game'].number)
+
+            if dump.votes:
+                dump_votes = list(map(int, dump.votes.split(',')))
+                votes = Vote.objects.filter(game=context['game'])
+                for vote in votes:
+                    if vote.id not in dump_votes:
+                        vote.delete()
+            else:
+                votes = Vote.objects.filter(game=context['game']).delete()
+
+            if dump.game_comments:
+                dump_comments = list(map(int, dump.game_comments.split(',')))
+                game_comments = GameComment.objects.filter(post__game=context['game'])
+                for comment in game_comments:
+                    if comment.id not in dump_comments:
+                        comment.delete()
+            else:
+                game_comments = GameComment.objects.filter(post__game=context['game']).delete()
+
+            if dump.game_posts:
+                dump_posts = list(map(int, dump.game_posts.split(',')))
+                game_posts = GamePost.objects.filter(game=context['game'])
+                for post in game_posts:
+                    if post.id not in dump_posts:
+                        post.delete()
+            else:
+                game_posts = GamePost.objects.filter(game=context['game']).delete()
+
+            d = json.loads(dump.game_participants)
+            if len(d) > 0:
+                game_participants = GameParticipant.objects.filter(game=context['game'])
+                for p in game_participants:
+                    p.role = d[str(p.id)]['role']
+                    p.prevRole = d[str(p.id)]['prevRole']
+                    p.prevTarget = d[str(p.id)]['prevTarget']
+                    p.can_ask_killer = d[str(p.id)]['can_ask_killer']
+                    p.can_choose_side = d[str(p.id)]['can_choose_side']
+                    p.sees_maf_q = d[str(p.id)]['sees_maf_q']
+                    p.sees_mil_q = d[str(p.id)]['sees_mil_q']
+                    p.can_recruit = d[str(p.id)]['can_recruit']
+                    p.checked_by_mil = d[str(p.id)]['checked_by_mil']
+                    p.save()
+            else:
+                game_participants = GameParticipant.objects.filter(game=context['game']).delete()
         elif action == 'Раздать':
             masks = Mask.objects.filter(game=context['game'], taken=False)
             masks = random.sample(list(masks), len(masks))

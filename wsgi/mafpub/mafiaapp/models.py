@@ -354,3 +354,24 @@ class Achievment(models.Model):
 
     def __str__(self):
         return self.name+' '+self.grade
+
+
+class GameDump(models.Model):
+    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+    day = models.IntegerField(default=0, blank=True, verbose_name='День')
+    state = models.CharField(max_length=10, default='', verbose_name='Фаза')
+    status = models.CharField(max_length=100, blank=True, null=True, verbose_name='Статус')
+    hasHeadMafia = models.BooleanField(default=False, verbose_name='ГлавМаф назначен')
+    hasRecruit = models.BooleanField(default=False, verbose_name='Есть завербованный')
+
+    votes = models.TextField(default="", blank=True, null=True)
+    game_posts = models.TextField(default="", blank=True, null=True)
+    game_comments = models.TextField(default="", blank=True, null=True)
+    game_participants = models.TextField(default="", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "GameDump"
+        verbose_name_plural = "GameDumps"
+
+    def __str__(self):
+        return str(self.game) + ' День ' + str(self.game.day)

@@ -289,6 +289,30 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin h4">
+            {% csrf_token %}
+            <label>Dump Game</label><br>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Dump" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4" style="text-align:center">
+        <form action="" method="post" class="form-signin h4">
+            {% csrf_token %}
+            <label>Restore Dump</label><br>
+            <input id="game" type="text" name="game" value="{{game.number}}" style="display:none" />
+            <div class="col-md-4 col-centered" style="padding-left:0px;padding-right:0px;margin-top:20px">
+                <input type="submit" name="action" value="Restore Dump" class="btn btn-default btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
 {#% debug %#}
 </div>
 {% endblock content %}
