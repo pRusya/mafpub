@@ -31,7 +31,11 @@
         <div id="{{post.id}}" class="content-markdown comment-item">{{ post.text|safe }}</div>
         <div style="height:1px;overflow:hidden"><textarea id="ihatejs{{post.id}}" value="" style="margin-top:2px;"></textarea></div>
         {% if user.is_superuser %}
-        <a href="/admin/mafiaapp/post/{{post.id}}" target="blank"><h4><input type="submit" value="Редактировать" class="btn btn-primary" ></h4></a>
+            {% if game %}
+                <a href="/admin/mafiaapp/gamepost/{{post.id}}" target="blank"><h4><input type="submit" value="Редактировать" class="btn btn-primary" ></h4></a>
+            {% else %}
+                <a href="/admin/mafiaapp/post/{{post.id}}" target="blank"><h4><input type="submit" value="Редактировать" class="btn btn-primary" ></h4></a>
+            {% endif %}
         {% endif %}
         <h4 class="cite" onClick='show_quote({{post.id}},1);'>Цитировать</h4>
     </div>

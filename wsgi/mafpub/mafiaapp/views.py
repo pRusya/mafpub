@@ -498,7 +498,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
                         mask.save()
                     participant.mask = mask
                     participant.save()
-                    private = GamePost.objects.filter(game=context['game'], tags__contains=[participant.user.nickname])
+                    private = GamePost.objects.filter(game=context['game'], tags__contains=[participant.user.nickname]).first()
                     private.title = participant.mask.username + '(' + participant.user.nickname + ')'
                     private.save()
                     mask.taken = True
