@@ -93,6 +93,32 @@ TEMPLATES = [
 LOG_DIR = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR', BASE_DIR)
 CUSTOM_LOGGER_FILENAME = os.path.join(LOG_DIR, 'user_activity.log')
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'print_file': {
+            'format': '%(asctime)s %(message)s',
+            'datefmt': '%H:%M:%S',
+        },
+    },
+    'handlers': {
+        'print_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'print.log'),
+            'formatter': 'print_file',
+        },
+    },
+    'loggers': {
+        'mafiaapp.views': {
+            'handlers': ['print_file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # SILKY_AUTHENTICATION = True  # User must login

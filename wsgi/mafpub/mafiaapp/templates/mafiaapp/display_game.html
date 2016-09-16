@@ -38,7 +38,7 @@
                     {% endif %}
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4">
-                    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
+                    <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.title|safe }}</a></h3>
                 </div>
                 {% with comments=private.gamecomment_set.all %}
                 {% if comments.count > 0 %}
@@ -106,7 +106,7 @@
                             {% endif %}
                         </div>
                         <div class="col-md-4 col-xs-4 col-sm-4">
-                            <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.text|safe }}</a></h3>
+                            <h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=private.slug %}">{{ private.title|safe }}</a></h3>
                         </div>
                         {% with comments=private.gamecomment_set.all %}
                         {% if comments.count > 0 %}
@@ -164,7 +164,7 @@
                             {% endif %}
                         </div>
         				<div class="col-md-4 col-xs-4 col-sm-4">
-            				<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=p.slug %}">{{ p.text|safe }}</a></h3>
+            				<h3><a href="{% url 'mafiaapp:display_game_post' game_slug=game.slug post_slug=p.slug %}">{{ p.title|safe }}</a></h3>
         				</div>
                         {% with comments=p.gamecomment_set.all %}
                         {% if comments.count > 0 %}

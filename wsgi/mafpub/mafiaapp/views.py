@@ -147,10 +147,12 @@ class LoginAs(generic.View):
         login(request, user)
         request.session['restore_user'] = True
         request.session['username'] = original_username
-        participant = GameParticipant.objects.filter(user=user).first()
-        private_q = GamePost.objects.get(tags__contains=[participant.user.nickname])
-        return redirect(reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
-                                                                           'post_slug': private_q.slug}))
+        #participant = GameParticipant.objects.filter(user=user).first()
+        #game = get_game(kwargs)
+        #private_q = GamePost.objects.get(game=game, tags__contains=[participant.user.nickname])
+        #return redirect(reverse_lazy('mafiaapp:display_game_post', kwargs={'game_slug': participant.game.slug,
+        #                                                                   'post_slug': private_q.slug}))
+        return redirect('/')
 
 
 class RegisterView(generic.CreateView):
@@ -796,9 +798,9 @@ def killer_kill(d):
     if (shoot_vote and barman and shoot_vote.target == barman) and (spoil_vote and spoil_vote.target.role != 'dead'):
         # doctor saves both barman and barman's target
         if heal_vote and heal_vote.target == barman:
-            success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором.'
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором'
         else:
-            success_result += '\n    ' + spoil_vote.target.mask.username + ' убит.'
+            success_result += '\n    ' + spoil_vote.target.mask.username + ' убит'
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
@@ -817,20 +819,20 @@ def killer_kill(d):
     # killer's target is already dead
     if shoot_vote and shoot_vote.target.role == 'dead':
         # shoot_vote always shown in night's summary
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден киллером уже мёртвым.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден киллером уже мёртвым'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # killer's target barman's target. no one dies
     elif shoot_vote and spoil_vote and spoil_vote.target == shoot_vote.target:
         # shoot_vote always shown in night's summary
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с киллером.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с киллером'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # killer's shoot target is doctor's target. doctor heals target.
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
@@ -840,7 +842,7 @@ def killer_kill(d):
         shoot_target_inform = GameComment(post=shoot_target_post, text=shoot_target_result, author=bot)
         shoot_target_inform.save()
     elif shoot_vote:
-        success_result = '\n  ' + shoot_vote.target.mask.username + ' убит.'
+        success_result = '\n  ' + shoot_vote.target.mask.username + ' убит'
         success_shoot = True
         if shoot_vote.target.role == 'head mafia':
             game.hasHeadMafia = False
@@ -890,9 +892,9 @@ def mafia_kill(d):
     # if head mafia's target is barman, then he kills barman's target first(if it's not dead already)
     if (shoot_vote and barman and shoot_vote.target == barman) and (spoil_vote and spoil_vote.target.role != 'dead'):
         if heal_vote and heal_vote.target == barman:
-            success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором.'
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' спасён доктором'
         else:
-            success_result += '\n  ' + spoil_vote.target.mask.username + ' убит.'
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' убит'
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
@@ -911,20 +913,20 @@ def mafia_kill(d):
     # head mafia's target is already dead
     if shoot_vote and shoot_vote.target.role == 'dead':
         # shoot_vote always shown in night's summary
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден мафией уже мёртвым.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден мафией уже мёртвым'
         success_shot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # head mafia's target barman's target. no one dies
     elif shoot_vote and spoil_vote and spoil_vote.target == shoot_vote.target:
         # shoot_vote always shown in night's summary
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с мафией.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с мафией'
         success_shot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # head mafia's target is doctor's target, so doctor heals target. Or, head mafia's target is already dead
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором'
         success_shot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
@@ -934,7 +936,7 @@ def mafia_kill(d):
         shoot_target_inform = GameComment(post=shoot_target_post, text=shoot_target_result, author=bot)
         shoot_target_inform.save()
     elif shoot_vote:
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' убит.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' убит'
         success_shot = True
         if shoot_vote.target.role == 'head mafia':
             game.hasHeadMafia = False
@@ -1035,9 +1037,9 @@ def maniac_kill_check(d):
     # if maniac's shoot target is barman, then he kills barman's target first(if it's not dead already)
     if (shoot_vote and barman and shoot_vote.target == barman) and (spoil_vote and spoil_vote.target.role != 'dead'):
         if heal_vote and heal_vote.target == barman:
-            success_result += '\n  ' + spoil_vote.target.mask.username + 'спасён доктором.'
+            success_result += '\n  ' + spoil_vote.target.mask.username + 'спасён доктором'
         else:
-            success_result += '\n  ' + spoil_vote.target.mask.username + ' убит.'
+            success_result += '\n  ' + spoil_vote.target.mask.username + ' убит'
             if spoil_vote.target.role == 'head mafia':
                 game.hasHeadMafia = False
                 game.save()
@@ -1056,20 +1058,20 @@ def maniac_kill_check(d):
     # maniac's target is already dead
     if shoot_vote and shoot_vote.target.role == 'dead':
         # shoot_vote always shown in night's summary
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден маньяком уже мёртвым.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' был найден маньяком уже мёртвым'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # maniac's target is barman's target. no one dies
     elif shoot_vote and spoil_vote and spoil_vote.target == shoot_vote.target:
         # shoot_vote always shown in night's summary
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с маньяком.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' избежал встречи с маньяком'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
     # maniac's shoot target is doctor's target. doctor heals target.
     elif shoot_vote and heal_vote and heal_vote.target == shoot_vote.target:
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' спасён доктором'
         success_shoot = True
         shoot_result = 'Ночь ' + str(
             game.day) + ': Вам не удалось убить игрока ' + shoot_vote.target.mask.username + '.' + shoot_result
@@ -1079,7 +1081,7 @@ def maniac_kill_check(d):
         shoot_target_inform = GameComment(post=shoot_target_post, text=shoot_target_result, author=bot)
         shoot_target_inform.save()
     elif shoot_vote:
-        success_result += '\n  ' + shoot_vote.target.mask.username + ' убит.'
+        success_result += '\n  ' + shoot_vote.target.mask.username + ' убит'
         success_shoot = True
         if shoot_vote.target.role == 'head mafia':
             game.hasHeadMafia = False
@@ -1115,6 +1117,45 @@ def maniac_kill_check(d):
         inform = GameComment(post=post, text=check_result, author=bot)
         inform.save()
     return '\n\nПокушение маньяка:' + success_result if success_shoot else ''
+
+
+def mafia_recruit_check(d):
+    game = Game.objects.get(number=d['game'])
+    mafia_recruit = GameParticipant.objects.filter(game=game, role='mafia recruit').first()
+    # there is no mafia_recruit
+    if not mafia_recruit:
+        return ''
+    # mafia_recruit's quarters
+    post = GamePost.objects.get(game=game, tags__contains=['private', mafia_recruit.user.nickname])
+    bot = User.objects.get(nickname='Игровой Бот')
+    check_result = ''
+    barman = GameParticipant.objects.filter(game=game, role__in=['neutral barman', 'mafia barman', 'militia barman']) \
+        .first()
+    spoil_vote = Vote.objects.filter(game=game, day=game.day, voter=barman, action='spoil').first() if barman else None
+    # mafia_recruit is drunk. no one checked
+    if spoil_vote and spoil_vote.target == mafia_recruit:
+        return ''
+    # mafia_recruit is ok. get his target
+    else:
+        check_vote = Vote.objects.filter(game=game, day=game.day, voter=mafia_recruit, action='check').first()
+    # perform check
+    # if mafia_recruit's check target is barman, then he checks both barman and barman's target
+    if (check_vote and barman and check_vote.target == barman) and (spoil_vote and spoil_vote.target.role != 'dead'):
+        check_result = ' Проверка: игрок ' + spoil_vote.target.mask.username + ' - ' + roles_dict[
+            spoil_vote.target.role] + '.'
+        check_result = 'Ночь ' + str(game.day) + ': Проверка: игрок ' + check_vote.target.mask.username + ' - ' \
+                       + roles_dict[check_vote.target.role] + '.' + check_result
+    # mafia_recruit's check target is barman's target. no one checked
+    elif spoil_vote and check_vote and spoil_vote.target == check_vote.target:
+        check_result = 'Ночь ' + str(
+            game.day) + ': Вам не удалось проверить игрока ' + check_vote.target.mask.username + '.'
+    elif check_vote:
+        check_result = 'Ночь ' + str(game.day) + ': Проверка: игрок ' + check_vote.target.mask.username + ' - ' \
+                       + roles_dict[check_vote.target.role] + '.' + check_result
+    if check_vote:
+        inform = GameComment(post=post, text=check_result, author=bot)
+        inform.save()
+    return ''
 
 
 def militia_check(d):
@@ -1805,6 +1846,7 @@ def perform_actions(d):
     report += head_militia_arrest(d)
     report += mafia_kill(d)
     report += militia_check(d)
+    report += mafia_recruit_check(d)
     report += change_side(d)
     report += '</span>'
     refresh_participants_states(d)
@@ -2145,6 +2187,10 @@ def heal(request, kwargs):
                                    id=int(request.POST['target']))
     except KeyError:
         raise Http404()
+    # role with check not allowed to check self
+    if voter.id == target.id:
+        messages.add_message(request, messages.ERROR, 'Нельзя проверить самого себя.')
+        return False
     vote = Vote.objects.update_or_create(game=game, day=game.day, voter=voter,
                                          action='heal', defaults={'target': target})
     author = User.objects.get(nickname='Игровой Бот')
@@ -2522,11 +2568,13 @@ class DisplayGamePost(generic.ListView):
                     allowed_actions['spoil_targets'] = [vote.target] + list(
                         GameParticipant.objects.filter(game=self.game) \
                             .exclude(id=participant.prevTarget.id).exclude(id=vote.target.id) \
-                            .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')))
+                            .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                            .exclude(id=participant.id))
                 else:
                     allowed_actions['spoil_targets'] = GameParticipant.objects.filter(game=self.game) \
                         .exclude(id=participant.prevTarget.id) \
-                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
+                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                        .exclude(id=participant.id)
             else:
                 if vote:
                     # make order: [target, queryset w/o target]
@@ -2534,10 +2582,12 @@ class DisplayGamePost(generic.ListView):
                     allowed_actions['spoil_targets'] = [vote.target] + list(GameParticipant.objects
                                                                             .filter(game=self.game)
                         .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
-                                                                            .exclude(id=vote.target.id))
+                        .exclude(id=vote.target.id)
+                        .exclude(id=participant.id))
                 else:
                     allowed_actions['spoil_targets'] = GameParticipant.objects.filter(game=self.game) \
-                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead'))
+                        .exclude(Q(user__nickname='Игровой Бот') | Q(role='dead')) \
+                        .exclude(id=participant.id)
 
         # killer's targets to shoot
         if allowed_actions['can_shoot'] and participant.role in ['neutral killer', 'mafia killer', 'militia killer']:
