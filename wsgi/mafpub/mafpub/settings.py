@@ -70,6 +70,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # third party
     # 'silk.middleware.SilkyMiddleware',
+    # internal middleware
+    'mafiaapp.middleware.CustomLogger',
 )
 
 ROOT_URLCONF = 'mafpub.urls'
