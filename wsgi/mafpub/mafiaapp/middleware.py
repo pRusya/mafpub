@@ -16,8 +16,14 @@ class CustomLogger(object):
         self.logger.info('CustomLogger initialized')
 
     def process_request(self, request):
-        message = 'from[{}] method[{}] url[{}] user[{}] agent[{}] data[{}]'.\
-            format(request.META['REMOTE_ADDR'], request.method, request.path,
-                   request.user, request.META['HTTP_USER_AGENT'], urllib.parse.unquote(request.body.decode('utf-8')))
+        message = 'x-forwarded[{}] ' \
+                  'ip[{}] method[{}] url[{}] user[{}] agent[{}] data[{}]'.\
+            format(request.META.get('HTTP_X_FORWARDED_FOR', ''),
+                   request.META.get('REMOTE_ADDR', ''), 
+                   request.method, 
+                   request.path,
+                   request.user, 
+                   request.META['HTTP_USER_AGENT'], 
+                   urllib.parse.unquote(request.body.decode('utf-8')))
         self.logger.info(message)
         return None
