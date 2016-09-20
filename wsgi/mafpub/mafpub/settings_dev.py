@@ -60,7 +60,9 @@ MIDDLEWARE_CLASSES = (
     # third party
     # 'silk.middleware.SilkyMiddleware',
     # internal middleware
-    'mafiaapp.middleware.CustomLogger',
+    #'mafiaapp.middleware.CustomLogger',
+    'visitor_activity.apps.VisitorActivityConfig',
+
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -82,7 +84,8 @@ TEMPLATES = [
     },
 ]
 
-CUSTOM_LOGGER_FILENAME = os.path.join(BASE_DIR, 'user_activity.log')
+#CUSTOM_LOGGER_FILENAME = os.path.join(BASE_DIR, 'user_activity.log')
+USER_ACTIVITY_LOG_FILENAME = os.path.join(BASE_DIR, 'visitor_activity.log')
 
 LOGGING = {
     'version': 1,
