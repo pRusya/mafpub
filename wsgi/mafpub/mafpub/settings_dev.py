@@ -61,7 +61,8 @@ MIDDLEWARE_CLASSES = (
     # 'silk.middleware.SilkyMiddleware',
     # internal middleware
     #'mafiaapp.middleware.CustomLogger',
-    'visitor_activity.apps.VisitorActivityConfig',
+    #'visitor_activity.apps.VisitorActivityConfig',
+    'visitor_activity.middleware.VisitorActivity',
 
 )
 

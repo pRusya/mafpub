@@ -15,6 +15,7 @@ setup(name='mafpub',
         'django-summernote==0.8.5',
       ],
       dependency_links=[
-        'https://pypi.python.org/simple/django/'
+        'https://pypi.python.org/simple/django/',
+        'git+https://github.com/prusya/django-visitor-activity.git',
       ],
      )

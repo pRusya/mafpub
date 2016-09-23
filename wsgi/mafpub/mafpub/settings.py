@@ -71,7 +71,7 @@ MIDDLEWARE_CLASSES = (
     # third party
     # 'silk.middleware.SilkyMiddleware',
     # internal middleware
-    'mafiaapp.middleware.CustomLogger',
+    'visitor_activity.middleware.VisitorActivity',
 )
 
 ROOT_URLCONF = 'mafpub.urls'
