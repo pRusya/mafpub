@@ -13,6 +13,7 @@ setup(name='mafpub',
         'Pillow==3.1.1',
         'requests',
         'django-summernote==0.8.5',
+        'visitor_activity',
       ],
       dependency_links=[
         'https://pypi.python.org/simple/django/',
