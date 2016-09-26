@@ -17,6 +17,6 @@ setup(name='mafpub',
       ],
       dependency_links=[
         'https://pypi.python.org/simple/django/',
-        'git+https://github.com/prusya/django-visitor-activity.git',
+        'git+https://github.com/prusya/django-visitor-activity.git#egg=visitor_activity',
       ],
      )
