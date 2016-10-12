@@ -228,6 +228,10 @@ a {
 .comment-item p {
   margin-bottom: 0px;
 }
+.comment-item img {
+  max-height: 100%;
+  width: auto;
+}
 .comment-avatar {
   height:90px;
   max-height:90px;

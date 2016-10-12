@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^life/$', staff_member_required(views.UsersActivity.as_view()), name='users_activity'),
     url(r'^logout/$', views.Logout.as_view(), name='logout'),
 
-    #url(r'^users/$', views.DisplayUsersView.as_view(), name='display_users'),
+    url(r'^users/$', staff_member_required(views.DisplayUsersView.as_view()), name='display_users'),
     url(r'^masks/$', staff_member_required(views.DisplayMasksView.as_view()), name='display_masks'),
     url(r'^users/delete/(?P<pk>[0-9]+)/$', staff_member_required(views.DeleteUser.as_view()), name='delete_user'),
 

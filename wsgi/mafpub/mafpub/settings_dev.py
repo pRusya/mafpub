@@ -62,7 +62,7 @@ MIDDLEWARE_CLASSES = (
     # internal middleware
     #'mafiaapp.middleware.CustomLogger',
     #'visitor_activity.apps.VisitorActivityConfig',
-    'visitor_activity.middleware.VisitorActivity',
+    #'visitor_activity.middleware.VisitorActivity',
 
 )
 

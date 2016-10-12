@@ -7,8 +7,10 @@ import re
 
 # Create your models here.
 
-# roles are ['mafia', 'head mafia', 'mafia doctor', 'mafia barman', 'mafia killer', 'mafia recruit',
-#            'militia', 'head militia', 'militia doctor', 'militia barman', 'militia killer', 'militia recruit',
+# roles are ['mafia', 'head mafia', 'mafia doctor', 'mafia barman',
+#            'mafia killer', 'mafia recruit',
+#            'militia', 'head militia', 'militia doctor', 'militia barman',
+#            'militia killer', 'militia recruit',
 #            'neutral doctor', 'neutral barman', 'neutral killer',
 #            'maniac',
 #            'peaceful',
@@ -99,23 +101,30 @@ class Game(models.Model):
         ('current',     'В процессе'),
         ('past',        'Завершена'),
     )
-    state = models.CharField(max_length=10, choices=STATE_CHOICES, default='upcoming', verbose_name='Фаза')
+    state = models.CharField(max_length=10, choices=STATE_CHOICES,
+                             default='upcoming', verbose_name='Фаза')
     slug = models.SlugField(verbose_name='URL', default=game_slug, unique=True)
     # current day
     day = models.IntegerField(default=0, blank=True, verbose_name='День')
     # custom string to display more info
     status = models.CharField(max_length=100, null=True, verbose_name='Статус')
     # choose leader form not avail if True
-    hasHeadMafia = models.BooleanField(default=False, verbose_name='ГлавМаф назначен')
+    hasHeadMafia = models.BooleanField(default=False,
+                                       verbose_name='ГлавМаф назначен')
     # recruit form not avail if True
-    hasRecruit = models.BooleanField(default=False, verbose_name='Есть завербованный')
+    hasRecruit = models.BooleanField(default=False,
+                                     verbose_name='Есть завербованный')
     # list of users who have access to every gamepost
-    anchor = ArrayField(base_field=models.CharField(max_length=30, unique=True), default='{}', verbose_name='Ведущие')
+    anchor = ArrayField(base_field=models.CharField(max_length=30,
+                                                    unique=True),
+                        default='{}', verbose_name='Ведущие')
     # list of users not allowed to participate
-    black_list = ArrayField(models.CharField(max_length=30, unique=True), verbose_name='Бан', null=True, blank=True)
+    black_list = ArrayField(models.CharField(max_length=30, unique=True),
+                            verbose_name='Бан', null=True, blank=True)
 
     def get_description(self):
-        return GamePost.objects.filter(game=self, tags__contains=['description']).first()
+        return GamePost.objects.filter(game=self,
+                                       tags__contains=['description']).first()
 
     def __str__(self):
         return self.title + '(id=' + str(self.number) + '). Фаза: ' + \

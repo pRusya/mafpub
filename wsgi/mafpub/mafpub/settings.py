@@ -29,7 +29,7 @@ SECRETS = secrets.getter(os.path.join(DATA_DIR, 'secrets.json'))
 SECRET_KEY = SECRETS['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # os.environ.get('DEBUG') == 'True'
+DEBUG = os.environ.get('DEBUG') == 'True'
 
 from socket import gethostname
 ALLOWED_HOSTS = [
@@ -71,7 +71,7 @@ MIDDLEWARE_CLASSES = (
     # third party
     # 'silk.middleware.SilkyMiddleware',
     # internal middleware
-    'visitor_activity.middleware.VisitorActivity',
+    #'visitor_activity.middleware.VisitorActivity',
 )
 
 ROOT_URLCONF = 'mafpub.urls'
