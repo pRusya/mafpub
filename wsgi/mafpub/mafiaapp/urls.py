@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^ajax_register', views.AjaxRegister.as_view(), name='ajax_register'),
     url(r'^ajax_login', views.AjaxLogin.as_view(), name='ajax_login'),
+    url(r'^form_register/$', views.FormRegister.as_view(), name='form_register'),
+    url(r'^form_login/$', views.FormLogin.as_view(), name='form_login'),
     url(r'^register/(?P<code>[a-zA-Z0-9]+)$', views.RegisterView.as_view(), name='register'),
 
     # password reset links
@@ -34,11 +36,11 @@ urlpatterns = [
     url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/$', views.DisplayGame.as_view(), name='display_game'),
     url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я-]+)/$',
         views.DisplayGamePost.as_view(), name='display_game_post'),
-    url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/deletecomment/(?P<pk>[0-9]+)/$',
+    url(r'^dashboard/g/(?P<game_slug>game[0-9]+)/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я-]+)/deletecomment/(?P<pk>[0-9]+)/$',
         staff_member_required(views.DeleteGameComment.as_view()), name='delete_game_comment'),
     # post urls
-    url(r'^dashboard/p/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/$', views.DisplayPost.as_view(), name='display_post'),
-    url(r'^dashboard/p/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я]+)/deletecomment/(?P<pk>[0-9]+)/$',
+    url(r'^dashboard/p/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я-]+)/$', views.DisplayPost.as_view(), name='display_post'),
+    url(r'^dashboard/p/(?P<post_slug>[a-z0-9A-Z_.а-яА-Я-]+)/deletecomment/(?P<pk>[0-9]+)/$',
         staff_member_required(views.DeleteComment.as_view()), name='delete_comment'),
 
     url(r'^dashboard/creategame/$', staff_member_required(views.CreateGame.as_view()), name='create_game'),

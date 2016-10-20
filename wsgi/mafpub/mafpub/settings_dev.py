@@ -141,7 +141,7 @@ MAFPUB_POSTGRESQL_DB_PASSWORD = os.environ.get('MAFPUB_POSTGRESQL_DB_PASSWORD')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mafpub',
+        'NAME': 'prod',
         'USER': MAFPUB_POSTGRESQL_DB_USER,
         'PASSWORD': MAFPUB_POSTGRESQL_DB_PASSWORD,
         'HOST': MAFPUB_POSTGRESQL_DB_HOST,

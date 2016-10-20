@@ -139,6 +139,80 @@ class AjaxLogin(generic.View):
             return JsonResponse({'status': status, 'message': message, 'next': next})
 
 
+class FormRegister(generic.TemplateView):
+    template_name = 'mafiaapp/form_register.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        form = EmailValidationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            registered_emails = EmailValidation.objects.all().values('email')
+            for record in registered_emails:
+                if email == record['email']:
+                    message = 'Данный адрес уже зарегистророван. Проверьте почту или укажите другой адрес.'
+                    return render(request, self.template_name, context={'form': form, 'message': message})
+            code = "".join([random.SystemRandom().choice(string.hexdigits) for n in range(30)])
+            ev = EmailValidation(email=email, code=code)
+            ev.save()
+            email_body = 'На форуме Галамафия 2.0 (http://www.maf.pub/) появилась регистрационная ' \
+                         'запись,\r' \
+                         'в которой был указал ваш электронный адрес (e-mail).\r' \
+                         '\r' \
+                         'Если вы не понимаете, о чем идет речь — просто проигнорируйте это сообщение!\r' \
+                         '\r' \
+                         'Если же именно вы решили зарегистрироваться на форуме Галамафия 2.0,\r' \
+                         'то вам следует завершить свою регистрацию и тем самым активировать вашу ' \
+                         'учетную запись.\r' \
+                         'Регистрация производится один раз и необходима для повышения безопасности форума и ' \
+                         'защиты его от злоумышленников.\r' \
+                         'Чтобы завершить регистрацию и активировать вашу учетную запись, необходимо перейти ' \
+                         'по ссылке:\r' \
+                         'http://www.maf.pub/register/%s\r' \
+                         'После активации учетной записи вы сможете авторизоваться используя выбранные вами ' \
+                         'электронный адрес и пароль.\r' \
+                         '\r' \
+                         'С этого момента вы сможете оставлять сообщения и принимать участие в играх.\r' \
+                         '\r' \
+                         'Благодарим за регистрацию!'
+            send_mail('Галамафия 2.0: Регистрация учетной записи', email_body % code,
+                      'Галамафия 2.0 <noreply@maf.pub>',
+                      [email], fail_silently=False)
+            message = 'Проверьте указанный почтовый ящик для завершения регистрации.'
+            return render(request, self.template_name, context={'form': form, 'message': message})
+        else:
+            message = 'Укажите корректный электронный адрес.'
+            return render(request, self.template_name, context={'form': form, 'message': message})
+
+
+class FormLogin(generic.TemplateView):
+    template_name = 'mafiaapp/form_login.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        form = LoginForm(request.POST)
+        message = 'Проверьте правильность логина и пароля.'
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            # user = get_object_or_404(User, email__iexact=email)
+            user = User.objects.filter(email__iexact=email).first()
+            if not user:
+                return render(request, self.template_name, context={'form': form, 'message': message})
+            password = form.cleaned_data['password']
+            user = authenticate(username=user.username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                return render(request, self.template_name, context={'form': form, 'message': message})
+        else:
+            return render(request, self.template_name, context={'form': form, 'message': message})
+
+
 class LoginAs(generic.View):
     def get(self, request, *args, **kwargs):
         user = User.objects.get(username=kwargs['username'])
@@ -510,7 +584,7 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
             bot = User.objects.get(nickname='Игровой Бот')
             departure_area = GamePost(title='Зал Ожидания', text='Зал Ожидания', game=context['game'],
                                       slug=str(context['game'].slug)+'_departure', allow_role=['everyone'],
-                                      author=bot, tags=['general_day', 'current'])
+                                      author=bot, tags=['general_day', 'current'], short=str(context['game'].slug)+'_departure')
             departure_area.save()
         elif action == 'Сохранить':
             form = self.get_form()

@@ -70,9 +70,12 @@
 	<div class="col-md-5 col-sm-12 col-xs-12"></div>
 	<div class="col-md-7 col-sm-12 col-xs-12 text-center">
 		<h1 >
-			<a href="#" class="text-btn" data-toggle="modal" data-target="#modal-login">Логин</a>
+			<!-- <a href="#" class="text-btn" data-toggle="modal" data-target="#modal-login">Логин</a>
 			 / 
-			<a href="#" class="text-btn" data-toggle="modal" data-target="#modal-register">Регистрация</a>
+			<a href="#" class="text-btn" data-toggle="modal" data-target="#modal-register">Регистрация</a> -->
+			<a href="{% url 'mafiaapp:form_login' %}" class="text-btn" >Логин</a>
+			 / 
+			<a href="{% url 'mafiaapp:form_register' %}" class="text-btn">Регистрация</a>
 		</h1>
 	</div>
 </div>
