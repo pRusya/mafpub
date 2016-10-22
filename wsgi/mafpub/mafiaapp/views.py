@@ -442,7 +442,8 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
             # masks = random.sample(list(context['masks']), len(context['masks']))
             masks = Mask.objects.filter(game=context['game'], taken=False)
             masks = random.sample(list(masks), len(masks))
-            roles = ['head militia', 'neutral doctor', 'neutral barman', 'maniac']
+            # roles = ['head militia', 'neutral doctor', 'neutral barman', 'maniac']
+            roles = ['head militia', 'neutral doctor', 'maniac']
             mafia = ['mafia']
             killer = ['neutral killer']
             militia = ['militia']
@@ -451,7 +452,8 @@ class EditGameView(generic.ListView, generic.edit.UpdateView):
             if len(participants) >= 12:
                 roles = roles + militia
             if len(participants) <= 18:
-                roles = roles + mafia * 3
+                # roles = roles + mafia * 3
+                roles = roles + mafia * 2
             elif 19 <= len(participants) <= 25:
                 roles = roles + mafia * 4
             elif len(participants) > 25:
@@ -1406,12 +1408,12 @@ def head_militia_arrest(d):
         if check_vote.target.role in mafia_roles:
             success_result += '\n  ' + check_vote.target.mask.username
             success_arrest = True
-            logger.info('check_vote')
+            # logger.info('check_vote')
             if check_vote.target.role == 'head mafia':
-                logger.info('check_vote.target.role == "head mafia"')
+                # logger.info('check_vote.target.role == "head mafia"')
                 game.hasHeadMafia = False
                 game.save()
-                logger.info(game.hasHeadMafia)
+                # logger.info(game.hasHeadMafia)
             check_vote.target.prevRole = check_vote.target.role
             check_vote.target.role = 'dead'
             check_vote.target.save()
@@ -1515,10 +1517,10 @@ def night(d):
             dead.mask.username + "(" + dead.get_literary_prev_role() + ")" if dead.checked_by_mil else
             dead.mask.username
             for dead in line)
-    logger.info('quicks_info %s', quicks_info)
-    logger.info('checked_quicks_info %s', checked_quicks_info)
-    logger.info('departed_info %s', departed_info)
-    logger.info('checked_departed_info %s', checked_departed_info)
+    # logger.info('quicks_info %s', quicks_info)
+    # logger.info('checked_quicks_info %s', checked_quicks_info)
+    # logger.info('departed_info %s', departed_info)
+    # logger.info('checked_departed_info %s', checked_departed_info)
     for post in posts:
         post.allow_comment = False
         post.tags.remove('current')
@@ -1723,8 +1725,9 @@ def neutrals_change_side(d):
     bot = User.objects.get(nickname='Игровой Бот')
     neutral_barman = GameParticipant.objects.filter(game=game, role='neutral barman').first()
     neutral_doctor = GameParticipant.objects.filter(game=game, role='neutral doctor').first()
-    neutral_killer = GameParticipant.objects.filter(game=game, role='neutral killer').first()
-    neutrals = [neutral_doctor, neutral_killer, neutral_barman]
+    # neutral_killer = GameParticipant.objects.filter(game=game, role='neutral killer').first()
+    # neutrals = [neutral_doctor, neutral_killer, neutral_barman]
+    neutrals = [neutral_doctor]
     side_result = ''
     for neutral in neutrals:
         if neutral:
@@ -1764,6 +1767,7 @@ def neutrals_change_side(d):
                 neutral.sees_mil_q = True
                 neutral.save()
             """
+    """
     if not neutral_barman:
         voter = GameParticipant.objects.filter(game=game, prevRole='neutral barman')
         side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
@@ -1776,6 +1780,7 @@ def neutrals_change_side(d):
             role = random.choice(['mafia barman', 'militia barman', 'mafia barman', 'militia barman',
                                   'mafia barman', 'militia barman', 'mafia barman', 'militia barman'])
         side_result += '\n  ' + roles_dict['neutral barman'] + ' - ' + roles_dict[role] + '.'
+    """
     if not neutral_doctor:
         voter = GameParticipant.objects.filter(game=game, prevRole='neutral doctor')
         side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
@@ -1788,6 +1793,7 @@ def neutrals_change_side(d):
             role = random.choice(['mafia doctor', 'militia doctor', 'mafia doctor', 'militia doctor',
                                   'mafia doctor', 'militia doctor', 'mafia doctor', 'militia doctor'])
         side_result += '\n  ' + roles_dict['neutral doctor'] + ' - ' + roles_dict[role] + '.'
+    """
     if not neutral_killer:
         voter = GameParticipant.objects.filter(game=game, prevRole='neutral killer')
         side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
@@ -1800,6 +1806,7 @@ def neutrals_change_side(d):
             role = random.choice(['mafia killer', 'militia killer', 'mafia killer', 'militia killer',
                                   'mafia killer', 'militia killer', 'mafia killer', 'militia killer'])
         side_result += '\n  ' + roles_dict['neutral killer'] + ' - ' + roles_dict[role] + '.'
+    """
     return ('\n\nВыбор стороны:' + side_result) if len(side_result) > 0 else ''
 
 
@@ -1824,13 +1831,13 @@ def recruit_change_side(d):
     bot = User.objects.get(nickname='Игровой Бот')
     # check if head mafia tried to recruit somebody
     vote_recruit = Vote.objects.filter(game=game, action='recruit', day=game.day).first()
-    logger.info('======RECRUIT')
-    logger.info(vote_recruit)
+    # logger.info('======RECRUIT')
+    # logger.info(vote_recruit)
     if vote_recruit:
         # mafia did try recruit. check if recruiter chose side
         side_vote = Vote.objects.filter(Q(action='mafia_side') | Q(action='militia_side'),
                                         game=game, voter=vote_recruit.target).first()
-        logger.info(side_vote)
+        # logger.info(side_vote)
         head_mafia = GameParticipant.objects.filter(game=game, role='head mafia').first()
         vote_recruit.target.can_choose_side = False
         vote_recruit.target.save()
@@ -1844,26 +1851,26 @@ def recruit_change_side(d):
             game.save()
             recruit_result = 'Ночь ' + str(game.day) + ': Вербовка: игрок ' + vote_recruit.target.mask.username + \
                              ' принимает вербовку. Завербованный теперь имеет доступ к явочной каюте мафии.'
-            logger.info('result %s', recruit_result)
+            # logger.info('result %s', recruit_result)
         else:
-            logger.info('no side vote')
+            # logger.info('no side vote')
             # recruiter did not choose side. head mafia can recruit again
             if head_mafia:
                 head_mafia.can_recruit = True
                 head_mafia.save()
             recruit_result = 'Ночь ' + str(game.day) + ': Вербовка: игрок ' + vote_recruit.target.mask.username + \
                              ' отказывается от вербовки.'
-            logger.info('recruit result %s', recruit_result)
+            # logger.info('recruit result %s', recruit_result)
         recruited_post = GamePost.objects.get(game=game,
                                               tags__contains=['private', vote_recruit.target.user.nickname])
-        logger.info('recruited post %s', recruited_post)
+        # logger.info('recruited post %s', recruited_post)
         inform = GameComment(post=recruited_post, text=recruit_result, author=bot)
         inform.save()
         if head_mafia:
-            logger.info('head mafia %s', head_mafia)
+            # logger.info('head mafia %s', head_mafia)
             head_mafia_post = GamePost.objects.get(game=game, tags__contains=['private',
                                                                               vote_recruit.voter.user.nickname])
-            logger.info('head mafia psot %s', head_mafia_post)
+            # logger.info('head mafia psot %s', head_mafia_post)
             inform = GameComment(post=head_mafia_post, text=recruit_result, author=bot)
             inform.save()
     return ''
@@ -1912,10 +1919,10 @@ def perform_actions(d):
     game = Game.objects.get(number=d['game'])
     report = '<center>Ночь ' + str(game.day) + '</center><span class="monospace">'
     report += vote_hang(d)
-    report += barman_spoil(d)
+    # report += barman_spoil(d)
     report += doctor_heal(d)
-    create_missing_killer_vote(d)
-    report += killer_kill(d)
+    # create_missing_killer_vote(d)
+    # report += killer_kill(d)
     report += maniac_kill_check(d)
     report += head_militia_arrest(d)
     report += mafia_kill(d)
@@ -2036,7 +2043,7 @@ def post_game_comment(request, kwargs):
     else:
         comment = GameComment(post=post, author=user.user, text=text,
                               mask=comment_participant.mask if user.user.nickname not in game.anchor else None)
-        logger.info(comment.mask)
+        # logger.info(comment.mask)
         comment.save()
         participant = get_object_or_404(GameParticipant, game=game, user=user)
         participant.comments_number += 1
@@ -2229,13 +2236,13 @@ def check(request, kwargs):
     # militia also can't check head militia
     if voter.role == 'militia':
         head_militia = GameParticipant.objects.filter(game=game, role='head militia').first()
-        if head_militia.id == target.id:
+        if head_militia and head_militia.id == target.id:
             messages.add_message(request, messages.ERROR, 'Нельзя проверить своего напарника.')
             return False
     # head militia also can't check militia
     if voter.role == 'head militia':
         militia = GameParticipant.objects.filter(game=game, role='militia').first()
-        if militia.id == target.id:
+        if militia and militia.id == target.id:
             messages.add_message(request, messages.ERROR, 'Нельзя проверить своего напарника.')
             return False
     vote = Vote.objects.update_or_create(game=game, day=game.day, voter=voter,
@@ -2819,9 +2826,9 @@ class DisplayGamePost(generic.ListView):
                     return True
                 if participant.role in mafia_core:
                     if 'mafia_secret' in self.game_post.tags:
-                        logger.info('mafia secret')
+                        # logger.info('mafia secret')
                         if participant.role in ['mafia', 'head mafia', 'mafia recruit', 'militia recruit']:
-                            logger.info(participant.role)
+                            # logger.info(participant.role)
                             return True
                         else:
                             return False
