@@ -2268,10 +2268,6 @@ def heal(request, kwargs):
                                    id=int(request.POST['target']))
     except KeyError:
         raise Http404()
-    # role with check not allowed to check self
-    if voter.id == target.id:
-        messages.add_message(request, messages.ERROR, 'Нельзя проверить самого себя.')
-        return False
     vote = Vote.objects.update_or_create(game=game, day=game.day, voter=voter,
                                          action='heal', defaults={'target': target})
     author = User.objects.get(nickname='Игровой Бот')
