@@ -195,7 +195,11 @@ class GameParticipant(models.Model):
     checked_by_mil = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.user)+' as '+str(self.mask)
+        # return str(self.user)+' as '+str(self.mask)
+        if self.mask:
+            return str(self.mask)
+        else:
+            return str(self.user)
 
     def get_votes(self):
         return Vote.objects.filter(voter=self)

@@ -1454,6 +1454,7 @@ def end_game(d):
     mafia = GameParticipant.objects.filter(game=game, role__in=mafia_roles)
     militia = GameParticipant.objects.filter(game=game, role__in=militia_roles)
     maniac = GameParticipant.objects.filter(game=game, role='maniac')
+    peaceful = GameParticipant.objects.filter(game=game, role='peaceful')
     participants = GameParticipant.objects.filter(game=game).exclude(Q(role='dead') | Q(mask__username='Игровой Бот'))
     bot = User.objects.get(nickname='Игровой Бот')
     summary_post = GamePost.objects.get(game=game, short='summary')
@@ -1468,7 +1469,7 @@ def end_game(d):
         inform = GameComment(post=summary_post, text=report, author=bot)
         inform.save()
         return True
-    if maniac and not militia and not mafia:
+    if maniac and not militia and not mafia or maniac and not peaceful:
         report += '\nПобеду одержал маньяк!'
         inform = GameComment(post=summary_post, text=report, author=bot)
         inform.save()
@@ -1841,7 +1842,15 @@ def recruit_change_side(d):
         head_mafia = GameParticipant.objects.filter(game=game, role='head mafia').first()
         vote_recruit.target.can_choose_side = False
         vote_recruit.target.save()
-        if side_vote:
+        if vote_recruit.target.role == 'dead':
+            vote_recruit.target.can_choose_side = False
+            vote_recruit.target.save()
+            if head_mafia:
+                head_mafia.can_recruit = True
+                head_mafia.save()
+            recruit_result = 'Ночь ' + str(game.day) + ': Вербовка: игрок ' + vote_recruit.target.mask.username + \
+                             ' мёртв. Вербовка не удалась.'
+        elif side_vote:
             # recruiter did chose side. change his role
             vote_recruit.target.role = roles_map[side_vote.action][vote_recruit.target.role]
             vote_recruit.target.sees_maf_q = True
